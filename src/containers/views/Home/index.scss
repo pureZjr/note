@@ -1,0 +1,28 @@
+@import 'var.scss';
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.layout {
+    flex: 1;
+}
+
+.sider {
+    user-select: none;
+
+    :global {
+        .ant-layout-sider-children {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-right: 1px solid $black01;
+        }
+    }
+}
+
+.content {
+    flex: 1;
+    background: '#fff';
+}

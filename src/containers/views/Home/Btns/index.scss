@@ -1,0 +1,25 @@
+@import 'var.scss';
+
+:local(.container) {
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    padding: 0 16px;
+    border-bottom: 1px solid $black01;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &.disabled > * {
+        color: $black02;
+        cursor: not-allowed;
+    }
+}
+
+.add {
+    color: $primary;
+    margin-left: 4px;
+}

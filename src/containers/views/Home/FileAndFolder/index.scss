@@ -1,0 +1,37 @@
+@import 'var.scss';
+:local(.container) {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 100%;
+    background: #fff;
+    border-right: 1px solid $black01;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 12px;
+    border-bottom: 1px solid $black01;
+}
+
+.name {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    @include ellipsis;
+}
+
+.content {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}

@@ -1,0 +1,42 @@
+@import 'var.scss';
+
+:local(.tabs-container) {
+    background-color: #fff;
+    flex: 1;
+    overflow: auto;
+}
+
+.tabContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 50px;
+    background: #fff;
+}
+
+.tabParent {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-height: 50px;
+    padding: 0 12px;
+    cursor: pointer;
+    &:hover {
+        background-color: #eff0f1;
+    }
+}
+
+.tabName {
+    padding-left: 12px;
+}
+
+.show {
+    display: flex;
+}
+
+.hide {
+    display: none;
+}
+
+.active {
+    background-color: #eff0f1;
+}

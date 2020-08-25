@@ -1,0 +1,7 @@
+@import 'var.scss';
+
+.container{
+    background:#fff;
+}
+
+

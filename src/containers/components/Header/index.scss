@@ -1,0 +1,35 @@
+@import 'var.scss';
+.container {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    padding: 0 12px;
+    background-color: #dbdbdf;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    text-align: center;
+}
+
+.search {
+    width: 250px;
+    border-radius: 16px;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    background-color: #5096f6;
+    border-radius: 6px;
+    border-top-right-radius: 0;
+}

@@ -1,0 +1,29 @@
+image: node:12.14.0
+
+cache:
+    key: '$CI_BUILD_REF_NAME'
+    untracked: true
+    paths:
+        - node_modules/
+
+before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+stages:
+    - deploy_prod_stage
+
+deploy_prod:
+    stage: deploy_prod_stage
+    only:
+        - master
+    script:
+        - yarn
+        - npm run build
+        - npm run deployProd
+    tags:
+        - note

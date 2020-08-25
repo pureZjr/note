@@ -1,0 +1,116 @@
+import * as React from 'react'
+import { observer } from 'mobx-react'
+import moment from 'moment'
+
+import { useRootStore } from '@utils/customHooks'
+import IconMarkdown from '@assets/svgs/markdown.svg'
+import { getArticleContent } from '@services/api/article'
+import { byteConvert } from '@utils/common'
+import * as styles from './index.scss'
+import { Tabs } from '@store/extraStore'
+import { setAllKeysByCurrKey } from '@utils/common'
+
+const ArticleList: React.FC = () => {
+    const {
+        articleStore: { articles, currArticleId, setCurrArticleId, setArticleContent, setContentLoading },
+        folderStore: {
+            setCurrSelectedFolderId,
+            setCurrSelectedFolderKey,
+            setExpandTreeKeys,
+            setCurrSelectedFolderName
+        },
+        extraStore: { currTabId, setCurrTabId, setMenuProps }
+    } = useRootStore()
+    const renderSvg = (type: string) => {
+        switch (type) {
+            case 'markdown':
+                return <IconMarkdown className="no-fill" width={16} height={16} />
+        }
+    }
+
+    // 点击文章，更新阅读时间
+    const onHandleClickItem = async ({ id, parentId, parentKey, type, parentFolderTitle }: IArticleStore.IArticle) => {
+        if ([Tabs.MyFolder, Tabs.NewDoc].includes(currTabId)) {
+            setCurrArticleId(id)
+        }
+        if (Tabs.MyFolder === currTabId) {
+            setCurrSelectedFolderName(parentFolderTitle)
+            setCurrSelectedFolderId(parentId)
+            setCurrSelectedFolderKey(parentKey)
+        }
+        try {
+            setContentLoading(true)
+            const res = await getArticleContent({ id, type })
+            setArticleContent(res)
+            setContentLoading(false)
+        } catch {}
+    }
+
+    // 跳转我的文件
+    const gotoMyFolder = (key: string, id: string) => {
+        setExpandTreeKeys()
+        setCurrTabId(Tabs.MyFolder)
+        setAllKeysByCurrKey(key)
+        setCurrSelectedFolderId(id)
+        setCurrSelectedFolderKey(key)
+    }
+
+    // 鼠标右键
+    const onHandleContextMenu = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        { parentId, parentKey, id, type }: IArticleStore.IArticle
+    ) => {
+        event.preventDefault()
+        const { pageX, pageY } = event
+        setMenuProps({
+            x: pageX,
+            y: pageY,
+            visible: true,
+            folderId: parentId,
+            articleId: id,
+            key: parentKey,
+            type
+        })
+        setCurrSelectedFolderKey(parentKey)
+    }
+
+    return (
+        <div className={styles.container}>
+            {articles.map(article => {
+                const active = article.id === currArticleId
+                return (
+                    <div
+                        className={`${styles.item} ${active ? styles.active : ''}`}
+                        key={article.id}
+                        onClick={() => onHandleClickItem(article)}
+                        onContextMenu={e => onHandleContextMenu(e, article)}
+                    >
+                        <div className={styles.top}>
+                            {renderSvg(article.type)}
+                            <div className={styles.title}>{article.title}</div>
+                        </div>
+                        <div className={styles.bottom}>
+                            {Tabs.MyFolder !== currTabId && active ? (
+                                <div
+                                    className={styles.parentFolderTitle}
+                                    onClick={() => gotoMyFolder(article.parentKey, article.id)}
+                                >
+                                    {article.parentFolderTitle}
+                                </div>
+                            ) : (
+                                <>
+                                    <div className={styles.updateTime}>
+                                        {moment(article.updateTime).format('YYYY-MM-DD')}
+                                    </div>
+                                    <div className={styles.size}>{byteConvert(article.size)}</div>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                )
+            })}
+        </div>
+    )
+}
+
+export default observer(ArticleList)

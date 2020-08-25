@@ -1,0 +1,16 @@
+@import 'var.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    background: #fff;
+
+    :global {
+        .ant-tree-treenode {
+            min-height: 50px;
+            align-items: center;
+        }
+    }
+}

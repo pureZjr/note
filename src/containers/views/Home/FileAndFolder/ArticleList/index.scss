@@ -1,0 +1,56 @@
+@import 'var.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    height: 72px;
+    padding: 6px 12px;
+    border-bottom: 1px solid $black01;
+
+    &:hover {
+        background-color: #eff0f1;
+    }
+}
+
+.top {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.title {
+    flex: 1;
+    padding-left: 12px;
+    color: $black08;
+    @include ellipsis;
+}
+
+.bottom {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.updateTime {
+    color: $black04;
+}
+
+.parentFolderTitle {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.size {
+    color: $black04;
+}
+
+.active {
+    background-color: #eff0f1;
+}

@@ -1,0 +1,4 @@
+/src/**/*.d.ts
+/build/tpl/index.html
+
+README.md

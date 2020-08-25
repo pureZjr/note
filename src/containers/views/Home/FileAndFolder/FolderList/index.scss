@@ -1,0 +1,32 @@
+@import 'var.scss';
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background: #fff;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 12px;
+    cursor: pointer;
+    background: #fff;
+    border-bottom: 1px solid $black01;
+
+    &:hover {
+        background-color: #eff0f1;
+    }
+}
+
+.active {
+    background-color: #eff0f1;
+}
+
+.title {
+    flex: 1;
+    padding-left: 12px;
+    color: #4c4c4c;
+    @include ellipsis;
+}
