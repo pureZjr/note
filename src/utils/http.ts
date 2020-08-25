@@ -52,6 +52,7 @@ export default class Http {
                             message.error(res.data.text)
                         }
                         if (res.data.logout) {
+                            localStorage.removeItem('token')
                             return routerStore.history.push('/login')
                         }
                         break
