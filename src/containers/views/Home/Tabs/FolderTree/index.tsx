@@ -3,7 +3,8 @@ import { observer } from 'mobx-react'
 import { Empty, Tree } from 'antd'
 import { FolderOpenFilled, FolderFilled } from '@ant-design/icons'
 
-import { useRootStore, useOnMount } from '@utils/customHooks'
+import { useRootStore } from '@utils/customHooks'
+import { Tabs } from '@store/extraStore'
 import * as styles from './index.scss'
 
 const { DirectoryTree } = Tree
@@ -11,9 +12,11 @@ const { DirectoryTree } = Tree
 const FolderTree: React.FC = () => {
     const { folderStore, extraStore, articleStore } = useRootStore()
 
-    useOnMount(() => {
-        folderStore.getTreeData()
-    })
+    React.useEffect(() => {
+        if (extraStore.currTabId === Tabs.MyFolder && !folderStore.treeData.length) {
+            folderStore.getTreeData()
+        }
+    }, [extraStore.currTabId])
 
     // 点击树
     const onSelect = (keys, info) => {
