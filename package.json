@@ -18,10 +18,10 @@
         "react-router-dom": "^5.0.1"
     },
     "scripts": {
-        "dev": "cross-env APP_ENV=dev NODE_ENV=development webpack-dev-server --config build/webpack.config.js --hot --open --disableHostCheck --host localhost --port 8888",
+        "dev": "cross-env APP_ENV=development NODE_ENV=development webpack-dev-server --config build/webpack.config.js --hot --open --disableHostCheck --host localhost --port 8888",
         "lint": "eslint src  --ext .ts,.tsx && stylelint \"./src/**/*.scss\"",
         "add": "add-component",
-        "build": "cross-env APP_ENV=prod NODE_ENV=prod webpack --config build/webpack.config.js",
+        "build": "cross-env APP_ENV=production NODE_ENV=production webpack --config build/webpack.config.js",
         "deployProd": "./deploy/deployProd.sh"
     },
     "devDependencies": {
