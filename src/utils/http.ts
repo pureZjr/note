@@ -5,7 +5,7 @@ import { isNil } from 'lodash'
 import { routerStore } from '@store/index'
 
 import config from '@config/index'
-
+console.log(config)
 type HttpMethods = 'GET' | 'POST'
 
 const baseUrl = config.baseUrl
@@ -23,6 +23,7 @@ export default class Http {
             let url = baseUrl + u
             const reqData = { ...data }
             if (method === 'GET') {
+                console.log(baseUrl, u, reqData)
                 url = `${baseUrl}${u}?${qs.stringify(reqData)}`
             }
             try {
