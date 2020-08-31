@@ -29,7 +29,7 @@ const Tabs: React.FC<IProps> = () => {
         {
             id: EnumTabs.NewDoc,
             icon: <IconLatest width={16} height={16} />,
-            title: '最新文档11'
+            title: '最新文档'
         },
         {
             id: EnumTabs.MyFolder,
