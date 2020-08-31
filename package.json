@@ -5,17 +5,7 @@
     "author": "pure",
     "private": true,
     "dependencies": {
-        "antd": "^4.1.2",
-        "axios": "^0.19.2",
-        "classnames": "^2.2.6",
-        "mobx": "^5.15.4",
-        "mobx-react": "^6.2.2",
-        "mobx-react-router": "^4.1.0",
-        "moment": "^2.24.0",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
-        "react-markdown": "^4.3.1",
-        "react-router-dom": "^5.0.1"
+        "axios": "^0.19.2"
     },
     "scripts": {
         "dev": "cross-env APP_ENV=development NODE_ENV=development webpack-dev-server --config build/webpack.config.js --hot --open --disableHostCheck --host localhost --port 8888",
@@ -25,6 +15,16 @@
         "deployProd": "./deploy/deployProd.sh"
     },
     "devDependencies": {
+        "antd": "^4.1.2",
+        "mobx": "^5.15.4",
+        "mobx-react": "^6.2.2",
+        "mobx-react-router": "^4.1.0",
+        "moment": "^2.24.0",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-markdown": "^4.3.1",
+        "react-router-dom": "^5.0.1",
+        "classnames": "^2.2.6",
         "@svgr/webpack": "^4.3.2",
         "@types/react": "16.9.38",
         "@types/react-dom": "^16.8.4",
