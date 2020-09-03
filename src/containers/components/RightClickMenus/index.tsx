@@ -17,7 +17,7 @@ const RightClickMenus: React.FC = () => {
     const {
         extraStore: {
             currTabId,
-            menuProps: { x, y, visible, folderId, articleId, isFolder, isTree, type, key: folderKey },
+            menuProps: { x, y, visible, folderId, articleId, isFolder, isTree, key: folderKey, type },
             setCreateFileFolderType,
             setCreateFileFolderDialogvisible,
             setMenuProps,
@@ -43,7 +43,10 @@ const RightClickMenus: React.FC = () => {
         switch (key) {
             case '1':
             case '2':
-                setCreateFileFolderType(key === '1' ? CreateType.Folder : CreateType.MarkDown)
+            case '6':
+                const createType =
+                    key === '1' ? CreateType.Folder : key === '2' ? CreateType.MarkDown : CreateType.Article
+                setCreateFileFolderType(createType)
                 setCreateFileFolderDialogvisible(true)
                 break
             case '3':
@@ -153,6 +156,7 @@ const RightClickMenus: React.FC = () => {
                         <SubMenu key="sub1" title="新建">
                             <Menu.Item key="1">文件夹</Menu.Item>
                             <Menu.Item key="2">Markdown</Menu.Item>
+                            <Menu.Item key="6">文章</Menu.Item>
                         </SubMenu>
                     )}
                     {currTabId === Tabs.Recycle && <Menu.Item key="5">恢复</Menu.Item>}

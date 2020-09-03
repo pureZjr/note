@@ -24,6 +24,13 @@ const Btns: React.FC = () => {
             <Menu>
                 <Menu.Item
                     onClick={() => {
+                        handleSelect(CreateType.Folder)
+                    }}
+                >
+                    文件夹
+                </Menu.Item>
+                <Menu.Item
+                    onClick={() => {
                         handleSelect(CreateType.MarkDown)
                     }}
                 >
@@ -31,10 +38,10 @@ const Btns: React.FC = () => {
                 </Menu.Item>
                 <Menu.Item
                     onClick={() => {
-                        handleSelect(CreateType.Folder)
+                        handleSelect(CreateType.Article)
                     }}
                 >
-                    文件夹
+                    文章
                 </Menu.Item>
             </Menu>
         )

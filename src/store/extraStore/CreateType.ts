@@ -1,6 +1,7 @@
 enum CreateType {
     MarkDown = 'markdown',
-    Folder = 'folder'
+    Folder = 'folder',
+    Article = 'article'
 }
 
 export default CreateType

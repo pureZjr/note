@@ -10,10 +10,11 @@ import { useRootStore } from '@utils/customHooks'
 import { sizeof } from '@utils/common'
 import * as styles from './index.scss'
 import CodeBlock from './CodeBlock'
+import Editor from './Editor'
 
 const TextArea = Input.TextArea
 
-const MarkDown: React.FC = () => {
+const Article: React.FC = () => {
     const {
         articleStore: { articleContent, setArticleContent, articles, currArticleId, contentLoading, updateArticle }
     } = useRootStore()
@@ -68,7 +69,6 @@ const MarkDown: React.FC = () => {
 
     // 标题
     const onHandleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('onHandleChangeTitle', event.target.value)
         setTitle(event.target.value)
     }
     const IconStyle = {
@@ -94,7 +94,18 @@ const MarkDown: React.FC = () => {
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}
                 {editing ? (
-                    <TextArea onChange={onHandleInput} value={content} />
+                    <>
+                        {article.type === 'article' ? (
+                            <Editor
+                                defaultValue={content}
+                                onChange={v => {
+                                    setContent(v)
+                                }}
+                            />
+                        ) : (
+                            <TextArea onChange={onHandleInput} value={content} />
+                        )}
+                    </>
                 ) : (
                     <ReactMarkdown
                         source={content}
@@ -109,4 +120,4 @@ const MarkDown: React.FC = () => {
     )
 }
 
-export default observer(MarkDown)
+export default observer(Article)

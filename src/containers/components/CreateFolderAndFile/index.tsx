@@ -15,7 +15,8 @@ const CreateFolderAndFile: React.FC = () => {
     const { extraStore, folderStore, articleStore } = useRootStore()
 
     const modalTitle = React.useMemo(() => {
-        return extraStore.createFileFolderType === CreateType.Folder ? '新建文件夹' : '新建MarkDown'
+        const type = extraStore.createFileFolderType
+        return type === CreateType.Folder ? '新建文件夹' : type === CreateType.Article ? '新建文章' : '新建MarkDown'
     }, [extraStore.createFileFolderType])
 
     const submit = async () => {
@@ -50,7 +51,7 @@ const CreateFolderAndFile: React.FC = () => {
             } else {
                 const res = await createArticle({
                     title: name,
-                    type: 'markdown',
+                    type: extraStore.createFileFolderType,
                     content: '',
                     parentId: fid
                 })
