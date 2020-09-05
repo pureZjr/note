@@ -10,7 +10,7 @@ FILEPATH=/home/note
 # 阿里云
 # 构建成功后打包文件上传到服务器
 cd dist
-tar -zcvf ${DEPLOYFILES} ./*
+tar -zcvf ${DEPLOYFILES} ./* ../favicon.ico
 scp -r ${DEPLOYFILES} root@${SERVER_1}:${FILEPATH}/tarfiles
 rm -rf ./*
 
