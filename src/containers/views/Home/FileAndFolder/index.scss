@@ -24,6 +24,12 @@
     @include ellipsis;
 }
 
+.sort {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
 .content {
     flex: 1;
     overflow: auto;

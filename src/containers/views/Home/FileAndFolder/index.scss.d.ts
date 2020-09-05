@@ -6,6 +6,7 @@ interface CssExports {
   'header': string;
   'loading': string;
   'name': string;
+  'sort': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

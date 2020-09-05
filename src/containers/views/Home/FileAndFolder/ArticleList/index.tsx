@@ -4,11 +4,13 @@ import moment from 'moment'
 
 import { useRootStore } from '@utils/customHooks'
 import IconMarkdown from '@assets/svgs/markdown.svg'
+import IconDocument from '@assets/svgs/document.svg'
 import { getArticleContent } from '@services/api/article'
 import { byteConvert } from '@utils/common'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import { setAllKeysByCurrKey } from '@utils/common'
+import CreateType from '@store/extraStore/CreateType'
 
 const ArticleList: React.FC = () => {
     const {
@@ -21,10 +23,19 @@ const ArticleList: React.FC = () => {
         },
         extraStore: { currTabId, setCurrTabId, setMenuProps }
     } = useRootStore()
+
     const renderSvg = (type: string) => {
+        const svgProps = {
+            className: 'no-fill',
+            width: 20,
+            height: 20
+        }
+
         switch (type) {
-            case 'markdown':
-                return <IconMarkdown className="no-fill" width={16} height={16} />
+            case CreateType.MarkDown:
+                return <IconMarkdown {...svgProps} />
+            case CreateType.Article:
+                return <IconDocument {...svgProps} />
         }
     }
 

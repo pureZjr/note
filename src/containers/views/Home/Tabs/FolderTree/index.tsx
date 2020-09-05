@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import { Empty, Tree } from 'antd'
-import { FolderOpenFilled, FolderFilled } from '@ant-design/icons'
 
 import { useRootStore } from '@utils/customHooks'
 import { Tabs } from '@store/extraStore'
 import * as styles from './index.scss'
+import IconFolderOpen from '@assets/svgs/folder-open.svg'
+import IconFolderClose from '@assets/svgs/folder-close.svg'
 
 const { DirectoryTree } = Tree
 
@@ -54,6 +55,12 @@ const FolderTree: React.FC = () => {
 
     const { treeData, expandTreeKeys, currSelectedFolderKey } = folderStore
 
+    const svgProps = {
+        className: 'no-fill',
+        width: 14,
+        height: 14
+    }
+
     return (
         <div className={styles.container}>
             {!folderStore.treeData.length ? (
@@ -65,7 +72,9 @@ const FolderTree: React.FC = () => {
                     onSelect={onSelect}
                     treeData={treeData}
                     onRightClick={onHandleRightClick}
-                    icon={({ expanded }) => (expanded ? <FolderOpenFilled /> : <FolderFilled />)}
+                    icon={({ expanded }) =>
+                        expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
+                    }
                 />
             )}
         </div>

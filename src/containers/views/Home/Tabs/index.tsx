@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import { FolderOpenFilled, FolderFilled } from '@ant-design/icons'
 
-import IconDelete from '@assets/svgs/delete.svg'
-import IconLatest from '@assets/svgs/latest.svg'
+import IconDustbin from '@assets/svgs/dustbin.svg'
+import IconNnewestArticle from '@assets/svgs/newest-article.svg'
 import FolderTree from './FolderTree'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import * as styles from './index.scss'
 import { Tabs as EnumTabs } from '@store/extraStore'
+import IconFolderOpen from '@assets/svgs/folder-open.svg'
+import IconFolderClose from '@assets/svgs/folder-close.svg'
 
 interface IProps {}
 
@@ -25,26 +26,28 @@ const Tabs: React.FC<IProps> = () => {
         articleStore: { setCurrArticleId, setArticles }
     } = useRootStore()
 
+    const svgProps = {
+        className: 'no-fill',
+        width: 16,
+        height: 16
+    }
+
     const tabs = [
         {
             id: EnumTabs.NewDoc,
-            icon: <IconLatest width={16} height={16} />,
+            icon: <IconNnewestArticle {...svgProps} />,
             title: '最新文档'
         },
         {
             id: EnumTabs.MyFolder,
             icon:
-                currTabId === EnumTabs.MyFolder ? (
-                    <FolderOpenFilled width={16} height={16} />
-                ) : (
-                    <FolderFilled width={16} height={16} />
-                ),
+                currTabId === EnumTabs.MyFolder ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />,
             title: '我的文件夹',
             children: <FolderTree />
         },
         {
             id: EnumTabs.Recycle,
-            icon: <IconDelete width={16} height={16} />,
+            icon: <IconDustbin {...svgProps} />,
             title: '回收站'
         }
     ]
@@ -101,7 +104,7 @@ const Tabs: React.FC<IProps> = () => {
                             onClick={() => onHandleTabClick(tab.id)}
                             onContextMenu={tab.id === '2' ? onHandleContextMenu : null}
                         >
-                            <span>{tab.icon}</span>
+                            {tab.icon}
                             <div className={styles.tabName}>{tab.title}</div>
                         </div>
                         <div

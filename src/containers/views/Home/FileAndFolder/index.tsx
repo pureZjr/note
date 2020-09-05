@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import { RollbackOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import { RollbackOutlined, UnorderedListOutlined, CaretDownFilled } from '@ant-design/icons'
 import { Empty, Spin } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
@@ -29,7 +29,7 @@ const FileAndFolder: React.FC = () => {
     const canBack =
         !!currSelectedFolderKey && (currSelectedFolderKey.match(/-/g) || []).length > 1 && currTabId === Tabs.MyFolder
     const rollbackOutlinedStyle = canBack
-        ? { color: 'rgba(0, 0, 0, 1)', cursor: 'pointer' }
+        ? { color: 'rgba(0, 0, 0, 0.4)', cursor: 'pointer' }
         : { color: 'rgba(0, 0, 0, 0.1)', cursor: 'not-allowed' }
 
     const onBlack = async () => {
@@ -54,7 +54,10 @@ const FileAndFolder: React.FC = () => {
             <div className={styles.header}>
                 <RollbackOutlined style={{ fontSize: 18, ...rollbackOutlinedStyle }} onClick={onBlack} />
                 <div className={styles.name}>{currSelectedFolderName}</div>
-                <UnorderedListOutlined style={{ fontSize: 18 }} />
+                <div className={styles.sort}>
+                    <UnorderedListOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.4)' }} />
+                    <CaretDownFilled style={{ fontSize: 12, color: 'rgba(0, 0, 0, 0.4)' }} />
+                </div>
             </div>
             <div className={styles.content}>
                 {loading && <Spin className={styles.loading} />}
