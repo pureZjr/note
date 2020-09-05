@@ -7,7 +7,7 @@ module.exports = [
         include: resolveFromRootDir('src')
     },
     {
-        test: /\.(png|jpg|gif)$/i,
+        test: /\.(png|jpg|gif|jpeg)$/i,
         use: [
             {
                 loader: 'url-loader',
