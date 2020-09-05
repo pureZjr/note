@@ -75,7 +75,7 @@ const Header: React.FC = () => {
                 <div className={styles.box}>
                     <IconYouDaoYun color="#fff" width={12} height={12} />
                 </div>
-                有道云笔记
+                幻象笔记
             </div>
             <Search
                 className={styles.search}
