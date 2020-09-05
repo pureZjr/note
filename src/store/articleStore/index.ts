@@ -109,6 +109,17 @@ export class ArticleStore {
         arr.splice(0, 0, article)
         this.setArticles(arr)
     }
+
+    /**
+     * 重命名
+     *
+     * @memberof ArticleStore
+     */
+    @action
+    setArticleName = (id: string, title: string) => {
+        const currArticle = this.articles.find(v => v.id === id)
+        currArticle.title = title
+    }
 }
 
 export default new ArticleStore()

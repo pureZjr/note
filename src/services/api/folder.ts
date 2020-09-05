@@ -51,3 +51,8 @@ export const searchFolder = data => {
 export const recoverFolder = data => {
     return post('folder-recover', data)
 }
+
+// 重命名
+export const renameFolder = data => {
+    return post('folder-rename', data)
+}

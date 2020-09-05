@@ -43,7 +43,7 @@ const FolderList: React.FC = () => {
 
     const onHandleContextMenu = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        { id, key }: IFolderStore.ITreeData
+        { id, key, title }: IFolderStore.ITreeData
     ) => {
         event.preventDefault()
         const { pageX, pageY } = event
@@ -53,7 +53,8 @@ const FolderList: React.FC = () => {
             visible: true,
             folderId: id,
             key,
-            isFolder: true
+            isFolder: true,
+            title
         })
         setCurrSelectedFolderKey(key)
     }

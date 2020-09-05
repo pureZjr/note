@@ -135,6 +135,17 @@ export class FolderStore {
             }
         })
     }
+
+    /**
+     * 重命名
+     *
+     * @memberof ArticleStore
+     */
+    @action
+    setFolderName = (id: string, title: string) => {
+        const currFolder = this.folders.find(v => v.id === id)
+        currFolder.title = title
+    }
 }
 
 export default new FolderStore()

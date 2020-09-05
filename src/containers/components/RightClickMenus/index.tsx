@@ -1,13 +1,14 @@
 import * as React from 'react'
-import { Menu, Modal } from 'antd'
+import { Menu, Modal, Input, Button } from 'antd'
 import { observer } from 'mobx-react'
 
 import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
-import { delFolder, delFolderComplete, recoverFolder } from '@services/api/folder'
-import { delFile, delArticleComplete, recoverArticle } from '@services/api/article'
+import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
+import { delFile, delArticleComplete, recoverArticle, renameArticle } from '@services/api/article'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
+import message from '@components/AntdMessageExt'
 
 const { SubMenu } = Menu
 
@@ -17,7 +18,7 @@ const RightClickMenus: React.FC = () => {
     const {
         extraStore: {
             currTabId,
-            menuProps: { x, y, visible, folderId, articleId, isFolder, isTree, key: folderKey, type },
+            menuProps: { x, y, visible, folderId, articleId, isFolder, isTree, key: folderKey, type, title },
             setCreateFileFolderType,
             setCreateFileFolderDialogvisible,
             setMenuProps,
@@ -26,6 +27,8 @@ const RightClickMenus: React.FC = () => {
         folderStore,
         articleStore
     } = useRootStore()
+
+    let currTitle = title
 
     const closeMenu = () => {
         setMenuProps({ visible: false })
@@ -123,6 +126,88 @@ const RightClickMenus: React.FC = () => {
                     }
                 })
                 break
+            case '7':
+                const onOk = async () => {
+                    const data = {
+                        title: currTitle
+                    }
+                    if (!currTitle) {
+                        return message.error('标题不能为空')
+                    }
+                    if (currTitle === title) {
+                        return modal.destroy()
+                    }
+                    let api
+                    if (isFolder) {
+                        Object.assign(data, {
+                            id: folderId
+                        })
+                        api = renameFolder
+                    } else {
+                        Object.assign(data, {
+                            id: articleId
+                        })
+                        api = renameArticle
+                    }
+                    try {
+                        await api(data)
+                        if (isFolder) {
+                            folderStore.getTreeData()
+                            folderStore.setFolderName(folderId, currTitle)
+                        } else {
+                            articleStore.setArticleName(articleId, currTitle)
+                        }
+                        message.success('操作成功')
+                        modal.destroy()
+                    } catch {}
+                }
+                const modal = Modal.confirm({
+                    title: '重命名',
+                    okButtonProps: {
+                        style: { display: 'none' }
+                    },
+                    cancelButtonProps: {
+                        style: { display: 'none' }
+                    },
+                    content: (
+                        <div
+                            style={{
+                                height: 50
+                            }}
+                        >
+                            <Input
+                                autoFocus
+                                maxLength={20}
+                                onKeyDown={e => {
+                                    if (e.keyCode === 13) {
+                                        onOk()
+                                    }
+                                }}
+                                onChange={v => (currTitle = v.target.value)}
+                                defaultValue={title}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    right: 32,
+                                    marginTop: 18
+                                }}
+                            >
+                                <Button
+                                    style={{ marginRight: 12 }}
+                                    ghost
+                                    type="primary"
+                                    onClick={() => modal.destroy()}
+                                >
+                                    取消
+                                </Button>
+                                <Button type="primary" onClick={onOk}>
+                                    确认
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                })
         }
         closeMenu()
     }
@@ -141,6 +226,9 @@ const RightClickMenus: React.FC = () => {
         window.removeEventListener('click', close)
         setMenuProps(null)
     })
+    const isRecycle = currTabId === Tabs.Recycle
+    const isRootFolder = currTabId === Tabs.MyFolder || folderId === Tabs.MyFolder
+    const isArticle = !!articleId
     return (
         <div
             className={styles.container}
@@ -152,18 +240,17 @@ const RightClickMenus: React.FC = () => {
         >
             {visible && (
                 <Menu onClick={handleClick} style={{ width: 200 }} mode="vertical">
-                    {isFolder && (currTabId === Tabs.MyFolder || folderId === Tabs.MyFolder) && (
+                    {isFolder && isRootFolder && (
                         <SubMenu key="sub1" title="新建">
                             <Menu.Item key="1">文件夹</Menu.Item>
                             <Menu.Item key="2">Markdown</Menu.Item>
                             <Menu.Item key="6">文章</Menu.Item>
                         </SubMenu>
                     )}
-                    {currTabId === Tabs.Recycle && <Menu.Item key="5">恢复</Menu.Item>}
-                    {currTabId === Tabs.Recycle && <Menu.Item key="4">彻底删除</Menu.Item>}
-                    {(folderId !== Tabs.MyFolder || !!articleId) && currTabId !== Tabs.Recycle && (
-                        <Menu.Item key="3">删除</Menu.Item>
-                    )}
+                    {isRecycle && <Menu.Item key="5">恢复</Menu.Item>}
+                    {isRecycle && <Menu.Item key="4">彻底删除</Menu.Item>}
+                    {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="7">重命名</Menu.Item>}
+                    {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="3">删除</Menu.Item>}
                 </Menu>
             )}
         </div>

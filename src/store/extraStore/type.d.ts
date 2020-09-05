@@ -19,4 +19,6 @@ export interface IMenuProps {
     // 是文件夹树
     isTree?: boolean
     type?: CreateType
+    // 当前文件夹或文章的标题
+    title?: string
 }

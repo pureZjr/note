@@ -56,3 +56,8 @@ export const getArticleContent = data => {
 export const recoverArticle = data => {
     return post('article-recover', data)
 }
+
+// 重命名
+export const renameArticle = data => {
+    return post('article-rename', data)
+}

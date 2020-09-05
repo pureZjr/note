@@ -46,7 +46,8 @@ const FolderTree: React.FC = () => {
             folderId: info.node.id,
             key: info.node.key,
             isFolder: true,
-            isTree: true
+            isTree: true,
+            title: info.node.title
         })
         folderStore.setCurrSelectedFolderKey(info.node.key)
     }

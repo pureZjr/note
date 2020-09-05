@@ -38,7 +38,7 @@ const CreateFolderAndFile: React.FC = () => {
         const fid = currSelectedFolderId || currTabId
         try {
             if (extraStore.createFileFolderType === CreateType.Folder) {
-                const { key } = await createFolder({ title: name, id: fid, key: currSelectedFolderKey || 2 })
+                const { key } = await createFolder({ title: name, id: fid, key: currSelectedFolderKey || '2' })
                 setCurrSelectedFolderKey(key)
                 if (!expandTreeKeys.includes(currSelectedFolderKey)) {
                     setExpandTreeKeys(currSelectedFolderKey)

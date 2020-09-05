@@ -58,7 +58,7 @@ const ArticleList: React.FC = () => {
     // 鼠标右键
     const onHandleContextMenu = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        { parentId, parentKey, id, type }: IArticleStore.IArticle
+        { parentId, parentKey, id, type, title }: IArticleStore.IArticle
     ) => {
         event.preventDefault()
         const { pageX, pageY } = event
@@ -69,7 +69,8 @@ const ArticleList: React.FC = () => {
             folderId: parentId,
             articleId: id,
             key: parentKey,
-            type
+            type,
+            title
         })
         setCurrSelectedFolderKey(parentKey)
     }
