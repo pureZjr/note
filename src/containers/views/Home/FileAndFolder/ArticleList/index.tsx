@@ -11,6 +11,7 @@ import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import { setAllKeysByCurrKey } from '@utils/common'
 import CreateType from '@store/extraStore/CreateType'
+import IconFolderClose from '@assets/svgs/folder-close.svg'
 
 const ArticleList: React.FC = () => {
     const {
@@ -86,6 +87,16 @@ const ArticleList: React.FC = () => {
         setCurrSelectedFolderKey(parentKey)
     }
 
+    const svgProps = {
+        className: 'no-fill',
+        width: 12,
+        height: 12,
+        style: {
+            marginRight: 6,
+            marginLeft: 4
+        }
+    }
+
     return (
         <div className={styles.container}>
             {articles.map(article => {
@@ -107,6 +118,7 @@ const ArticleList: React.FC = () => {
                                     className={styles.parentFolderTitle}
                                     onClick={() => gotoMyFolder(article.parentKey, article.id)}
                                 >
+                                    <IconFolderClose {...svgProps} />
                                     {article.parentFolderTitle}
                                 </div>
                             ) : (

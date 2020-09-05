@@ -45,6 +45,9 @@
 .parentFolderTitle {
     text-decoration: underline;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
 }
 
 .size {
