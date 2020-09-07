@@ -92,7 +92,7 @@ const ArticleList: React.FC = () => {
         width: 12,
         height: 12,
         style: {
-            marginRight: 6,
+            marginRight: 14,
             marginLeft: 4
         }
     }

@@ -12,6 +12,7 @@
     height: 72px;
     padding: 6px 12px;
     border-bottom: 1px solid $black01;
+    cursor: pointer;
 
     &:hover {
         background-color: #eff0f1;
@@ -26,7 +27,7 @@
 
 .title {
     flex: 1;
-    padding-left: 12px;
+    padding-left: 10px;
     color: $black08;
     @include ellipsis;
 }
@@ -39,18 +40,24 @@
 }
 
 .updateTime {
+    font-size: 12px;
     color: $black04;
 }
 
 .parentFolderTitle {
-    text-decoration: underline;
     cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 12px;
+    color: $black02;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .size {
+    font-size: 12px;
     color: $black04;
 }
 
