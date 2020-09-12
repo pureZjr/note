@@ -4,6 +4,7 @@ import { Form, Input, Button } from 'antd'
 import * as styles from './index.scss'
 import { useRootStore } from '@utils/customHooks'
 import { register } from '@services/api/account'
+import message from '@components/AntdMessageExt'
 
 const layout = {
     labelCol: { span: 8 },
@@ -23,15 +24,17 @@ const Register: React.FC = () => {
         setRegisterLoading(true)
         try {
             await register(values)
-            routerStore.history.push('/login')
+            setRegisterLoading(false)
+            message.success('注册成功，赶紧登录体验吧！')
+            routerStore.history.push(`/login?email=${values.email}&password=${values.password}`)
         } catch (err) {
+            setRegisterLoading(false)
             console.log(err)
         }
-        setRegisterLoading(false)
     }
 
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo)
+    const onFinishFailed = () => {
+        setRegisterLoading(false)
     }
 
     return (
@@ -43,35 +46,46 @@ const Register: React.FC = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
-            <Form.Item
-                style={itemStyle}
-                label="用户名"
-                name="username"
-                rules={[{ required: true, message: '用户名不能为空!' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                style={itemStyle}
-                label="邮箱"
-                name="email"
-                rules={[{ required: true, message: '邮箱不能为空!' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                style={itemStyle}
-                label="密码"
-                name="password"
-                rules={[{ required: true, message: '密码不能为空!' }]}
-            >
-                <Input.Password />
-            </Form.Item>
-            <Form.Item style={itemStyle} {...tailLayout}>
-                <Button type="primary" htmlType="submit" loading={registerLoading} onClick={onFinish}>
-                    注册
-                </Button>
-            </Form.Item>
+            <div className={styles.bg} style={{ backgroundImage: `url(${require('@assets/img/login-banner.jpg')})` }} />
+            <div className={styles['input-container']}>
+                <Form.Item
+                    style={itemStyle}
+                    label="用户名"
+                    name="username"
+                    rules={[{ required: true, message: '用户名不能为空!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    style={itemStyle}
+                    label="邮箱"
+                    name="email"
+                    rules={[{ required: true, message: '邮箱不能为空!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    style={itemStyle}
+                    label="密码"
+                    name="password"
+                    rules={[{ required: true, message: '密码不能为空!' }]}
+                >
+                    <Input.Password />
+                </Form.Item>
+                <Form.Item style={itemStyle} {...tailLayout}>
+                    <Button
+                        style={{
+                            width: '100%'
+                        }}
+                        type="primary"
+                        htmlType="submit"
+                        loading={registerLoading}
+                        onClick={onFinish}
+                    >
+                        注册
+                    </Button>
+                </Form.Item>
+            </div>
         </Form>
     )
 }

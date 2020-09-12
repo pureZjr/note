@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Form, Input, Button } from 'antd'
+import qs from 'qs'
 
 import { login } from '@services/api/account'
-import { useRootStore } from '@utils/customHooks'
+import { useRootStore, useOnMount } from '@utils/customHooks'
 import * as styles from './index.scss'
 
 const layout = {
@@ -16,6 +17,8 @@ const itemStyle = { width: 300 }
 
 const Login: React.FC = () => {
     const [submitLoading, setSubmitLoading] = React.useState(false)
+
+    const formRef = React.useRef(null)
 
     const { routerStore } = useRootStore()
 
@@ -39,12 +42,21 @@ const Login: React.FC = () => {
         routerStore.history.push('/register')
     }
 
+    useOnMount(() => {
+        const loginParam = qs.parse(routerStore.location.search.replace(/\?/, ''))
+        formRef.current.setFieldsValue({
+            remember: true,
+            email: loginParam.email || '',
+            password: loginParam.password || ''
+        })
+    })
+
     return (
         <Form
             className={styles.container}
             {...layout}
             name="basic"
-            initialValues={{ remember: true }}
+            ref={formRef}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
