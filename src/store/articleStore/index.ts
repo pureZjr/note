@@ -111,7 +111,7 @@ export class ArticleStore {
     }
 
     /**
-     * 重命名
+     * 修改文章信息
      *
      * @memberof ArticleStore
      */
@@ -119,6 +119,17 @@ export class ArticleStore {
     setArticleName = (id: string, title: string) => {
         const currArticle = this.articles.find(v => v.id === id)
         currArticle.title = title
+    }
+
+    /**
+     * 文章置顶
+     *
+     * @memberof ArticleStore
+     */
+    @action
+    setArticleTop = (id: string, isTop: 0 | 1) => {
+        const currArticle = this.articles.find(v => v.id === id)
+        currArticle.isTop = isTop
     }
 }
 

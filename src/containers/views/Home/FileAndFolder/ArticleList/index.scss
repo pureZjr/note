@@ -13,6 +13,7 @@
     padding: 6px 12px;
     border-bottom: 1px solid $black01;
     cursor: pointer;
+    position: relative;
 
     &:hover {
         background-color: #eff0f1;
@@ -63,4 +64,14 @@
 
 .active {
     background-color: #eff0f1;
+}
+
+.is-top {
+    border-left: 8px solid transparent;
+    border-top: 8px solid $primary;
+    height: 0;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 0;
 }

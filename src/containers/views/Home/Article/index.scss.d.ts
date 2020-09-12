@@ -6,6 +6,7 @@ interface CssExports {
   'content': string;
   'header': string;
   'loading': string;
+  'title': string;
   'wange-editor': string;
 }
 declare var cssExports: CssExports;

@@ -1,22 +1,40 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import { EditOutlined, EyeOutlined } from '@ant-design/icons'
+import {
+    EditOutlined,
+    SaveOutlined,
+    ExclamationCircleOutlined,
+    ShareAltOutlined,
+    EllipsisOutlined
+} from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { get } from 'lodash'
-import { Input, Spin } from 'antd'
+import { Input, Spin, Tooltip, Dropdown, Menu } from 'antd'
 
+import message from '@components/AntdMessageExt'
 import { editArticle } from '@services/api/article'
 import { useRootStore } from '@utils/customHooks'
 import { sizeof } from '@utils/common'
 import * as styles from './index.scss'
 import CodeBlock from './CodeBlock'
 import Editor from './Editor'
+import { setTopArticle } from '@services/api/article'
+import { Tabs } from '@store/extraStore'
 
 const TextArea = Input.TextArea
 
 const Article: React.FC = () => {
     const {
-        articleStore: { articleContent, setArticleContent, articles, currArticleId, contentLoading, updateArticle }
+        articleStore: {
+            articleContent,
+            articles,
+            currArticleId,
+            contentLoading,
+            setArticleContent,
+            updateArticle,
+            getArticles
+        },
+        extraStore: { currTabId, getNewestFolderAndFile }
     } = useRootStore()
 
     const [editing, setEditing] = React.useState(false)
@@ -71,25 +89,72 @@ const Article: React.FC = () => {
     const onHandleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value)
     }
-    const IconStyle = {
-        width: 16,
-        height: 16
+    // 加载操作项
+    const renderBtns = () => {
+        const setTop = async () => {
+            try {
+                const { id, isTop } = article
+                const data = { id, is_top: Boolean(isTop) ? 0 : 1 }
+                await setTopArticle(data)
+                if (Tabs.NewDoc === currTabId) {
+                    getNewestFolderAndFile()
+                } else {
+                    await getArticles(article.parentKey)
+                }
+                message.success('操作成功')
+            } catch {}
+        }
+        const menu = () => (
+            <Menu>
+                <Menu.Item onClick={setTop}>{Boolean(article.isTop) ? '取消置顶' : '置顶'}</Menu.Item>
+            </Menu>
+        )
+
+        return (
+            <div className={styles.btns}>
+                <span onClick={() => editTigger(editing)}>
+                    {editing ? (
+                        <Tooltip title="保存">
+                            <SaveOutlined style={IconStyle} />
+                        </Tooltip>
+                    ) : (
+                        <Tooltip title="编辑">
+                            <EditOutlined style={IconStyle} />
+                        </Tooltip>
+                    )}
+                </span>
+                <Tooltip title="分享">
+                    <ShareAltOutlined style={IconStyle} />
+                </Tooltip>
+                <Dropdown overlay={menu()}>
+                    <EllipsisOutlined style={IconStyle} />
+                </Dropdown>
+                <Tooltip title="信息">
+                    <ExclamationCircleOutlined style={IconStyle} />
+                </Tooltip>
+            </div>
+        )
     }
+
+    const IconStyle = {
+        marginLeft: 8,
+        cursor: 'pointer',
+        fontSize: 18
+    }
+
+    if (!article) {
+        return null
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 {editing ? (
                     <Input value={title} onChange={onHandleChangeTitle} style={{ width: 150 }} />
                 ) : (
-                    <span>{get(article, 'title')}</span>
+                    <span className={styles.title}>{get(article, 'title')}</span>
                 )}
-                {!!currArticleId && (
-                    <div className={styles.btns}>
-                        <span onClick={() => editTigger(editing)}>
-                            {editing ? <EyeOutlined {...IconStyle} /> : <EditOutlined {...IconStyle} />}
-                        </span>
-                    </div>
-                )}
+                {!!currArticleId && renderBtns()}
             </div>
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}

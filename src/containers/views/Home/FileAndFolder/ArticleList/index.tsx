@@ -31,7 +31,6 @@ const ArticleList: React.FC = () => {
             width: 20,
             height: 20
         }
-
         switch (type) {
             case CreateType.MarkDown:
                 return <IconMarkdown {...svgProps} />
@@ -70,7 +69,7 @@ const ArticleList: React.FC = () => {
     // 鼠标右键
     const onHandleContextMenu = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        { parentId, parentKey, id, type, title }: IArticleStore.IArticle
+        { parentId, parentKey, id, type, title, isTop }: IArticleStore.IArticle
     ) => {
         event.preventDefault()
         const { pageX, pageY } = event
@@ -82,7 +81,8 @@ const ArticleList: React.FC = () => {
             articleId: id,
             key: parentKey,
             type,
-            title
+            title,
+            isTop
         })
         setCurrSelectedFolderKey(parentKey)
     }
@@ -110,7 +110,10 @@ const ArticleList: React.FC = () => {
                     >
                         <div className={styles.top}>
                             {renderSvg(article.type)}
-                            <div className={styles.title}>{article.title}</div>
+                            <div className={styles.title}>
+                                {article.title}
+                                {Boolean(article.isTop) && <div className={styles['is-top']} />}
+                            </div>
                         </div>
                         <div className={styles.bottom}>
                             {Tabs.MyFolder !== currTabId && active ? (

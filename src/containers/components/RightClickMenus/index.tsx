@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
 import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
-import { delFile, delArticleComplete, recoverArticle, renameArticle } from '@services/api/article'
+import { delFile, delArticleComplete, recoverArticle, renameArticle, setTopArticle } from '@services/api/article'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
@@ -18,11 +18,12 @@ const RightClickMenus: React.FC = () => {
     const {
         extraStore: {
             currTabId,
-            menuProps: { x, y, visible, folderId, articleId, isFolder, isTree, key: folderKey, type, title },
+            menuProps: { x, y, visible, folderId, articleId, isFolder, isTree, key: folderKey, type, title, isTop },
             setCreateFileFolderType,
             setCreateFileFolderDialogvisible,
             setMenuProps,
-            getFolderAndFile
+            getFolderAndFile,
+            getNewestFolderAndFile
         },
         folderStore,
         articleStore
@@ -39,7 +40,7 @@ const RightClickMenus: React.FC = () => {
         articleStore.setArticles([])
     }
 
-    const handleClick = ({ key }) => {
+    const handleClick = async ({ key }) => {
         const { setCurrSelectedFolderId, getTreeData } = folderStore
         setCurrSelectedFolderId(folderId)
 
@@ -208,6 +209,17 @@ const RightClickMenus: React.FC = () => {
                         </div>
                     )
                 })
+            case '8':
+                const data = { id: articleId, is_top: Boolean(isTop) ? 0 : 1 }
+                try {
+                    await setTopArticle(data)
+                    if (Tabs.NewDoc === currTabId) {
+                        await getNewestFolderAndFile()
+                    } else {
+                        await articleStore.getArticles(folderKey)
+                    }
+                    message.success('操作成功')
+                } catch {}
         }
         closeMenu()
     }
@@ -249,6 +261,7 @@ const RightClickMenus: React.FC = () => {
                     )}
                     {isRecycle && <Menu.Item key="5">恢复</Menu.Item>}
                     {isRecycle && <Menu.Item key="4">彻底删除</Menu.Item>}
+                    {isArticle && !isRecycle && <Menu.Item key="8">{isTop ? '取消置顶' : '置顶'}</Menu.Item>}
                     {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="7">重命名</Menu.Item>}
                     {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="3">删除</Menu.Item>}
                 </Menu>

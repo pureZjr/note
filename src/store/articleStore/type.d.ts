@@ -17,4 +17,6 @@ export interface IArticle {
     key?: string
     parentKey?: string
     parentFolderTitle?: string
+    isTop?: 0 | 1
+    tags?: string[]
 }

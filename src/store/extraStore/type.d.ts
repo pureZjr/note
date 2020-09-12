@@ -21,4 +21,6 @@ export interface IMenuProps {
     type?: CreateType
     // 当前文件夹或文章的标题
     title?: string
+    // 置顶
+    isTop?: 0 | 1
 }

@@ -61,3 +61,8 @@ export const recoverArticle = data => {
 export const renameArticle = data => {
     return post('article-rename', data)
 }
+
+// 置顶操作
+export const setTopArticle = data => {
+    return post('article-setTop', data)
+}

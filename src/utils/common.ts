@@ -92,3 +92,14 @@ export const setAllKeysByCurrKey = (currKey: string) => {
         setCurrSelectedFolderName(get(res, '[0].title', '我的文件夹'))
     })
 }
+
+/**
+ * 延迟方法
+ */
+export const delayFun = (delay = 1000) => {
+    return new Promise(relolve => {
+        setTimeout(() => {
+            relolve(true)
+        }, delay)
+    })
+}
