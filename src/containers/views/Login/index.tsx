@@ -48,30 +48,33 @@ const Login: React.FC = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
-            <Form.Item
-                style={itemStyle}
-                label="邮箱"
-                name="email"
-                rules={[{ required: true, message: '邮箱不能为空!' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                style={itemStyle}
-                label="密码"
-                name="password"
-                rules={[{ required: true, message: '密码不能为空!' }]}
-            >
-                <Input.Password />
-            </Form.Item>
-            <Form.Item style={{ ...itemStyle }} {...tailLayout}>
-                <Button type="primary" htmlType="submit" loading={submitLoading}>
-                    提交
-                </Button>
-                <Button style={{ float: 'right' }} type="primary" htmlType="button" onClick={handleRegister}>
-                    注册
-                </Button>
-            </Form.Item>
+            <div className={styles.bg} style={{ backgroundImage: `url(${require('@assets/img/login-banner.jpg')})` }} />
+            <div className={styles['input-container']}>
+                <Form.Item
+                    style={itemStyle}
+                    label="邮箱"
+                    name="email"
+                    rules={[{ required: true, message: '邮箱不能为空!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    style={itemStyle}
+                    label="密码"
+                    name="password"
+                    rules={[{ required: true, message: '密码不能为空!' }]}
+                >
+                    <Input.Password />
+                </Form.Item>
+                <Form.Item style={{ ...itemStyle, marginTop: 8 }} {...tailLayout}>
+                    <Button type="primary" htmlType="submit" loading={submitLoading}>
+                        提交
+                    </Button>
+                    <Button style={{ float: 'right' }} type="primary" htmlType="button" onClick={handleRegister}>
+                        注册
+                    </Button>
+                </Form.Item>
+            </div>
         </Form>
     )
 }
