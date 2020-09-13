@@ -59,3 +59,11 @@
         flex: 1;
     }
 }
+
+.info {
+    :global(label) {
+        width: 70px;
+        display: inline-block;
+        text-align: right;
+    }
+}

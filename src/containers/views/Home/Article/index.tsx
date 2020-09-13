@@ -10,6 +10,7 @@ import {
 import ReactMarkdown from 'react-markdown'
 import { get } from 'lodash'
 import { Input, Spin, Tooltip, Dropdown, Menu } from 'antd'
+import moment from 'moment'
 
 import message from '@components/AntdMessageExt'
 import { editArticle } from '@services/api/article'
@@ -110,6 +111,25 @@ const Article: React.FC = () => {
             </Menu>
         )
 
+        const info = () => {
+            return (
+                <div className={styles.info}>
+                    <div>
+                        <label>创建时间：</label>
+                        <span>{moment(article.createTime).format('YYYY-MM-DD')}</span>
+                    </div>
+                    <div>
+                        <label>修改时间：</label>
+                        <span>{moment(article.updateTime).format('YYYY-MM-DD')}</span>
+                    </div>
+                    <div>
+                        <label>文件夹：</label>
+                        <span>{article.parentFolderTitle}</span>
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div className={styles.btns}>
                 <span onClick={() => editTigger(editing)}>
@@ -129,7 +149,7 @@ const Article: React.FC = () => {
                 <Dropdown overlay={menu()}>
                     <EllipsisOutlined style={IconStyle} />
                 </Dropdown>
-                <Tooltip title="信息">
+                <Tooltip title={info()} placement="bottomRight" trigger="click">
                     <ExclamationCircleOutlined style={IconStyle} />
                 </Tooltip>
             </div>
