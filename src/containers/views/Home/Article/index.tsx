@@ -15,7 +15,7 @@ import moment from 'moment'
 import message from '@components/AntdMessageExt'
 import { editArticle } from '@services/api/article'
 import { useRootStore } from '@utils/customHooks'
-import { sizeof } from '@utils/common'
+import { sizeof, copyToClipboard } from '@utils/common'
 import * as styles from './index.scss'
 import CodeBlock from './CodeBlock'
 import Editor from './Editor'
@@ -106,7 +106,7 @@ const Article: React.FC = () => {
             } catch {}
         }
         const copy = async (link: string) => {
-            await navigator.clipboard.writeText(link)
+            copyToClipboard(link)
             message.success('复制成功')
         }
         // 获取分享链接
