@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { get } from 'lodash'
-import { Input, Spin, Tooltip, Dropdown, Menu } from 'antd'
+import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
 import moment from 'moment'
 
 import message from '@components/AntdMessageExt'
@@ -19,7 +19,7 @@ import { sizeof } from '@utils/common'
 import * as styles from './index.scss'
 import CodeBlock from './CodeBlock'
 import Editor from './Editor'
-import { setTopArticle } from '@services/api/article'
+import { setTopArticle, createShareArticleLink } from '@services/api/article'
 import { Tabs } from '@store/extraStore'
 
 const TextArea = Input.TextArea
@@ -105,6 +105,41 @@ const Article: React.FC = () => {
                 message.success('操作成功')
             } catch {}
         }
+        const copy = async (link: string) => {
+            await navigator.clipboard.writeText(link)
+            message.success('复制成功')
+        }
+        // 获取分享链接
+        const getShareLink = async () => {
+            try {
+                await createShareArticleLink({ key: article.key, ts: moment().valueOf() })
+                const link = `localhost:8888/#/share-article/${article.key}`
+                const dialog = Modal.info({
+                    title: '分享链接',
+                    mask: false,
+                    okButtonProps: { title: '关闭' },
+                    content: (
+                        <div>
+                            <span className={styles.tips}>链接生成成功, 复制链接分享给好友吧</span>
+                            <div>
+                                <span>{link}</span>
+                                <Button
+                                    type="primary"
+                                    size="small"
+                                    onClick={() => {
+                                        copy(link)
+                                        dialog.destroy()
+                                    }}
+                                >
+                                    复制链接
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                })
+            } catch {}
+        }
+
         const menu = () => (
             <Menu>
                 <Menu.Item onClick={setTop}>{Boolean(article.isTop) ? '取消置顶' : '置顶'}</Menu.Item>
@@ -144,7 +179,7 @@ const Article: React.FC = () => {
                     )}
                 </span>
                 <Tooltip title="分享">
-                    <ShareAltOutlined style={IconStyle} />
+                    <ShareAltOutlined onClick={getShareLink} style={IconStyle} />
                 </Tooltip>
                 <Dropdown overlay={menu()}>
                     <EllipsisOutlined style={IconStyle} />

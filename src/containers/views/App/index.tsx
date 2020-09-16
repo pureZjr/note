@@ -6,6 +6,7 @@ import Home from '@views/Home'
 import Login from '@views/Login'
 import Register from '@views/Register'
 import NotFound from '@views/NotFound'
+import ShareArticle from '@views/ShareArticle'
 import styles from './index.scss'
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
                 </Route>
                 <Route path="/register" exact={true}>
                     <Register />
+                </Route>
+                <Route path="/share-article">
+                    <ShareArticle />
                 </Route>
                 <Route path="/" exact={true}>
                     <Home />

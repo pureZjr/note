@@ -66,3 +66,13 @@ export const renameArticle = data => {
 export const setTopArticle = data => {
     return post('article-setTop', data)
 }
+
+// 生成分享文章
+export const createShareArticleLink = data => {
+    return post('set-article-share', data)
+}
+
+// 获取分享文章
+export const getShareArticleLink = data => {
+    return get('get-article-share', data)
+}
