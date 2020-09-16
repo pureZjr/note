@@ -113,7 +113,7 @@ const Article: React.FC = () => {
         const getShareLink = async () => {
             try {
                 await createShareArticleLink({ key: article.key, ts: moment().valueOf() })
-                const link = `localhost:8888/#/share-article/${article.key}`
+                const link = `http://note.purevivi.chat/#/share-article/${article.key}`
                 const dialog = Modal.info({
                     title: '分享链接',
                     mask: false,
