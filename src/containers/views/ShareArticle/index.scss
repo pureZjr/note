@@ -4,6 +4,51 @@
     background: #fff;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    border: 1px solid $black02;
+    height: 52px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 500;
+}
+
 .btn {
     border: 1px solid $black01;
+    padding: 2px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        color: $primary;
+    }
+}
+
+.content {
+    padding: 0 24px;
+}
+
+.markdown {
+    :global {
+        h1 {
+            font-size: 2em;
+        }
+
+        th,
+        td {
+            padding: 6px 13px;
+            border: 1px solid #dfe2e5;
+        }
+        th {
+            display: table-cell;
+            vertical-align: inherit;
+            font-weight: bold;
+            text-align: -internal-center;
+        }
+    }
 }

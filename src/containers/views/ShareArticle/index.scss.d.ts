@@ -3,6 +3,10 @@
 interface CssExports {
   'btn': string;
   'container': string;
+  'content': string;
+  'header': string;
+  'markdown': string;
+  'title': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;
