@@ -7,6 +7,7 @@ interface CssExports {
   'header': string;
   'info': string;
   'loading': string;
+  'markdown': string;
   'tips': string;
   'title': string;
   'wange-editor': string;

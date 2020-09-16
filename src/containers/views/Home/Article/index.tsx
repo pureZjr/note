@@ -228,6 +228,7 @@ const Article: React.FC = () => {
                     </>
                 ) : (
                     <ReactMarkdown
+                        className={styles.markdown}
                         source={content}
                         renderers={{
                             code: CodeBlock
