@@ -16,3 +16,8 @@ export const logout = () => {
 export const register = data => {
     return post('account-register', data)
 }
+
+// 编辑
+export const edit = data => {
+    return post('account-edit', data)
+}

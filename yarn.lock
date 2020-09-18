@@ -846,6 +846,14 @@
     "@babel/plugin-transform-react-jsx-self" "^7.0.0"
     "@babel/plugin-transform-react-jsx-source" "^7.0.0"
 
+"@babel/runtime-corejs2@^7.10.2":
+  version "7.11.2"
+  resolved "https://registry.npmjs.org/@babel/runtime-corejs2/-/runtime-corejs2-7.11.2.tgz#700a03945ebad0d31ba6690fc8a6bcc9040faa47"
+  integrity sha512-AC/ciV28adSSpEkBglONBWq4/Lvm6GAZuxIoyVtsnUpZMl0bxLtoChEnYAkP+47KyOCayZanojtflUEUJtR/6Q==
+  dependencies:
+    core-js "^2.6.5"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.1.2", "@babel/runtime@^7.4.0":
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.0.tgz#4fc1d642a9fd0299754e8b5de62c631cf5568205"
@@ -2673,6 +2681,11 @@ core-js@^2.4.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
 
+core-js@^2.6.5:
+  version "2.6.11"
+  resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
+  integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -3601,6 +3614,11 @@ execall@^2.0.0:
   integrity sha512-0FU2hZ5Hh6iQnarpRtQurM/aAvp3RIbfvgLHrcqJYzhXyV2KFruhuChf9NC6waAhiUR7FFtlugkI4p7f2Fqlow==
   dependencies:
     clone-regexp "^2.1.0"
+
+exif-js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
+  integrity sha1-nRCBm/Vx+HOBPnZAJBJVq5zhqBQ=
 
 expand-brackets@^2.1.4:
   version "2.1.4"
@@ -7239,6 +7257,15 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
+qiniu-js@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/qiniu-js/-/qiniu-js-3.1.1.tgz#a8dd7e044f4e0e0a03dc8288c34f0194794f34b0"
+  integrity sha512-eL3NzcCHuWzHvOpKTlHBvtkPJHrJp+VGnFDe+5olq4oo2KVsUPNlBEjtGE/sA+ZEeSBm4Pynt1QMO3Ve0Q8AGw==
+  dependencies:
+    "@babel/runtime-corejs2" "^7.10.2"
+    exif-js "^2.3.0"
+    spark-md5 "^3.0.0"
+
 qs@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
@@ -8624,6 +8651,11 @@ space-separated-tokens@^1.0.0:
   version "1.1.5"
   resolved "https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-1.1.5.tgz#85f32c3d10d9682007e917414ddc5c26d1aa6899"
   integrity sha512-q/JSVd1Lptzhf5bkYm4ob4iWPjx0KiRe3sRFBNrVqbJkFaBm5vbbowy1mymoPNLRa52+oadOhJ+K49wsSeSjTA==
+
+spark-md5@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/spark-md5/-/spark-md5-3.0.1.tgz#83a0e255734f2ab4e5c466e5a2cfc9ba2aa2124d"
+  integrity sha512-0tF3AGSD1ppQeuffsLDIOWlKUd3lS92tFxcsrh5Pe3ZphhnoK+oXIBTzOAThZCiuINZLvpiLH/1VS1/ANEJVig==
 
 spdx-correct@^3.0.0:
   version "3.1.0"

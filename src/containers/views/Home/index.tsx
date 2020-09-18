@@ -10,17 +10,20 @@ import Btns from './Btns'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import CreateFolderAndFile from '@components/CreateFolderAndFile'
 import RightClickMenus from '@components/RightClickMenus'
+import { LOCALSTORAGE } from '@constant/index'
 
 import * as styles from './index.scss'
 
 const { Sider, Content } = Layout
 
 const Home: React.FC = () => {
-    const { routerStore } = useRootStore()
+    const { routerStore, userInfoStore } = useRootStore()
 
     function checkLocalUserInfo() {
-        const token = localStorage.getItem('token')
-        if (!token) {
+        const userInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
+        if (!!userInfo) {
+            userInfoStore.setUserInfo(JSON.parse(userInfo))
+        } else {
             routerStore.history.replace('/login')
         }
     }

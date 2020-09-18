@@ -13,6 +13,7 @@ declare global {
         articleStore: IArticleStore.ArticleStore
         folderStore: IFolderStore.FolderStore
         extraStore: IExtraStore.ExtraStore
+        userInfoStore: IUserInfoStore.UserInfoStore
         routerStore: RouterStore
     }
 }

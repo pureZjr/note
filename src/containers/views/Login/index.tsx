@@ -4,6 +4,7 @@ import qs from 'qs'
 
 import { login } from '@services/api/account'
 import { useRootStore, useOnMount } from '@utils/customHooks'
+import { LOCALSTORAGE } from '@constant/index'
 import * as styles from './index.scss'
 
 const layout = {
@@ -20,13 +21,14 @@ const Login: React.FC = () => {
 
     const formRef = React.useRef(null)
 
-    const { routerStore } = useRootStore()
+    const { routerStore, userInfoStore } = useRootStore()
 
     const onFinish = async values => {
         setSubmitLoading(true)
         try {
             const res = await login(values)
-            localStorage.setItem('token', res.token)
+            localStorage.setItem(LOCALSTORAGE.USERINFO, JSON.stringify(res))
+            userInfoStore.setUserInfo(res)
             routerStore.history.push('/')
         } catch (err) {
             console.log(err)

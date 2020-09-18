@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import { useOnMount, useRootStore } from '@utils/customHooks'
 import { getShareArticleLink } from '@services/api/article'
 import CodeBlock from '../Home/Article/CodeBlock'
+import { LOCALSTORAGE } from '@constant/index'
 import * as styles from './index.scss'
 
 const ShareArticle: React.FC = () => {
@@ -22,13 +23,13 @@ const ShareArticle: React.FC = () => {
         })
     })
 
-    const hasToken = localStorage.getItem('token')
+    const hasUserInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <span className={styles.title}>{title}</span>
-                {!hasToken && (
+                {!hasUserInfo && (
                     <div
                         onClick={() => {
                             routerStore.history.push('/login')

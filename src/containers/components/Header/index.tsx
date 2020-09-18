@@ -7,13 +7,17 @@ import { logout } from '@services/api/account'
 import { useRootStore } from '@utils/customHooks'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
+import UserInfo from '@shared/UserInfo'
+import { LOCALSTORAGE } from '@constant/index'
 
 const { Search } = Input
 
 const Header: React.FC = () => {
     const [kw, setKw] = React.useState('')
 
-    const { routerStore, extraStore, folderStore } = useRootStore()
+    const { routerStore, extraStore, folderStore, userInfoStore } = useRootStore()
+
+    const { userInfoVisible, setUserInfoVisible, userInfo } = userInfoStore
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setKw(event.target.value)
@@ -21,7 +25,7 @@ const Header: React.FC = () => {
 
     const onHandleLogout = async () => {
         await logout()
-        localStorage.removeItem('token')
+        localStorage.removeItem(LOCALSTORAGE.USERINFO)
         routerStore.history.push('/login')
     }
 
@@ -54,6 +58,9 @@ const Header: React.FC = () => {
 
     const menu = (
         <Menu>
+            <Menu.Item>
+                <span onClick={() => setUserInfoVisible(true)}>个人信息</span>
+            </Menu.Item>
             <Menu.Item>
                 <span onClick={onHandleLogout}>登出</span>
             </Menu.Item>
@@ -89,21 +96,19 @@ const Header: React.FC = () => {
                         />
                     }
                 />
-                <Avatar
-                    shape="square"
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                    size={46}
-                    icon={<img src={require('@assets/img/joker.jpeg')} width={24} height={24} />}
-                />
-                <Dropdown overlay={menu}>
-                    <CaretDownOutlined
-                        style={{
-                            marginLeft: 8
-                        }}
-                        color={'#000'}
-                    />
-                </Dropdown>
             </div>
+            <Dropdown overlay={menu}>
+                <div className={styles.container}>
+                    <Avatar
+                        shape="square"
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        size={46}
+                        icon={<img src={userInfo.avatar} width={24} height={24} />}
+                    />
+                    <CaretDownOutlined />
+                </div>
+            </Dropdown>
+            {userInfoVisible && <UserInfo close={() => setUserInfoVisible(false)} />}
         </div>
     )
 }

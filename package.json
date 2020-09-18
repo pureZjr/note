@@ -6,7 +6,8 @@
     "private": true,
     "dependencies": {
         "axios": "^0.19.2",
-        "wangeditor": "^3.1.1"
+        "wangeditor": "^3.1.1",
+        "qiniu-js": "^3.1.1"
     },
     "scripts": {
         "dev": "cross-env APP_ENV=development NODE_ENV=development webpack-dev-server --config build/webpack.config.js --hot --open --disableHostCheck --host localhost --port 8888",

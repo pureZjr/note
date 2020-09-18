@@ -1,10 +1,11 @@
 import axios from 'axios'
 import qs from 'qs'
-import { message } from 'antd'
 import { isNil } from 'lodash'
 import { routerStore } from '@store/index'
 
 import config from '@config/index'
+import message from '@components/AntdMessageExt'
+import { LOCALSTORAGE } from '@constant/index'
 
 type HttpMethods = 'GET' | 'POST'
 
@@ -26,9 +27,11 @@ export default class Http {
                 url = `${baseUrl}${u}?${qs.stringify(reqData)}`
             }
             try {
-                const token = localStorage.getItem('token')
+                const userInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
+
                 const headers = {}
-                if (!!token) {
+                if (!!userInfo) {
+                    const { token } = JSON.parse(userInfo)
                     Object.assign(headers, {
                         token: token
                     })
@@ -52,7 +55,7 @@ export default class Http {
                             message.error(res.data.text)
                         }
                         if (res.data.logout) {
-                            localStorage.removeItem('token')
+                            localStorage.removeItem(LOCALSTORAGE.USERINFO)
                             return routerStore.history.push('/login')
                         }
                         break
