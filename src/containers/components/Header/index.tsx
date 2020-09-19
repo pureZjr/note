@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Avatar, Input, Menu, Dropdown } from 'antd'
 import { CloseCircleOutlined, CaretDownOutlined } from '@ant-design/icons'
 import { observer } from 'mobx-react'
+import { debounce } from 'lodash'
 
 import { logout } from '@services/api/account'
 import { useRootStore } from '@utils/customHooks'
@@ -13,15 +14,17 @@ import { LOCALSTORAGE } from '@constant/index'
 const { Search } = Input
 
 const Header: React.FC = () => {
-    const [kw, setKw] = React.useState('')
-
     const { routerStore, extraStore, folderStore, userInfoStore } = useRootStore()
 
     const { userInfoVisible, setUserInfoVisible, userInfo } = userInfoStore
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setKw(event.target.value)
+        extraStore.setKeyword(event.target.value)
+        autoSearch(event.target.value)
     }
+
+    const autoSearch = React.useCallback(val => debounceWrapper(val), [])
+    const debounceWrapper = debounce(val => handleSearch(val), 1000)
 
     const onHandleLogout = async () => {
         await logout()
@@ -45,16 +48,20 @@ const Header: React.FC = () => {
         setIsSearching(true)
     }
 
+    const clearSearch = () => {
+        const { setKeyword, setIsSearching } = extraStore
+        setKeyword('')
+        setIsSearching(false)
+    }
+
     const reset = () => {
-        setKw('')
-        extraStore.setIsSearching(false)
+        clearSearch()
         handleSearch('')
     }
 
     React.useEffect(() => {
-        setKw('')
-        extraStore.setIsSearching(false)
-    }, [extraStore.currTabId, folderStore.currSelectedFolderKey])
+        clearSearch()
+    }, [extraStore.currTabId])
 
     const menu = (
         <Menu>
@@ -83,14 +90,14 @@ const Header: React.FC = () => {
                     className={styles.search}
                     placeholder="输入关键字搜索"
                     onChange={onHandleChange}
-                    value={kw}
+                    value={extraStore.keyword}
                     onSearch={handleSearch}
                     suffix={
                         <CloseCircleOutlined
                             style={{
                                 marginRight: 4,
                                 color: 'rgba(0, 0, 0, 0.45)',
-                                display: Boolean(kw.length) ? 'inline' : 'none'
+                                display: Boolean(extraStore.keyword.length) ? 'inline' : 'none'
                             }}
                             onClick={reset}
                         />
