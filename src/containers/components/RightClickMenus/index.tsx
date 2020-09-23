@@ -209,6 +209,7 @@ const RightClickMenus: React.FC = () => {
                         </div>
                     )
                 })
+                break
             case '8':
                 const data = { id: articleId, is_top: Boolean(isTop) ? 0 : 1 }
                 try {
@@ -220,6 +221,7 @@ const RightClickMenus: React.FC = () => {
                     }
                     message.success('操作成功')
                 } catch {}
+                break
         }
         closeMenu()
     }
