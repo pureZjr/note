@@ -172,6 +172,18 @@ export class ExtraStore {
     setIsSearching = (boo: boolean) => {
         this.isSearching = boo
     }
+
+    /**
+     * 搜索关键字
+     *
+     * @memberof ExtraStore
+     */
+    @observable
+    keyword = ''
+    @action
+    setKeyword = (kw: string) => {
+        this.keyword = kw
+    }
 }
 
 export default new ExtraStore()

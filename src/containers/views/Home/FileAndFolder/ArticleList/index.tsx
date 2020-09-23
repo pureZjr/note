@@ -22,7 +22,7 @@ const ArticleList: React.FC = () => {
             setExpandTreeKeys,
             setCurrSelectedFolderName
         },
-        extraStore: { currTabId, setCurrTabId, setMenuProps }
+        extraStore: { currTabId, isSearching, keyword, setCurrTabId, setMenuProps }
     } = useRootStore()
 
     const renderSvg = (type: string) => {
@@ -96,7 +96,7 @@ const ArticleList: React.FC = () => {
             marginLeft: 4
         }
     }
-
+    console.log(keyword, isSearching)
     return (
         <div className={styles.container}>
             {articles.map(article => {
