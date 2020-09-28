@@ -17,7 +17,7 @@ const FolderList: React.FC = () => {
             setCurrSelectedFolderKey,
             setExpandTreeKeys
         },
-        articleStore: { setCurrArticleId },
+        fileStore: { setCurrFileId },
         extraStore: { currTabId, isSearching, setCurrTabId, getFolderAndFile, setMenuProps }
     } = useRootStore()
 
@@ -30,7 +30,7 @@ const FolderList: React.FC = () => {
         if (Tabs.NewDoc === currTabId) {
             setCurrTabId(Tabs.MyFolder)
         }
-        setCurrArticleId(null)
+        setCurrFileId(null)
         setCurrSelectedFolderId(id)
         setCurrSelectedFolderKey(key)
         getFolderAndFile(key)

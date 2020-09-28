@@ -46,7 +46,7 @@ export class ExtraStore {
      */
     getFolderAndFile = async (parentKey: string) => {
         this.setLoading(true)
-        Promise.all([store.folderStore.getFolders(parentKey), store.articleStore.getArticles(parentKey)])
+        Promise.all([store.folderStore.getFolders(parentKey), store.fileStore.getFiles(parentKey)])
             .then(() => {})
             .finally(() => {
                 this.setLoading(false)
@@ -63,7 +63,7 @@ export class ExtraStore {
         Promise.all([getDelFolder(), getDelFile()])
             .then(res => {
                 store.folderStore.setFolder(res[0])
-                store.articleStore.setArticles(res[1])
+                store.fileStore.setFiles(res[1])
             })
             .catch(() => {})
             .finally(() => {
@@ -80,7 +80,7 @@ export class ExtraStore {
         this.setLoading(true)
         Promise.all([getNewestFile({ key })])
             .then(res => {
-                store.articleStore.setArticles(res[0])
+                store.fileStore.setFiles(res[0])
             })
             .catch(() => {})
             .finally(() => {
@@ -98,7 +98,7 @@ export class ExtraStore {
         Promise.all([searchFolder(args), searchFile(args)])
             .then(res => {
                 store.folderStore.setFolder(res[0])
-                store.articleStore.setArticles(res[1])
+                store.fileStore.setFiles(res[1])
             })
             .catch(() => {})
             .finally(() => {

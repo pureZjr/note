@@ -18,13 +18,13 @@ const FileAndFolder: React.FC = () => {
             setCurrSelectedFolderKey,
             setNameByParentKey
         },
-        articleStore: { articles },
+        fileStore: { files },
         extraStore: { loading, currTabId, getFolderAndFile }
     } = useRootStore()
 
     const empty = React.useMemo(() => {
-        return !folders.length && !articles.length
-    }, [folders, articles])
+        return !folders.length && !files.length
+    }, [folders, files])
 
     const canBack =
         !!currSelectedFolderKey && (currSelectedFolderKey.match(/-/g) || []).length > 1 && currTabId === Tabs.MyFolder

@@ -23,7 +23,7 @@ const Tabs: React.FC<IProps> = () => {
             setMenuProps
         },
         folderStore: { setCurrSelectedFolderId, setCurrSelectedFolderName, setCurrSelectedFolderKey, setFolder },
-        articleStore: { setCurrArticleId, setArticles }
+        fileStore: { setCurrFileId, setFiles }
     } = useRootStore()
 
     const svgProps = {
@@ -56,21 +56,21 @@ const Tabs: React.FC<IProps> = () => {
         setCurrTabId(id)
         setCurrSelectedFolderId(null)
         setFolder([])
-        setArticles([])
+        setFiles([])
         setCurrSelectedFolderKey(null)
         const title = id === EnumTabs.NewDoc ? '最新文档' : id === EnumTabs.MyFolder ? '我的文件夹' : '回收站'
         setCurrSelectedFolderName(title)
         switch (id) {
             case EnumTabs.NewDoc:
                 getNewestFolderAndFile()
-                setCurrArticleId(null)
+                setCurrFileId(null)
                 break
             case EnumTabs.MyFolder:
                 getFolderAndFile(EnumTabs.MyFolder)
                 break
             case EnumTabs.Recycle:
                 getDelFolderAndFile()
-                setCurrArticleId(null)
+                setCurrFileId(null)
                 break
         }
     }

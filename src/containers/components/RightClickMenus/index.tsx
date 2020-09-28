@@ -26,7 +26,7 @@ const RightClickMenus: React.FC = () => {
             getNewestFolderAndFile
         },
         folderStore,
-        articleStore
+        fileStore
     } = useRootStore()
 
     let currTitle = title
@@ -37,7 +37,7 @@ const RightClickMenus: React.FC = () => {
 
     const clearFolderAndArticleList = () => {
         folderStore.setFolder([])
-        articleStore.setArticles([])
+        fileStore.setFiles([])
     }
 
     const handleClick = async ({ key }) => {
@@ -74,7 +74,7 @@ const RightClickMenus: React.FC = () => {
                                 clearFolderAndArticleList()
                             }
                         } else {
-                            articleStore.delArticle(articleId)
+                            fileStore.delFile(articleId)
                         }
                     })
                     .finally(() => {})
@@ -98,7 +98,7 @@ const RightClickMenus: React.FC = () => {
                                         clearFolderAndArticleList()
                                     }
                                 } else {
-                                    articleStore.delArticle(articleId)
+                                    fileStore.delFile(articleId)
                                 }
                             })
                             .finally(() => {})
@@ -120,7 +120,7 @@ const RightClickMenus: React.FC = () => {
                                     getTreeData()
                                     folderStore.delFolder(folderId)
                                 } else {
-                                    articleStore.delArticle(articleId)
+                                    fileStore.delFile(articleId)
                                 }
                             })
                             .finally(() => {})
@@ -156,7 +156,7 @@ const RightClickMenus: React.FC = () => {
                             folderStore.getTreeData()
                             folderStore.setFolderName(folderId, currTitle)
                         } else {
-                            articleStore.setArticleName(articleId, currTitle)
+                            fileStore.setFileName(articleId, currTitle)
                         }
                         message.success('操作成功')
                         modal.destroy()
@@ -217,7 +217,7 @@ const RightClickMenus: React.FC = () => {
                     if (Tabs.NewDoc === currTabId) {
                         await getNewestFolderAndFile()
                     } else {
-                        await articleStore.getArticles(folderKey)
+                        await fileStore.getFiles(folderKey)
                     }
                     message.success('操作成功')
                 } catch {}

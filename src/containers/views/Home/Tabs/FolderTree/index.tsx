@@ -11,7 +11,7 @@ import IconFolderClose from '@assets/svgs/folder-close.svg'
 const { DirectoryTree } = Tree
 
 const FolderTree: React.FC = () => {
-    const { folderStore, extraStore, articleStore } = useRootStore()
+    const { folderStore, extraStore, fileStore } = useRootStore()
 
     React.useEffect(() => {
         if (extraStore.currTabId === Tabs.MyFolder && !folderStore.treeData.length) {
@@ -34,7 +34,7 @@ const FolderTree: React.FC = () => {
         setCurrSelectedFolderKey(key)
         setExpandTreeKeys(key)
         getFolderAndFile(key)
-        articleStore.setCurrArticleId(null)
+        fileStore.setCurrFileId(null)
     }
 
     // 右击

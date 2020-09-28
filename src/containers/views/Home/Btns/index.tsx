@@ -67,12 +67,13 @@ const Btns: React.FC = () => {
         } catch {}
     }
 
-    const onSuccessUpload = async ({ title, type, content }) => {
+    const onSuccessUpload = async ({ title, type, content, size }) => {
         try {
             await create({
                 title,
                 type: type,
                 content,
+                size,
                 parentId: folderStore.currSelectedFolderId
             })
             message.success('上传成功')
@@ -107,6 +108,7 @@ const Btns: React.FC = () => {
                     if (fileInfo.file.status === 'done') {
                         onSuccessUpload({
                             title: fileInfo.file.name,
+                            size: fileInfo.file.size,
                             type: fileInfo.file.type.includes('image') ? 'image' : 'video',
                             content: `${QN_SOURCE_URL}/${fileInfo.file.response.hash}`
                         })
@@ -115,7 +117,7 @@ const Btns: React.FC = () => {
             >
                 <div className={classnames(styles.btn, disabled && styles.disabled)}>
                     <div className={styles.upload}>
-                        <CloudUploadOutlined style={{ color: disabled ? 'rgba(0, 0, 0, 0.2)' : 'rgb(25, 144, 255)' }} />{' '}
+                        <CloudUploadOutlined style={{ color: disabled ? 'rgba(0, 0, 0, 0.2)' : 'rgb(25, 144, 255)' }} />
                         上传
                     </div>
                 </div>

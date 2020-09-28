@@ -27,15 +27,8 @@ const TextArea = Input.TextArea
 
 const Article: React.FC = () => {
     const {
-        articleStore: {
-            articleContent,
-            articles,
-            currArticleId,
-            contentLoading,
-            setArticleContent,
-            updateArticle,
-            getArticles
-        },
+        articleStore: { articleContent, setArticleContent },
+        fileStore: { files, currFileId, contentLoading, updateFile, getFiles },
         extraStore: { currTabId, getNewestFolderAndFile }
     } = useRootStore()
 
@@ -51,17 +44,17 @@ const Article: React.FC = () => {
         setContent('')
         setArticleContent('')
         setEditing(false)
-    }, [currArticleId])
+    }, [currFileId])
 
     const article = React.useMemo(() => {
-        return articles.find(v => v.id === currArticleId)
-    }, [currArticleId, articles])
+        return files.find(v => v.id === currFileId)
+    }, [currFileId, files])
 
     // 编辑
     const editTigger = (isEditing?: boolean) => {
         setEditing(!isEditing)
         if (isEditing) {
-            save(content, currArticleId)
+            save(content, currFileId)
         } else {
             setContent(content || '')
             setTitle(article.title)
@@ -78,7 +71,7 @@ const Article: React.FC = () => {
         if (editing) {
             editFile({ content, id: currArticleId, title, type: article.type })
             const size = sizeof(content, 'utf-8')
-            updateArticle({
+            updateFile({
                 content,
                 size,
                 id: currArticleId,
@@ -101,7 +94,7 @@ const Article: React.FC = () => {
                 if (Tabs.NewDoc === currTabId) {
                     getNewestFolderAndFile()
                 } else {
-                    await getArticles(article.parentKey)
+                    await getFiles(article.parentKey)
                 }
                 message.success('操作成功')
             } catch {}
@@ -210,7 +203,7 @@ const Article: React.FC = () => {
                 ) : (
                     <span className={styles.title}>{get(article, 'title')}</span>
                 )}
-                {!!currArticleId && renderBtns()}
+                {!!currFileId && renderBtns()}
             </div>
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}

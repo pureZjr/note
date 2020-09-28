@@ -15,5 +15,6 @@ declare global {
         extraStore: IExtraStore.ExtraStore
         userInfoStore: IUserInfoStore.UserInfoStore
         routerStore: RouterStore
+        fileStore: IFileStore.FileStore
     }
 }

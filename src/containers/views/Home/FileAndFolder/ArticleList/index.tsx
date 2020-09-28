@@ -15,7 +15,8 @@ import IconFolderClose from '@assets/svgs/folder-close.svg'
 
 const ArticleList: React.FC = () => {
     const {
-        articleStore: { articles, currArticleId, setCurrArticleId, setArticleContent, setContentLoading },
+        fileStore: { files, currFileId, setCurrFileId, setContentLoading },
+        articleStore: { setArticleContent },
         folderStore: {
             setCurrSelectedFolderId,
             setCurrSelectedFolderKey,
@@ -40,9 +41,9 @@ const ArticleList: React.FC = () => {
     }
 
     // 点击文章，更新阅读时间
-    const onHandleClickItem = async ({ id, parentId, parentKey, type, parentFolderTitle }: IArticleStore.IArticle) => {
+    const onHandleClickItem = async ({ id, parentId, parentKey, type, parentFolderTitle }: IFileStore.IFile) => {
         if ([Tabs.MyFolder, Tabs.NewDoc].includes(currTabId)) {
-            setCurrArticleId(id)
+            setCurrFileId(id)
         }
         if (Tabs.MyFolder === currTabId) {
             setCurrSelectedFolderName(parentFolderTitle)
@@ -69,7 +70,7 @@ const ArticleList: React.FC = () => {
     // 鼠标右键
     const onHandleContextMenu = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        { parentId, parentKey, id, type, title, isTop }: IArticleStore.IArticle
+        { parentId, parentKey, id, type, title, isTop }: IFileStore.IFile
     ) => {
         event.preventDefault()
         const { pageX, pageY } = event
@@ -99,8 +100,8 @@ const ArticleList: React.FC = () => {
     console.log(keyword, isSearching)
     return (
         <div className={styles.container}>
-            {articles.map(article => {
-                const active = article.id === currArticleId
+            {files.map(article => {
+                const active = article.id === currFileId
                 return (
                     <div
                         className={`${styles.item} ${active ? styles.active : ''}`}
