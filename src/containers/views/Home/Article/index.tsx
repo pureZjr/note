@@ -13,13 +13,13 @@ import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
 import moment from 'moment'
 
 import message from '@components/AntdMessageExt'
-import { editArticle } from '@services/api/article'
+import { editFile } from '@services/api/file'
 import { useRootStore } from '@utils/customHooks'
 import { sizeof, copyToClipboard } from '@utils/common'
 import * as styles from './index.scss'
 import CodeBlock from './CodeBlock'
 import Editor from './Editor'
-import { setTopArticle, createShareArticleLink } from '@services/api/article'
+import { setTopFile, createShareFileLink } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
 import { SHHARE_BASE_URL } from '@constant/index'
 
@@ -76,7 +76,7 @@ const Article: React.FC = () => {
     // 保存
     const save = (content: string, currArticleId: string) => {
         if (editing) {
-            editArticle({ content, id: currArticleId, title, type: article.type })
+            editFile({ content, id: currArticleId, title, type: article.type })
             const size = sizeof(content, 'utf-8')
             updateArticle({
                 content,
@@ -97,7 +97,7 @@ const Article: React.FC = () => {
             try {
                 const { id, isTop } = article
                 const data = { id, is_top: Boolean(isTop) ? 0 : 1 }
-                await setTopArticle(data)
+                await setTopFile(data)
                 if (Tabs.NewDoc === currTabId) {
                     getNewestFolderAndFile()
                 } else {
@@ -113,7 +113,7 @@ const Article: React.FC = () => {
         // 获取分享链接
         const getShareLink = async () => {
             try {
-                await createShareArticleLink({ key: article.key, ts: moment().valueOf() })
+                await createShareFileLink({ key: article.key, ts: moment().valueOf() })
                 const link = `${SHHARE_BASE_URL}${article.key}`
                 const dialog = Modal.info({
                     title: '分享链接',

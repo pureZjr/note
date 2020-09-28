@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getArticleInFolder } from '@services/api/article'
+import { getFileInFolder } from '@services/api/file'
 
 /**
  * 文章store
@@ -28,7 +28,7 @@ export class ArticleStore {
      * @memberof ArticleStore
      */
     getArticles = async (parentKey: string) => {
-        const res = await getArticleInFolder({ parentKey })
+        const res = await getFileInFolder({ parentKey })
         this.setArticles(res)
         return res
     }

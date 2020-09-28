@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
 import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
-import { delFile, delArticleComplete, recoverArticle, renameArticle, setTopArticle } from '@services/api/article'
+import { delFile, delFileComplete, recoverFile, renameFile, setTopFile } from '@services/api/file'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
@@ -86,7 +86,7 @@ const RightClickMenus: React.FC = () => {
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {
-                        ;(isFolder ? delFolderComplete : delArticleComplete)({
+                        ;(isFolder ? delFolderComplete : delFileComplete)({
                             id: isFolder ? folderId : articleId,
                             type
                         })
@@ -112,7 +112,7 @@ const RightClickMenus: React.FC = () => {
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {
-                        ;(isFolder ? recoverFolder : recoverArticle)({
+                        ;(isFolder ? recoverFolder : recoverFile)({
                             id: isFolder ? folderId : articleId
                         })
                             .then(() => {
@@ -148,7 +148,7 @@ const RightClickMenus: React.FC = () => {
                         Object.assign(data, {
                             id: articleId
                         })
-                        api = renameArticle
+                        api = renameFile
                     }
                     try {
                         await api(data)
@@ -213,7 +213,7 @@ const RightClickMenus: React.FC = () => {
             case '8':
                 const data = { id: articleId, is_top: Boolean(isTop) ? 0 : 1 }
                 try {
-                    await setTopArticle(data)
+                    await setTopFile(data)
                     if (Tabs.NewDoc === currTabId) {
                         await getNewestFolderAndFile()
                     } else {

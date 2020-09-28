@@ -2,7 +2,7 @@ import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { useOnMount, useRootStore } from '@utils/customHooks'
-import { getShareArticleLink } from '@services/api/article'
+import { getShareFileLink } from '@services/api/file'
 import CodeBlock from '../Home/Article/CodeBlock'
 import { LOCALSTORAGE } from '@constant/index'
 import * as styles from './index.scss'
@@ -16,7 +16,7 @@ const ShareArticle: React.FC = () => {
 
     useOnMount(() => {
         const key = location.href.split('/')[location.href.split('/').length - 1]
-        getShareArticleLink({ key }).then(res => {
+        getShareFileLink({ key }).then(res => {
             setTitle(res.title)
             setContent(res.content)
             setType(res.type)

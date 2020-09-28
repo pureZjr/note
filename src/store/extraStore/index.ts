@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 
 import { getDelFolder, searchFolder } from '@services/api/folder'
-import { getDelArticle, getNewestArticle, searchArticle } from '@services/api/article'
+import { getDelFile, getNewestFile, searchFile } from '@services/api/file'
 import * as store from '../index'
 
 export enum Tabs {
@@ -60,7 +60,7 @@ export class ExtraStore {
      */
     getDelFolderAndFile = async () => {
         this.setLoading(true)
-        Promise.all([getDelFolder(), getDelArticle()])
+        Promise.all([getDelFolder(), getDelFile()])
             .then(res => {
                 store.folderStore.setFolder(res[0])
                 store.articleStore.setArticles(res[1])
@@ -78,7 +78,7 @@ export class ExtraStore {
      */
     getNewestFolderAndFile = async (key?: string) => {
         this.setLoading(true)
-        Promise.all([getNewestArticle({ key })])
+        Promise.all([getNewestFile({ key })])
             .then(res => {
                 store.articleStore.setArticles(res[0])
             })
@@ -95,7 +95,7 @@ export class ExtraStore {
      */
     searchFolderAndFile = async (args: { key?: string; keyword: string; type: Tabs }) => {
         this.setLoading(true)
-        Promise.all([searchFolder(args), searchArticle(args)])
+        Promise.all([searchFolder(args), searchFile(args)])
             .then(res => {
                 store.folderStore.setFolder(res[0])
                 store.articleStore.setArticles(res[1])

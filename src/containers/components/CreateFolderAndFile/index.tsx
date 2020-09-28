@@ -3,7 +3,7 @@ import { Modal, Input } from 'antd'
 import { observer } from 'mobx-react'
 
 import message from '@components/AntdMessageExt'
-import { createArticle } from '@services/api/article'
+import { createFile } from '@services/api/file'
 import { createFolder } from '@services/api/folder'
 import { useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
@@ -49,7 +49,7 @@ const CreateFolderAndFile: React.FC = () => {
                 setCurrArticleId(null)
                 setArticleContent('')
             } else {
-                const res = await createArticle({
+                const res = await createFile({
                     title: name,
                     type: extraStore.createFileFolderType,
                     content: '',
