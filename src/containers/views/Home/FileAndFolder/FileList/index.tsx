@@ -17,8 +17,7 @@ import IconFolderClose from '@assets/svgs/folder-close.svg'
 
 const FileList: React.FC = () => {
     const {
-        fileStore: { files, currFileId, setCurrFileId, setContentLoading },
-        articleStore: { setArticleContent },
+        fileStore: { files, currFileId, setFileContent, setCurrFileId, setContentLoading },
         folderStore: {
             setCurrSelectedFolderId,
             setCurrSelectedFolderKey,
@@ -59,7 +58,7 @@ const FileList: React.FC = () => {
         try {
             setContentLoading(true)
             const res = await getFileContent({ id, type })
-            setArticleContent(res)
+            setFileContent(res)
             setContentLoading(false)
         } catch {}
     }

@@ -12,7 +12,7 @@ import * as styles from './index.scss'
 const CreateFolderAndFile: React.FC = () => {
     const [name, setName] = React.useState('')
 
-    const { extraStore, folderStore, fileStore, articleStore } = useRootStore()
+    const { extraStore, folderStore, fileStore } = useRootStore()
 
     const modalTitle = React.useMemo(() => {
         const type = extraStore.createFileFolderType
@@ -32,8 +32,7 @@ const CreateFolderAndFile: React.FC = () => {
             setCurrSelectedFolderKey,
             setFolder
         } = folderStore
-        const { setCurrFileId, insertFile, setFiles } = fileStore
-        const { setArticleContent } = articleStore
+        const { setCurrFileId, insertFile, setFiles, setFileContent } = fileStore
 
         const { currTabId } = extraStore
         const fid = currSelectedFolderId || currTabId
@@ -48,7 +47,7 @@ const CreateFolderAndFile: React.FC = () => {
                 setFiles([])
                 setFolder([])
                 setCurrFileId(null)
-                setArticleContent('')
+                setFileContent('')
             } else {
                 const res = await createFile({
                     title: name,

@@ -10,7 +10,6 @@ declare global {
     interface RouterStore extends _RouterStore {}
 
     declare interface IAllStore {
-        articleStore: IArticleStore.ArticleStore
         folderStore: IFolderStore.FolderStore
         extraStore: IExtraStore.ExtraStore
         userInfoStore: IUserInfoStore.UserInfoStore

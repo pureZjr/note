@@ -30,27 +30,26 @@ const TextArea = Input.TextArea
 
 const File: React.FC = () => {
     const {
-        articleStore: { articleContent, setArticleContent },
-        fileStore: { files, currFileId, contentLoading, updateFile, getFiles },
+        fileStore: { files, currFileId, contentLoading, fileContent, setFileContent, updateFile, getFiles },
         extraStore: { currTabId, getNewestFolderAndFile }
     } = useRootStore()
 
     const [editing, setEditing] = React.useState(false)
-    const [content, setContent] = React.useState(articleContent)
+    const [content, setContent] = React.useState(fileContent)
     const [title, setTitle] = React.useState('')
     const [mdEditAndRead, setMdEditAndRead] = React.useState(true)
 
     React.useEffect(() => {
-        setContent(articleContent)
-    }, [articleContent])
+        setContent(fileContent)
+    }, [fileContent])
 
     React.useEffect(() => {
         setContent('')
-        setArticleContent('')
+        setFileContent('')
         setEditing(false)
     }, [currFileId])
 
-    const article = React.useMemo(() => {
+    const file = React.useMemo(() => {
         return files.find(v => v.id === currFileId)
     }, [currFileId, files])
 
@@ -61,7 +60,7 @@ const File: React.FC = () => {
             save(content, currFileId)
         } else {
             setContent(content || '')
-            setTitle(article.title)
+            setTitle(file.title)
             setMdEditAndRead(true)
         }
     }
@@ -74,7 +73,7 @@ const File: React.FC = () => {
     // 保存
     const save = (content: string, currArticleId: string) => {
         if (editing) {
-            editFile({ content, id: currArticleId, title, type: article.type })
+            editFile({ content, id: currArticleId, title, type: file.type })
             const size = sizeof(content, 'utf-8')
             updateFile({
                 content,
@@ -93,13 +92,13 @@ const File: React.FC = () => {
     const renderBtns = () => {
         const setTop = async () => {
             try {
-                const { id, isTop } = article
+                const { id, isTop } = file
                 const data = { id, is_top: Boolean(isTop) ? 0 : 1 }
                 await setTopFile(data)
                 if (Tabs.NewDoc === currTabId) {
                     getNewestFolderAndFile()
                 } else {
-                    await getFiles(article.parentKey)
+                    await getFiles(file.parentKey)
                 }
                 message.success('操作成功')
             } catch {}
@@ -111,8 +110,8 @@ const File: React.FC = () => {
         // 获取分享链接
         const getShareLink = async () => {
             try {
-                await createShareFileLink({ key: article.key, ts: moment().valueOf() })
-                const link = `${SHHARE_BASE_URL}${article.key}`
+                await createShareFileLink({ key: file.key, ts: moment().valueOf() })
+                const link = `${SHHARE_BASE_URL}${file.key}`
                 const dialog = Modal.info({
                     title: '分享链接',
                     mask: false,
@@ -141,7 +140,7 @@ const File: React.FC = () => {
 
         const menu = () => (
             <Menu>
-                <Menu.Item onClick={setTop}>{Boolean(article.isTop) ? '取消置顶' : '置顶'}</Menu.Item>
+                <Menu.Item onClick={setTop}>{Boolean(file.isTop) ? '取消置顶' : '置顶'}</Menu.Item>
             </Menu>
         )
 
@@ -150,15 +149,15 @@ const File: React.FC = () => {
                 <div className={styles.info}>
                     <div>
                         <label>创建时间：</label>
-                        <span>{moment(article.createTime).format('YYYY-MM-DD')}</span>
+                        <span>{moment(file.createTime).format('YYYY-MM-DD')}</span>
                     </div>
                     <div>
                         <label>修改时间：</label>
-                        <span>{moment(article.updateTime).format('YYYY-MM-DD')}</span>
+                        <span>{moment(file.updateTime).format('YYYY-MM-DD')}</span>
                     </div>
                     <div>
                         <label>文件夹：</label>
-                        <span>{article.parentFolderTitle}</span>
+                        <span>{file.parentFolderTitle}</span>
                     </div>
                 </div>
             )
@@ -166,7 +165,7 @@ const File: React.FC = () => {
 
         return (
             <div className={styles.btns}>
-                {[CreateType.Article, CreateType.MarkDown].includes(article.type) && (
+                {[CreateType.Article, CreateType.MarkDown].includes(file.type) && (
                     <span onClick={() => editTigger(editing)}>
                         {editing ? (
                             <Tooltip title="保存">
@@ -201,7 +200,7 @@ const File: React.FC = () => {
     const mdDivider = () => <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
 
     const renderReadingContent = () => {
-        switch (article.type) {
+        switch (file.type) {
             case CreateType.Img:
                 return (
                     <ImgView
@@ -268,7 +267,7 @@ const File: React.FC = () => {
     }
 
     const renderEditingContent = () => {
-        switch (article.type) {
+        switch (file.type) {
             case CreateType.Article:
                 return (
                     <Editor
@@ -310,8 +309,27 @@ const File: React.FC = () => {
         }
     }
 
-    if (!article) {
-        return null
+    if (!file) {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%'
+                }}
+            >
+                <img
+                    style={{
+                        filter: 'grayscale(100%)',
+                        borderRadius: 4
+                    }}
+                    src={require('@assets/img/illusion.jpg')}
+                    width={90}
+                    height={90}
+                />
+            </div>
+        )
     }
 
     return (
@@ -320,7 +338,7 @@ const File: React.FC = () => {
                 {editing ? (
                     <Input value={title} onChange={onHandleChangeTitle} style={{ width: 150 }} />
                 ) : (
-                    <span className={styles.title}>{get(article, 'title')}</span>
+                    <span className={styles.title}>{get(file, 'title')}</span>
                 )}
                 {!!currFileId && renderBtns()}
             </div>

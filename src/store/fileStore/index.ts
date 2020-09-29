@@ -119,6 +119,18 @@ export class FileStore {
         }
         this.setFiles(arr)
     }
+
+    /**
+     * 文件内容
+     *
+     * @memberof FileStore
+     */
+    @observable
+    fileContent = ''
+    @action
+    setFileContent = (content: string) => {
+        this.fileContent = content
+    }
 }
 
 export default new FileStore()
