@@ -51,6 +51,9 @@ const Login: React.FC = () => {
             email: loginParam.email || '',
             password: loginParam.password || ''
         })
+        if (localStorage.getItem(LOCALSTORAGE.USERINFO)) {
+            routerStore.history.push('/')
+        }
     })
 
     return (
