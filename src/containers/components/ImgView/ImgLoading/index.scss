@@ -1,0 +1,20 @@
+@import 'var.scss';
+
+.container {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 8992;
+}
+
+.mask {
+    background: #000;
+    bottom: 0;
+    left: 0;
+    opacity: 0.1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 8991;
+}

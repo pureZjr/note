@@ -2,6 +2,20 @@ const { resolveFromRootDir } = require('../utils')
 
 module.exports = [
     {
+        test: /\.css$/,
+        include: [resolveFromRootDir('src'), resolveFromRootDir('node_modules')],
+        use: [
+            'style-loader',
+            {
+                loader: 'cache-loader',
+                options: {
+                    cacheDirectory: resolveFromRootDir('.cache-loader')
+                }
+            },
+            'css-loader'
+        ]
+    },
+    {
         test: /\.scss$/,
         include: [resolveFromRootDir('src')],
         use: [

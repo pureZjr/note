@@ -17,7 +17,7 @@ import * as styles from './index.scss'
 const Btns: React.FC = () => {
     const [qnToken, setQnToken] = React.useState('')
 
-    const { extraStore, folderStore } = useRootStore()
+    const { extraStore, folderStore, fileStore } = useRootStore()
 
     const menu = () => {
         const { setCreateFileFolderDialogvisible, setCreateFileFolderType } = extraStore
@@ -69,13 +69,15 @@ const Btns: React.FC = () => {
 
     const onSuccessUpload = async ({ title, type, content, size }) => {
         try {
-            await create({
+            const res = await create({
                 title,
                 type: type,
                 content,
                 size,
                 parentId: folderStore.currSelectedFolderId
             })
+            fileStore.insertFile(res)
+            fileStore.setCurrFileId(res.id)
             message.success('上传成功')
         } catch {}
     }

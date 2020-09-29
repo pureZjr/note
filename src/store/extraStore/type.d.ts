@@ -4,7 +4,13 @@ export as namespace IExtraStore
 
 interface ExtraStore extends ExtraStoreModal {}
 
-type CreateType = 'markdown' | 'folder' | 'article'
+enum CreateType {
+    MarkDown = 'markdown',
+    Folder = 'folder',
+    Article = 'article',
+    Img = 'image',
+    Video = 'video'
+}
 
 export interface IMenuProps {
     x?: number

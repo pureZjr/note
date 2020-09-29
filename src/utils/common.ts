@@ -1,4 +1,5 @@
 import { get } from 'lodash'
+import axios from 'axios'
 
 import * as store from '@store/index'
 import { getFolderInfo } from '@services/api/folder'
@@ -114,4 +115,27 @@ export function copyToClipboard(text: string): void {
     aux.select()
     document.execCommand('copy')
     document.body.removeChild(aux)
+}
+
+/**
+ * 下载远程文件 filename需要带后缀
+ */
+
+export const downloadRemoteFile = (fileurl: string, filename: string) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(fileurl, { responseType: 'blob' })
+            .then(response => {
+                const a = document.createElement('a')
+                const url = window.URL.createObjectURL(new Blob([response.data]))
+                a.href = url
+                a.download = filename
+                a.click()
+                window.URL.revokeObjectURL(url)
+                resolve(true)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
 }

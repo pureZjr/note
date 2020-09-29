@@ -5,7 +5,9 @@ import moment from 'moment'
 import { useRootStore } from '@utils/customHooks'
 import IconMarkdown from '@assets/svgs/markdown.svg'
 import IconDocument from '@assets/svgs/document.svg'
-import { getArticleContent } from '@services/api/article'
+import IconImage from '@assets/svgs/image.svg'
+import IconVideo from '@assets/svgs/video.svg'
+import { getFileContent } from '@services/api/file'
 import { byteConvert } from '@utils/common'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
@@ -13,7 +15,7 @@ import { setAllKeysByCurrKey } from '@utils/common'
 import CreateType from '@store/extraStore/CreateType'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
 
-const ArticleList: React.FC = () => {
+const FileList: React.FC = () => {
     const {
         fileStore: { files, currFileId, setCurrFileId, setContentLoading },
         articleStore: { setArticleContent },
@@ -37,6 +39,10 @@ const ArticleList: React.FC = () => {
                 return <IconMarkdown {...svgProps} />
             case CreateType.Article:
                 return <IconDocument {...svgProps} />
+            case CreateType.Img:
+                return <IconImage {...svgProps} />
+            case CreateType.Video:
+                return <IconVideo {...svgProps} />
         }
     }
 
@@ -52,7 +58,7 @@ const ArticleList: React.FC = () => {
         }
         try {
             setContentLoading(true)
-            const res = await getArticleContent({ id, type })
+            const res = await getFileContent({ id, type })
             setArticleContent(res)
             setContentLoading(false)
         } catch {}
@@ -97,7 +103,7 @@ const ArticleList: React.FC = () => {
             marginLeft: 4
         }
     }
-    console.log(keyword, isSearching)
+
     return (
         <div className={styles.container}>
             {files.map(article => {
@@ -141,4 +147,4 @@ const ArticleList: React.FC = () => {
     )
 }
 
-export default observer(ArticleList)
+export default observer(FileList)

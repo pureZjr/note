@@ -8,6 +8,7 @@ import * as store from '@store/index'
 import { RootProvider } from '@components/RootProvider'
 import App from '@views/App'
 import '../src/styles/app.scss'
+import 'viewerjs/dist/viewer.min.css'
 
 const hashHistory = createHashHistory()
 const history = syncHistoryWithStore(hashHistory, store.routerStore)

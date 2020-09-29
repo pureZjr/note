@@ -6,8 +6,11 @@ export const IMAGE_SIZE_LIMIT = 20 * 1024 * 1024
 export const FILE_SIZE_LIMIT = 50 * 1024 * 1024
 export const QN_UPLOAD_URL = 'https://upload-z2.qiniup.com'
 export const QN_BUCKET = 'pure-note'
-export const QN_SOURCE_URL = 'http://qfz0ncp9r.hn-bkt.clouddn.com'
+export const QN_SOURCE_URL = 'http://note.ss.purevivi.chat'
 
 export const LOCALSTORAGE = {
     USERINFO: 'userinfo'
 }
+
+// 错误图片
+export const BREAK_IMAGE = `${QN_SOURCE_URL}/Fih9U9CwldysGx6i3BjfzX2epnab`

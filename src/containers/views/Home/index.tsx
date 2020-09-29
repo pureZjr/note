@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 
 import Header from '@components/Header'
 import FileAndFolder from './FileAndFolder'
-import Article from './Article'
+import File from './File'
 import Tabs from './Tabs'
 import Btns from './Btns'
 import { useRootStore, useOnMount } from '@utils/customHooks'
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
                 </Sider>
                 <FileAndFolder />
                 <Content className={styles.content}>
-                    <Article />
+                    <File />
                 </Content>
             </Layout>
             <CreateFolderAndFile />

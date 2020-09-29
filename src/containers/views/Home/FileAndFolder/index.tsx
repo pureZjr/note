@@ -5,7 +5,7 @@ import { Empty, Spin } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import FolderList from './FolderList'
-import ArticleList from './ArticleList'
+import FileList from './FileList'
 import { Tabs } from '@store/extraStore'
 import * as styles from './index.scss'
 
@@ -66,7 +66,7 @@ const FileAndFolder: React.FC = () => {
                 ) : (
                     <>
                         <FolderList />
-                        <ArticleList />
+                        <FileList />
                     </>
                 )}
             </div>

@@ -21,11 +21,14 @@ import CodeBlock from './CodeBlock'
 import Editor from './Editor'
 import { setTopFile, createShareFileLink } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
-import { SHHARE_BASE_URL } from '@constant/index'
+import { SHHARE_BASE_URL, BREAK_IMAGE } from '@constant/index'
+import CreateType from '@store/extraStore/CreateType'
+import { ImgView, ImgViewTrigger } from '@components/ImgView'
+import RenderVideo from '@components/RenderVideo'
 
 const TextArea = Input.TextArea
 
-const Article: React.FC = () => {
+const File: React.FC = () => {
     const {
         articleStore: { articleContent, setArticleContent },
         fileStore: { files, currFileId, contentLoading, updateFile, getFiles },
@@ -191,6 +194,49 @@ const Article: React.FC = () => {
         fontSize: 18
     }
 
+    const renderContent = () => {
+        switch (article.type) {
+            case CreateType.Img:
+                return (
+                    <ImgView
+                        imgUrl={content}
+                        style={{ width: '100%', height: '100%', justifyContent: 'center', display: 'flex' }}
+                    >
+                        <ImgViewTrigger>
+                            <img
+                                style={{
+                                    marginRight: 10
+                                }}
+                                width={100}
+                                height={100}
+                                src={content}
+                                ref={ref => {
+                                    if (ref) {
+                                        ref.onerror = () => {
+                                            ref.src = BREAK_IMAGE
+                                        }
+                                    }
+                                }}
+                            />
+                        </ImgViewTrigger>
+                    </ImgView>
+                )
+            case CreateType.MarkDown:
+                return (
+                    <ReactMarkdown
+                        className={styles.markdown}
+                        source={content}
+                        renderers={{
+                            code: CodeBlock
+                        }}
+                        escapeHtml={false}
+                    />
+                )
+            case CreateType.Video:
+                return <RenderVideo videoSrc={content} width={500} height={300} />
+        }
+    }
+
     if (!article) {
         return null
     }
@@ -209,7 +255,7 @@ const Article: React.FC = () => {
                 {contentLoading && <Spin className={styles.loading} />}
                 {editing ? (
                     <>
-                        {article.type === 'article' ? (
+                        {article.type === CreateType.Article ? (
                             <Editor
                                 defaultValue={content}
                                 onChange={v => {
@@ -221,18 +267,11 @@ const Article: React.FC = () => {
                         )}
                     </>
                 ) : (
-                    <ReactMarkdown
-                        className={styles.markdown}
-                        source={content}
-                        renderers={{
-                            code: CodeBlock
-                        }}
-                        escapeHtml={false}
-                    />
+                    renderContent()
                 )}
             </div>
         </div>
     )
 }
 
-export default observer(Article)
+export default observer(File)

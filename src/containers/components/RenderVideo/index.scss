@@ -1,0 +1,40 @@
+@import 'var.scss';
+
+.container {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.mask {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &:hover {
+        .play-icon {
+            color: #fff;
+        }
+    }
+}
+
+.play-icon {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 50px;
+
+    @include absoluteCenter;
+}
+
+.play-angel {
+    color: #000;
+    @include absoluteCenter;
+}
+
+.loading {
+    @include absoluteCenter;
+}

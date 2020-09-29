@@ -2,7 +2,7 @@ enum CreateType {
     MarkDown = 'markdown',
     Folder = 'folder',
     Article = 'article',
-    Img = 'img',
+    Img = 'image',
     Video = 'video'
 }
 

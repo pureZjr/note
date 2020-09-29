@@ -6,3 +6,11 @@
     word-wrap: normal;
     white-space: nowrap;
 }
+
+// 绝对居中
+@mixin absoluteCenter {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
