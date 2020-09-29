@@ -84,7 +84,7 @@ export const getNewestFile = data => {
 
 // 搜索文件
 export const searchFile = data => {
-    return get('search-File', data)
+    return get('search-file', data)
 }
 
 // 获取文件内容

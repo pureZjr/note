@@ -234,6 +234,14 @@ const File: React.FC = () => {
                 )
             case CreateType.Video:
                 return <RenderVideo videoSrc={content} width={500} height={300} />
+            case CreateType.Article:
+                return (
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: content
+                        }}
+                    />
+                )
         }
     }
 

@@ -18,7 +18,7 @@ const FolderList: React.FC = () => {
             setExpandTreeKeys
         },
         fileStore: { setCurrFileId },
-        extraStore: { currTabId, isSearching, setCurrTabId, getFolderAndFile, setMenuProps }
+        extraStore: { currTabId, isSearching, keyword, setCurrTabId, getFolderAndFile, setMenuProps }
     } = useRootStore()
 
     // 点击文件夹，更新阅读时间
@@ -59,6 +59,23 @@ const FolderList: React.FC = () => {
         setCurrSelectedFolderKey(key)
     }
 
+    const renderTitle = (title: string) => {
+        if (title.indexOf(keyword) > -1 && isSearching) {
+            return (
+                <span
+                    dangerouslySetInnerHTML={{
+                        __html: title.replace(
+                            new RegExp(`${keyword}`),
+                            `<span style="background:yellow;">${keyword}</span>`
+                        )
+                    }}
+                />
+            )
+        } else {
+            return title
+        }
+    }
+
     return (
         <div className={styles.container}>
             {folders.map(folder => {
@@ -70,7 +87,7 @@ const FolderList: React.FC = () => {
                         onContextMenu={e => onHandleContextMenu(e, folder)}
                     >
                         <IconFolderClose width={20} height={20} className="no-fill" />
-                        <div className={styles.title}>{folder.title}</div>
+                        <div className={styles.title}>{renderTitle(folder.title)}</div>
                     </div>
                 )
             })}

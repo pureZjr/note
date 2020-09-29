@@ -94,6 +94,23 @@ const FileList: React.FC = () => {
         setCurrSelectedFolderKey(parentKey)
     }
 
+    const renderTitle = (title: string) => {
+        if (title.indexOf(keyword) > -1 && isSearching) {
+            return (
+                <span
+                    dangerouslySetInnerHTML={{
+                        __html: title.replace(
+                            new RegExp(`${keyword}`),
+                            `<span style="background:yellow;">${keyword}</span>`
+                        )
+                    }}
+                />
+            )
+        } else {
+            return title
+        }
+    }
+
     const svgProps = {
         className: 'no-fill',
         width: 12,
@@ -118,7 +135,7 @@ const FileList: React.FC = () => {
                         <div className={styles.top}>
                             {renderSvg(article.type)}
                             <div className={styles.title}>
-                                {article.title}
+                                {renderTitle(article.title)}
                                 {Boolean(article.isTop) && <div className={styles['is-top']} />}
                             </div>
                         </div>
