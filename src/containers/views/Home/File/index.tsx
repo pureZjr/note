@@ -38,6 +38,7 @@ const File: React.FC = () => {
     const [editing, setEditing] = React.useState(false)
     const [content, setContent] = React.useState(articleContent)
     const [title, setTitle] = React.useState('')
+    const [mdEditAndRead, setMdEditAndRead] = React.useState(true)
 
     React.useEffect(() => {
         setContent(articleContent)
@@ -61,6 +62,7 @@ const File: React.FC = () => {
         } else {
             setContent(content || '')
             setTitle(article.title)
+            setMdEditAndRead(true)
         }
     }
 
@@ -164,17 +166,19 @@ const File: React.FC = () => {
 
         return (
             <div className={styles.btns}>
-                <span onClick={() => editTigger(editing)}>
-                    {editing ? (
-                        <Tooltip title="保存">
-                            <SaveOutlined style={IconStyle} />
-                        </Tooltip>
-                    ) : (
-                        <Tooltip title="编辑">
-                            <EditOutlined style={IconStyle} />
-                        </Tooltip>
-                    )}
-                </span>
+                {[CreateType.Article, CreateType.MarkDown].includes(article.type) && (
+                    <span onClick={() => editTigger(editing)}>
+                        {editing ? (
+                            <Tooltip title="保存">
+                                <SaveOutlined style={IconStyle} />
+                            </Tooltip>
+                        ) : (
+                            <Tooltip title="编辑">
+                                <EditOutlined style={IconStyle} />
+                            </Tooltip>
+                        )}
+                    </span>
+                )}
                 <Tooltip title="分享">
                     <ShareAltOutlined onClick={getShareLink} style={IconStyle} />
                 </Tooltip>
@@ -194,13 +198,21 @@ const File: React.FC = () => {
         fontSize: 18
     }
 
-    const renderContent = () => {
+    const mdDivider = () => <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
+
+    const renderReadingContent = () => {
         switch (article.type) {
             case CreateType.Img:
                 return (
                     <ImgView
                         imgUrl={content}
-                        style={{ width: '100%', height: '100%', justifyContent: 'center', display: 'flex' }}
+                        style={{
+                            padding: 12,
+                            width: '100%',
+                            height: '100%',
+                            justifyContent: 'center',
+                            display: 'flex'
+                        }}
                     >
                         <ImgViewTrigger>
                             <img
@@ -233,14 +245,67 @@ const File: React.FC = () => {
                     />
                 )
             case CreateType.Video:
-                return <RenderVideo videoSrc={content} width={500} height={300} />
+                return (
+                    <RenderVideo
+                        videoSrc={content}
+                        width={500}
+                        height={300}
+                        style={{
+                            margin: 12
+                        }}
+                    />
+                )
             case CreateType.Article:
                 return (
                     <div
+                        style={{ padding: 12 }}
                         dangerouslySetInnerHTML={{
                             __html: content
                         }}
                     />
+                )
+        }
+    }
+
+    const renderEditingContent = () => {
+        switch (article.type) {
+            case CreateType.Article:
+                return (
+                    <Editor
+                        defaultValue={content}
+                        onChange={v => {
+                            setContent(v)
+                        }}
+                    />
+                )
+            case CreateType.MarkDown:
+                const textarea = (
+                    <TextArea style={{ border: 0, padding: 12 }} onChange={onHandleInput} value={content} />
+                )
+                return (
+                    <>
+                        {mdEditAndRead ? (
+                            <div className={styles['md-edit-and-read']}>
+                                <div className={styles['textarea-container']}>
+                                    {textarea}
+                                    {mdDivider()}
+                                </div>
+                                <ReactMarkdown
+                                    className={styles.markdown}
+                                    source={content}
+                                    renderers={{
+                                        code: CodeBlock
+                                    }}
+                                    escapeHtml={false}
+                                />
+                            </div>
+                        ) : (
+                            <>
+                                {textarea}
+                                {mdDivider()}
+                            </>
+                        )}
+                    </>
                 )
         }
     }
@@ -261,22 +326,7 @@ const File: React.FC = () => {
             </div>
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}
-                {editing ? (
-                    <>
-                        {article.type === CreateType.Article ? (
-                            <Editor
-                                defaultValue={content}
-                                onChange={v => {
-                                    setContent(v)
-                                }}
-                            />
-                        ) : (
-                            <TextArea onChange={onHandleInput} value={content} />
-                        )}
-                    </>
-                ) : (
-                    renderContent()
-                )}
+                {editing ? renderEditingContent() : renderReadingContent()}
             </div>
         </div>
     )
