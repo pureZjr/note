@@ -5,6 +5,7 @@ interface CssExports {
   'btn': string;
   'container': string;
   'disabled': string;
+  'loading': string;
   'upload': string;
 }
 declare var cssExports: CssExports;

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown, Menu, Upload } from 'antd'
+import { Dropdown, Menu, Upload, Spin } from 'antd'
 import { PlusCircleOutlined, CloudUploadOutlined } from '@ant-design/icons'
 import { observer } from 'mobx-react'
 import classnames from 'classnames'
@@ -12,10 +12,12 @@ import { QN_UPLOAD_URL, QN_BUCKET, FILE_SIZE_LIMIT, QN_SOURCE_URL } from '@const
 import message from '@components/AntdMessageExt'
 import { getToken } from '@services/api/qiniu'
 import { create } from '@services/api/file'
+import PortalsContainer from '@components/PortalsContainer'
 import * as styles from './index.scss'
 
 const Btns: React.FC = () => {
     const [qnToken, setQnToken] = React.useState('')
+    const [uploadLoading, setUploadLoading] = React.useState(false)
 
     const { extraStore, folderStore, fileStore } = useRootStore()
 
@@ -60,11 +62,14 @@ const Btns: React.FC = () => {
                 message.error('文件不能超过50M')
                 return Promise.reject(false)
             }
+            setUploadLoading(true)
             const token = await getToken({
                 bucket: QN_BUCKET
             })
             setQnToken(token)
-        } catch {}
+        } catch {
+            setUploadLoading(false)
+        }
     }
 
     const onSuccessUpload = async ({ title, type, content, size }) => {
@@ -80,6 +85,7 @@ const Btns: React.FC = () => {
             fileStore.setCurrFileId(res.id)
             message.success('上传成功')
         } catch {}
+        setUploadLoading(false)
     }
 
     // 最新文档、回收站没有新建功能
@@ -124,6 +130,11 @@ const Btns: React.FC = () => {
                     </div>
                 </div>
             </Upload>
+            {uploadLoading && (
+                <PortalsContainer style={{ backgroundColor: 'transparent', zIndex: 100 }}>
+                    <Spin className={styles.loading} />
+                </PortalsContainer>
+            )}
         </div>
     )
 }
