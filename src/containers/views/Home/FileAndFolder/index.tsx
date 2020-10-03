@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import { RollbackOutlined, UnorderedListOutlined, CaretDownFilled } from '@ant-design/icons'
-import { Empty, Spin } from 'antd'
+import { Empty, Spin, Menu, Dropdown } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import FolderList from './FolderList'
 import FileList from './FileList'
 import { Tabs } from '@store/extraStore'
+import { LOCALSTORAGE } from '@constant/index'
 import * as styles from './index.scss'
 
 const FileAndFolder: React.FC = () => {
@@ -19,7 +20,17 @@ const FileAndFolder: React.FC = () => {
             setNameByParentKey
         },
         fileStore: { files },
-        extraStore: { loading, currTabId, getFolderAndFile }
+        extraStore: {
+            loading,
+            currTabId,
+            fileAndFolderDisplay,
+            fileAndFolderSort,
+            getNewestFolderAndFile,
+            getFolderAndFile,
+            setFileAndFolderDisplay,
+            setFileAndFolderSort,
+            getDelFolderAndFile
+        }
     } = useRootStore()
 
     const empty = React.useMemo(() => {
@@ -48,16 +59,51 @@ const FileAndFolder: React.FC = () => {
             setNameByParentKey(parentKey)
         }
     }
+    const onHandleList = (key: string) => {
+        switch (key) {
+            case 'abstract':
+            case 'list':
+                setFileAndFolderDisplay(key)
+                localStorage.setItem(LOCALSTORAGE.FILEANDFOLDERDISPLAY, key)
+                break
+            case 'createTime':
+            case 'updateTime':
+            case 'size':
+                localStorage.setItem(LOCALSTORAGE.FILEANDFOLDERSORT, key)
+                setFileAndFolderSort(key)
+                if (currTabId === Tabs.MyFolder) {
+                    getFolderAndFile(currSelectedFolderKey || '2')
+                } else if (currTabId === Tabs.NewDoc) {
+                    getNewestFolderAndFile(key)
+                } else {
+                    getDelFolderAndFile(key)
+                }
+                break
+        }
+    }
+
+    const menu = (
+        <Menu onClick={e => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
+            <Menu.Item key="abstract">摘要</Menu.Item>
+            <Menu.Item key="list">列表</Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="createTime">创建时间</Menu.Item>
+            <Menu.Item key="updateTime">修改时间</Menu.Item>
+            <Menu.Item key="size">文件大小</Menu.Item>
+        </Menu>
+    )
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <RollbackOutlined style={{ fontSize: 18, ...rollbackOutlinedStyle }} onClick={onBlack} />
                 <div className={styles.name}>{currSelectedFolderName}</div>
-                <div className={styles.sort}>
-                    <UnorderedListOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.4)' }} />
-                    <CaretDownFilled style={{ fontSize: 12, color: 'rgba(0, 0, 0, 0.4)' }} />
-                </div>
+                <Dropdown overlay={menu} trigger={['click']}>
+                    <div className={styles.sort}>
+                        <UnorderedListOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.4)' }} />
+                        <CaretDownFilled style={{ fontSize: 12, color: 'rgba(0, 0, 0, 0.4)' }} />
+                    </div>
+                </Dropdown>
             </div>
             <div className={styles.content}>
                 {loading && <Spin className={styles.loading} />}

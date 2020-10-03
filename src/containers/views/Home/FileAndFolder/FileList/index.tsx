@@ -8,10 +8,9 @@ import IconDocument from '@assets/svgs/document.svg'
 import IconImage from '@assets/svgs/image.svg'
 import IconVideo from '@assets/svgs/video.svg'
 import { getFileContent } from '@services/api/file'
-import { byteConvert } from '@utils/common'
+import { byteConvert, setAllKeysByCurrKey } from '@utils/common'
 import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
-import { setAllKeysByCurrKey } from '@utils/common'
 import CreateType from '@store/extraStore/CreateType'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
 
@@ -24,7 +23,7 @@ const FileList: React.FC = () => {
             setExpandTreeKeys,
             setCurrSelectedFolderName
         },
-        extraStore: { currTabId, isSearching, keyword, setCurrTabId, setMenuProps }
+        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
     } = useRootStore()
 
     const renderSvg = (type: string) => {
@@ -127,6 +126,9 @@ const FileList: React.FC = () => {
                 return (
                     <div
                         className={`${styles.item} ${active ? styles.active : ''}`}
+                        style={{
+                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46
+                        }}
                         key={article.id}
                         onClick={() => onHandleClickItem(article)}
                         onContextMenu={e => onHandleContextMenu(e, article)}
@@ -137,25 +139,32 @@ const FileList: React.FC = () => {
                                 {renderTitle(article.title)}
                                 {Boolean(article.isTop) && <div className={styles['is-top']} />}
                             </div>
-                        </div>
-                        <div className={styles.bottom}>
-                            {Tabs.MyFolder !== currTabId && active ? (
-                                <div
-                                    className={styles.parentFolderTitle}
-                                    onClick={() => gotoMyFolder(article.parentKey, article.id)}
-                                >
-                                    <IconFolderClose {...svgProps} />
-                                    {article.parentFolderTitle}
+                            {fileAndFolderDisplay === 'list' && (
+                                <div className={styles.updateTime}>
+                                    {moment(article.updateTime).format('YYYY-MM-DD')}
                                 </div>
-                            ) : (
-                                <>
-                                    <div className={styles.updateTime}>
-                                        {moment(article.updateTime).format('YYYY-MM-DD')}
-                                    </div>
-                                    <div className={styles.size}>{byteConvert(article.size)}</div>
-                                </>
                             )}
                         </div>
+                        {fileAndFolderDisplay === 'abstract' && (
+                            <div className={styles.bottom}>
+                                {Tabs.MyFolder !== currTabId && active ? (
+                                    <div
+                                        className={styles.parentFolderTitle}
+                                        onClick={() => gotoMyFolder(article.parentKey, article.id)}
+                                    >
+                                        <IconFolderClose {...svgProps} />
+                                        {article.parentFolderTitle}
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className={styles.updateTime}>
+                                            {moment(article.updateTime).format('YYYY-MM-DD')}
+                                        </div>
+                                        <div className={styles.size}>{byteConvert(article.size)}</div>
+                                    </>
+                                )}
+                            </div>
+                        )}
                     </div>
                 )
             })}

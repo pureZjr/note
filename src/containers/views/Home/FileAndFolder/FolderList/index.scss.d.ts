@@ -4,6 +4,8 @@ interface CssExports {
   'active': string;
   'container': string;
   'title': string;
+  'title-container': string;
+  'updateTime': string;
   'wrapper': string;
 }
 declare var cssExports: CssExports;

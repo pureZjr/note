@@ -14,3 +14,11 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+// 单行文本溢出，用省略号截断
+@mixin textEllipsis {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

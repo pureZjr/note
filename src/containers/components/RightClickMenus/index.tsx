@@ -10,10 +10,14 @@ import * as styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
 
+const menuHeight = 40
+
 const { SubMenu } = Menu
 
 const RightClickMenus: React.FC = () => {
-    const containerRef = React.useRef<HTMLDivElement>(null)
+    const containerRef = React.useRef(null)
+
+    const menuRef = React.useRef<Menu>(null)
 
     const {
         extraStore: {
@@ -28,6 +32,8 @@ const RightClickMenus: React.FC = () => {
         folderStore,
         fileStore
     } = useRootStore()
+
+    const [_y, _setY] = React.useState(null)
 
     let currTitle = title
 
@@ -232,6 +238,17 @@ const RightClickMenus: React.FC = () => {
         }
     }
 
+    React.useEffect(() => {
+        try {
+            const menuTotalHeight = (menuRef.current.props.children as any[]).filter(v => !!v).length * menuHeight
+            if (menuTotalHeight + y > document.body.clientHeight) {
+                _setY(y - menuTotalHeight)
+            } else {
+                _setY(y)
+            }
+        } catch {}
+    }, [y])
+
     useOnMount(() => {
         window.addEventListener('click', close)
     })
@@ -243,17 +260,18 @@ const RightClickMenus: React.FC = () => {
     const isRecycle = currTabId === Tabs.Recycle
     const isRootFolder = currTabId === Tabs.MyFolder || folderId === Tabs.MyFolder
     const isArticle = !!articleId
+
     return (
         <div
             className={styles.container}
             style={{
                 left: x,
-                top: y
+                top: _y
             }}
             ref={containerRef}
         >
             {visible && (
-                <Menu onClick={handleClick} style={{ width: 200 }} mode="vertical">
+                <Menu onClick={handleClick} style={{ width: 200 }} mode="vertical" ref={menuRef}>
                     {isFolder && isRootFolder && (
                         <SubMenu key="sub1" title="新建">
                             <Menu.Item key="1">文件夹</Menu.Item>

@@ -28,8 +28,8 @@ export const delFolderComplete = data => {
 }
 
 // 获取回收站的文件夹
-export const getDelFolder = () => {
-    return get('del-folders-get', {})
+export const getDelFolder = data => {
+    return get('del-folders-get', data)
 }
 
 // 获取指定文件夹信息

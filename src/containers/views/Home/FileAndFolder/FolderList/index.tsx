@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
+import moment from 'moment'
 
 import { useRootStore } from '@utils/customHooks'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
@@ -18,7 +19,15 @@ const FolderList: React.FC = () => {
             setExpandTreeKeys
         },
         fileStore: { setCurrFileId },
-        extraStore: { currTabId, isSearching, keyword, setCurrTabId, getFolderAndFile, setMenuProps }
+        extraStore: {
+            currTabId,
+            isSearching,
+            keyword,
+            fileAndFolderDisplay,
+            setCurrTabId,
+            getFolderAndFile,
+            setMenuProps
+        }
     } = useRootStore()
 
     // 点击文件夹，更新阅读时间
@@ -76,18 +85,32 @@ const FolderList: React.FC = () => {
         }
     }
 
+    const itemStyle: React.CSSProperties =
+        fileAndFolderDisplay === 'abstract'
+            ? {
+                  height: 72,
+                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                  alignItems: 'flex-start'
+              }
+            : { height: 46, flexDirection: 'row', justifyContent: 'space-between' }
+
     return (
         <div className={styles.container}>
             {folders.map(folder => {
                 return (
                     <div
                         className={`${styles.wrapper} ${folder.id === currSelectedFolderId ? styles.active : ''}`}
+                        style={itemStyle}
                         key={folder.id}
                         onClick={() => onHandleClickItem(folder)}
                         onContextMenu={e => onHandleContextMenu(e, folder)}
                     >
-                        <IconFolderClose width={20} height={20} className="no-fill" />
-                        <div className={styles.title}>{renderTitle(folder.title)}</div>
+                        <div className={styles['title-container']}>
+                            <IconFolderClose width={20} height={20} className="no-fill" />
+                            <div className={styles.title}>{renderTitle(folder.title)}</div>
+                        </div>
+                        <div className={styles.updateTime}>{moment(folder.updateTime).format('YYYY-MM-DD')}</div>
                     </div>
                 )
             })}

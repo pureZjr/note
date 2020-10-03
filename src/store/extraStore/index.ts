@@ -2,6 +2,7 @@ import { observable, action } from 'mobx'
 
 import { getDelFolder, searchFolder } from '@services/api/folder'
 import { getDelFile, getNewestFile, searchFile } from '@services/api/file'
+import { LOCALSTORAGE } from '@constant/index'
 import * as store from '../index'
 
 export enum Tabs {
@@ -58,9 +59,9 @@ export class ExtraStore {
      *
      * @memberof ExtraStore
      */
-    getDelFolderAndFile = async () => {
+    getDelFolderAndFile = async (sort = 'updateTime') => {
         this.setLoading(true)
-        Promise.all([getDelFolder(), getDelFile()])
+        Promise.all([getDelFolder(sort), getDelFile(sort)])
             .then(res => {
                 store.folderStore.setFolder(res[0])
                 store.fileStore.setFiles(res[1])
@@ -72,15 +73,15 @@ export class ExtraStore {
     }
 
     /**
-     * 获取最新的文件和文件夹
+     * 获取最新的文件
      *
      * @memberof ExtraStore
      */
-    getNewestFolderAndFile = async (key?: string) => {
+    getNewestFolderAndFile = async (sort = 'updateTime') => {
         this.setLoading(true)
-        Promise.all([getNewestFile({ key })])
+        getNewestFile({ sort })
             .then(res => {
-                store.fileStore.setFiles(res[0])
+                store.fileStore.setFiles(res)
             })
             .catch(() => {})
             .finally(() => {
@@ -95,15 +96,27 @@ export class ExtraStore {
      */
     searchFolderAndFile = async (args: { key?: string; keyword: string; type: Tabs }) => {
         this.setLoading(true)
-        Promise.all([searchFolder(args), searchFile(args)])
-            .then(res => {
-                store.folderStore.setFolder(res[0])
-                store.fileStore.setFiles(res[1])
-            })
-            .catch(() => {})
-            .finally(() => {
-                this.setLoading(false)
-            })
+        const searchInMyFolder = () =>
+            Promise.all([searchFolder(args), searchFile(args)])
+                .then(res => {
+                    store.folderStore.setFolder(res[0])
+                    store.fileStore.setFiles(res[1])
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.setLoading(false)
+                })
+        if (args.keyword === '') {
+            if (args.type === Tabs.NewDoc) {
+                this.getNewestFolderAndFile()
+            } else if (args.type === Tabs.MyFolder) {
+                searchInMyFolder()
+            } else {
+                this.getDelFolderAndFile()
+            }
+        } else {
+            searchInMyFolder()
+        }
     }
 
     /**
@@ -183,6 +196,30 @@ export class ExtraStore {
     @action
     setKeyword = (kw: string) => {
         this.keyword = kw
+    }
+
+    /**
+     * 文件文件夹列表显示方式
+     *
+     * @memberof ExtraStore
+     */
+    @observable
+    fileAndFolderDisplay: string = localStorage.getItem(LOCALSTORAGE.FILEANDFOLDERDISPLAY) || 'abstract'
+    @action
+    setFileAndFolderDisplay = type => {
+        this.fileAndFolderDisplay = type
+    }
+
+    /**
+     * 文件文件夹列表排序方式
+     *
+     * @memberof ExtraStore
+     */
+    @observable
+    fileAndFolderSort: string = localStorage.getItem(LOCALSTORAGE.FILEANDFOLDERSORT) || 'updateTime'
+    @action
+    setFileAndFolderSort = sort => {
+        this.fileAndFolderSort = sort
     }
 }
 

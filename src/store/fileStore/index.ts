@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 
 import { getFileInFolder } from '@services/api/file'
+import extraStore from '../extraStore'
 
 /**
  * 文件store
@@ -75,7 +76,7 @@ export class FileStore {
      * @memberof FileStore
      */
     getFiles = async (parentKey: string) => {
-        const res = await getFileInFolder({ parentKey })
+        const res = await getFileInFolder({ parentKey, sort: extraStore.fileAndFolderSort })
         this.setFiles(res)
         return res
     }

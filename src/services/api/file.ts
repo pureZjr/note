@@ -73,8 +73,8 @@ export const delFileComplete = data => {
 }
 
 // 获取回收站的文件
-export const getDelFile = () => {
-    return get('del-file-get', {})
+export const getDelFile = data => {
+    return get('del-file-get', data)
 }
 
 // 获取回收站的文件

@@ -88,7 +88,7 @@ export class FolderStore {
      * @memberof FolderStore
      */
     getFolders = async (parentKey: string) => {
-        const res = await getFolder({ parentKey })
+        const res = await getFolder({ parentKey, sort: extraStore.fileAndFolderSort })
         this.setFolder(res)
         return res
     }

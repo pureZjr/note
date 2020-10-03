@@ -9,7 +9,6 @@
 .item {
     display: flex;
     flex-direction: column;
-    height: 72px;
     padding: 6px 12px;
     border-bottom: 1px solid $black01;
     cursor: pointer;
@@ -30,6 +29,7 @@
     flex: 1;
     padding-left: 10px;
     color: $black08;
+    padding-right: 4px;
     @include ellipsis;
 }
 
