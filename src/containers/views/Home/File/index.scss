@@ -11,6 +11,7 @@
 .markdown {
     padding: 12px;
     flex: 1;
+    overflow: auto;
 
     :global {
         h1 {
