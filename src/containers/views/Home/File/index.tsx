@@ -8,7 +8,7 @@ import {
     EllipsisOutlined
 } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
-import { get } from 'lodash'
+import { get, isUndefined } from 'lodash'
 import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
 import moment from 'moment'
 
@@ -236,7 +236,7 @@ const File: React.FC = () => {
                 return (
                     <ReactMarkdown
                         className={styles.markdown}
-                        source={content}
+                        source={isUndefined(content) ? '' : content}
                         renderers={{
                             code: CodeBlock
                         }}
@@ -291,7 +291,7 @@ const File: React.FC = () => {
                                 </div>
                                 <ReactMarkdown
                                     className={styles.markdown}
-                                    source={content}
+                                    source={isUndefined(content) ? '' : content}
                                     renderers={{
                                         code: CodeBlock
                                     }}

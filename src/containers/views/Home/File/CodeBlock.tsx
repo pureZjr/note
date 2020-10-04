@@ -5,6 +5,7 @@ import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism'
 // 设置高亮的语言
 import { javascript, jsx } from 'react-syntax-highlighter/dist/esm/languages/prism'
+import { isUndefined } from 'lodash'
 
 interface IProps {
     language?: any
@@ -13,7 +14,6 @@ interface IProps {
 
 class CodeBlock extends PureComponent<IProps> {
     static propTypes = {
-        value: PropTypes.string.isRequired,
         language: PropTypes.string
     }
 
@@ -34,7 +34,7 @@ class CodeBlock extends PureComponent<IProps> {
         return (
             <figure className="highlight">
                 <SyntaxHighlighter language={language} style={xonokai}>
-                    {value}
+                    {isUndefined(value) ? '' : value}
                 </SyntaxHighlighter>
             </figure>
         )
