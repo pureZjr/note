@@ -8,7 +8,7 @@ export const FILE_SIZE_LIMIT = 50 * 1024 * 1024
 // 七牛相关
 export const QN_UPLOAD_URL = 'https://upload-z2.qiniup.com'
 export const QN_BUCKET = 'pure-note'
-export const QN_SOURCE_URL = 'http://note.ss.purevivi.chat'
+export const QN_SOURCE_URL = 'https://note.ss.purevivi.chat'
 
 export const LOCALSTORAGE = {
     USERINFO: 'userinfo',
