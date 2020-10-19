@@ -152,7 +152,8 @@ const RightClickMenus: React.FC = () => {
                         api = renameFolder
                     } else {
                         Object.assign(data, {
-                            id: articleId
+                            id: articleId,
+                            type
                         })
                         api = renameFile
                     }
