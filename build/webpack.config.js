@@ -25,7 +25,8 @@ module.exports = {
             new TsconfigPathsWebpackPlugin({
                 configFile: resolveFromRootDir('tsconfig.json')
             })
-        ]
+        ],
+        fallback: { path: require.resolve('path-browserify') }
     },
     optimization: {
         splitChunks: {

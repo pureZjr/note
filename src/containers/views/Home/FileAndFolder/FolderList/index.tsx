@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import { useRootStore } from '@utils/customHooks'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
-import * as styles from './index.scss'
+import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import { setAllKeysByCurrKey } from '@utils/common'
 

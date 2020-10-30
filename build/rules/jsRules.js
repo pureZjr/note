@@ -10,8 +10,6 @@ module.exports = [
             {
                 loader: 'awesome-typescript-loader',
                 options: {
-                    useCache: true,
-                    cacheDirectory: resolveFromRootDir('.cache-loader'),
                     transpileOnly: true,
                     getCustomTransformers: () => ({
                         before: [
@@ -43,11 +41,19 @@ module.exports = [
             {
                 loader: 'less-loader',
                 options: {
-                    // 禁用内联js代码，禁止在样式表用js代码
-                    javascriptEnabled: true,
-                    modifyVars: theme
+                    lessOptions: {
+                        // 禁用内联js代码，禁止在样式表用js代码
+                        javascriptEnabled: true,
+                        modifyVars: theme
+                    }
                 }
             }
         ]
+    },
+    {
+        test: /\.m?js/,
+        resolve: {
+            fullySpecified: false
+        }
     }
 ]

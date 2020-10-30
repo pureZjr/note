@@ -15,7 +15,7 @@ export default class Http {
     get = (url: string, data: Record<string, any>): Promise<any> => {
         return this.HandleHttp('GET', url, data)
     }
-    post = (url: string, data: {}): Promise<any> => {
+    post = (url: string, data: Record<string, unknown>): Promise<any> => {
         return this.HandleHttp('POST', url, data)
     }
 

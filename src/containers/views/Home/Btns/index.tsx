@@ -13,7 +13,7 @@ import message from '@components/AntdMessageExt'
 import { getToken } from '@services/api/qiniu'
 import { create } from '@services/api/file'
 import PortalsContainer from '@components/PortalsContainer'
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 const Btns: React.FC = () => {
     const [qnToken, setQnToken] = React.useState('')

@@ -4,7 +4,7 @@ import { Empty, Tree } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import { Tabs } from '@store/extraStore'
-import * as styles from './index.scss'
+import styles from './index.scss'
 import IconFolderOpen from '@assets/svgs/folder-open.svg'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
 

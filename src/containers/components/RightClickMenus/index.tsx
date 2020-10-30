@@ -6,7 +6,7 @@ import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
 import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
 import { delFile, delFileComplete, recoverFile, renameFile, setTopFile } from '@services/api/file'
-import * as styles from './index.scss'
+import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
 
@@ -60,30 +60,28 @@ const RightClickMenus: React.FC = () => {
                 setCreateFileFolderDialogvisible(true)
                 break
             case '3':
-                ;(isFolder ? delFolder : delFile)({ id: isFolder ? folderId : articleId, type })
-                    .then(() => {
-                        if (isFolder) {
-                            const {
-                                delFolder,
-                                setExpandTreeKeys,
-                                setCurrSelectedFolderKey,
-                                setNameByParentKey
-                            } = folderStore
-                            getTreeData()
-                            delFolder(folderId)
-                            setExpandTreeKeys(folderKey)
-                            const parentKey = folderKey.replace(`-${folderId}`, '')
-                            setCurrSelectedFolderKey(parentKey)
-                            getFolderAndFile(parentKey)
-                            setNameByParentKey(parentKey)
-                            if (isTree) {
-                                clearFolderAndArticleList()
-                            }
-                        } else {
-                            fileStore.delFile(articleId)
+                ;(isFolder ? delFolder : delFile)({ id: isFolder ? folderId : articleId, type }).then(() => {
+                    if (isFolder) {
+                        const {
+                            delFolder,
+                            setExpandTreeKeys,
+                            setCurrSelectedFolderKey,
+                            setNameByParentKey
+                        } = folderStore
+                        getTreeData()
+                        delFolder(folderId)
+                        setExpandTreeKeys(folderKey)
+                        const parentKey = folderKey.replace(`-${folderId}`, '')
+                        setCurrSelectedFolderKey(parentKey)
+                        getFolderAndFile(parentKey)
+                        setNameByParentKey(parentKey)
+                        if (isTree) {
+                            clearFolderAndArticleList()
                         }
-                    })
-                    .finally(() => {})
+                    } else {
+                        fileStore.delFile(articleId)
+                    }
+                })
                 break
             case '4':
                 Modal.confirm({
@@ -95,19 +93,17 @@ const RightClickMenus: React.FC = () => {
                         ;(isFolder ? delFolderComplete : delFileComplete)({
                             id: isFolder ? folderId : articleId,
                             type
-                        })
-                            .then(() => {
-                                if (isFolder) {
-                                    getTreeData()
-                                    folderStore.delFolder(folderId)
-                                    if (isTree) {
-                                        clearFolderAndArticleList()
-                                    }
-                                } else {
-                                    fileStore.delFile(articleId)
+                        }).then(() => {
+                            if (isFolder) {
+                                getTreeData()
+                                folderStore.delFolder(folderId)
+                                if (isTree) {
+                                    clearFolderAndArticleList()
                                 }
-                            })
-                            .finally(() => {})
+                            } else {
+                                fileStore.delFile(articleId)
+                            }
+                        })
                     }
                 })
                 break
@@ -120,16 +116,14 @@ const RightClickMenus: React.FC = () => {
                     onOk: () => {
                         ;(isFolder ? recoverFolder : recoverFile)({
                             id: isFolder ? folderId : articleId
+                        }).then(() => {
+                            if (isFolder) {
+                                getTreeData()
+                                folderStore.delFolder(folderId)
+                            } else {
+                                fileStore.delFile(articleId)
+                            }
                         })
-                            .then(() => {
-                                if (isFolder) {
-                                    getTreeData()
-                                    folderStore.delFolder(folderId)
-                                } else {
-                                    fileStore.delFile(articleId)
-                                }
-                            })
-                            .finally(() => {})
                     }
                 })
                 break

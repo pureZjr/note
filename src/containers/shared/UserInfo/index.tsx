@@ -8,7 +8,7 @@ import { QN_UPLOAD_URL, QN_BUCKET, QN_SOURCE_URL, LOCALSTORAGE } from '@constant
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import message from '@components/AntdMessageExt'
 
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 interface IProps {
     close: () => void

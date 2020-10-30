@@ -2,7 +2,7 @@ import * as React from 'react'
 import WangeEditor from 'wangeditor'
 
 import { useOnMount } from '@utils/customHooks'
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 interface IProps {
     defaultValue?: string

@@ -4,28 +4,13 @@ module.exports = [
     {
         test: /\.css$/,
         include: [resolveFromRootDir('src'), resolveFromRootDir('node_modules')],
-        use: [
-            'style-loader',
-            {
-                loader: 'cache-loader',
-                options: {
-                    cacheDirectory: resolveFromRootDir('.cache-loader')
-                }
-            },
-            'css-loader'
-        ]
+        use: ['style-loader', 'css-loader']
     },
     {
         test: /\.scss$/,
         include: [resolveFromRootDir('src')],
         use: [
             'style-loader',
-            {
-                loader: 'cache-loader',
-                options: {
-                    cacheDirectory: resolveFromRootDir('.cache-loader')
-                }
-            },
             {
                 loader: 'css-modules-typescript-loader'
             },
@@ -41,7 +26,11 @@ module.exports = [
             {
                 loader: 'sass-loader',
                 options: {
-                    includePaths: [resolveFromRootDir('src/styles')]
+                    sassOptions: {
+                        // 缩进宽度
+                        indentWidth: 4,
+                        includePaths: [resolveFromRootDir('src/styles')]
+                    }
                 }
             }
         ]

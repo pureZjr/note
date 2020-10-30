@@ -5,7 +5,7 @@ import qs from 'qs'
 import { login } from '@services/api/account'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import { LOCALSTORAGE } from '@constant/index'
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 const layout = {
     labelCol: { span: 8 },

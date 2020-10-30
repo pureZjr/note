@@ -75,7 +75,7 @@ export default class RenderImg extends React.Component<IP> {
     componentDidMount() {
         const { options: customOptions, index, hide } = this.props
         const { toolbar, hidden, ...rest } = customOptions || ({ toolbar: {} } as Viewer.Options)
-        const customToolbar = toolbar as {}
+        const customToolbar = toolbar as Record<string, unknown>
         const options: Viewer.Options = {
             button: false,
             title: false,

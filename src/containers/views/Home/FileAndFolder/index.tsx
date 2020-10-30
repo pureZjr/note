@@ -8,7 +8,7 @@ import FolderList from './FolderList'
 import FileList from './FileList'
 import { Tabs } from '@store/extraStore'
 import { LOCALSTORAGE } from '@constant/index'
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 const FileAndFolder: React.FC = () => {
     const {

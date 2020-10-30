@@ -12,7 +12,7 @@ import CreateFolderAndFile from '@components/CreateFolderAndFile'
 import RightClickMenus from '@components/RightClickMenus'
 import { LOCALSTORAGE } from '@constant/index'
 
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 const { Sider, Content } = Layout
 

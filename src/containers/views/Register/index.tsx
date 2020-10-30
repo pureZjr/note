@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Form, Input, Button } from 'antd'
 
-import * as styles from './index.scss'
+import styles from './index.scss'
 import { useRootStore } from '@utils/customHooks'
 import { register } from '@services/api/account'
 import message from '@components/AntdMessageExt'

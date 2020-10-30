@@ -47,11 +47,9 @@ export class ExtraStore {
      */
     getFolderAndFile = async (parentKey: string) => {
         this.setLoading(true)
-        Promise.all([store.folderStore.getFolders(parentKey), store.fileStore.getFiles(parentKey)])
-            .then(() => {})
-            .finally(() => {
-                this.setLoading(false)
-            })
+        Promise.all([store.folderStore.getFolders(parentKey), store.fileStore.getFiles(parentKey)]).finally(() => {
+            this.setLoading(false)
+        })
     }
 
     /**
@@ -66,7 +64,6 @@ export class ExtraStore {
                 store.folderStore.setFolder(res[0])
                 store.fileStore.setFiles(res[1])
             })
-            .catch(() => {})
             .finally(() => {
                 this.setLoading(false)
             })
@@ -83,7 +80,6 @@ export class ExtraStore {
             .then(res => {
                 store.fileStore.setFiles(res)
             })
-            .catch(() => {})
             .finally(() => {
                 this.setLoading(false)
             })
@@ -102,7 +98,6 @@ export class ExtraStore {
                     store.folderStore.setFolder(res[0])
                     store.fileStore.setFiles(res[1])
                 })
-                .catch(() => {})
                 .finally(() => {
                     this.setLoading(false)
                 })

@@ -5,7 +5,7 @@ import { useOnMount, useRootStore } from '@utils/customHooks'
 import { getShareFileLink } from '@services/api/file'
 import CodeBlock from '../Home/File/CodeBlock'
 import { LOCALSTORAGE } from '@constant/index'
-import * as styles from './index.scss'
+import styles from './index.scss'
 
 const ShareArticle: React.FC = () => {
     const [title, setTitle] = React.useState('')
