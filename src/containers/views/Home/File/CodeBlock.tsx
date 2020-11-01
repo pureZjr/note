@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 // 设置高亮样式
-import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 // 设置高亮的语言
 import { javascript, jsx } from 'react-syntax-highlighter/dist/esm/languages/prism'
 import { isUndefined } from 'lodash'
@@ -33,7 +33,7 @@ class CodeBlock extends PureComponent<IProps> {
         const { language, value } = this.props
         return (
             <figure className="highlight">
-                <SyntaxHighlighter language={language} style={xonokai}>
+                <SyntaxHighlighter language={language} style={atomDark}>
                     {isUndefined(value) ? '' : value}
                 </SyntaxHighlighter>
             </figure>
