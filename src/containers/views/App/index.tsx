@@ -1,34 +1,37 @@
-import * as React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 
-import Home from '@views/Home'
-import Login from '@views/Login'
-import Register from '@views/Register'
-import NotFound from '@views/NotFound'
-import ShareArticle from '@views/ShareArticle'
 import styles from './index.scss'
+
+const Home = lazy(() => import('@views/Home'))
+const Login = lazy(() => import('@views/Login'))
+const Register = lazy(() => import('@views/Register'))
+const NotFound = lazy(() => import('@views/NotFound'))
+const ShareArticle = lazy(() => import('@views/ShareArticle'))
 
 function App() {
     return (
         <div className={styles.container}>
-            <Switch>
-                <Route path="/login" exact={true}>
-                    <Login />
-                </Route>
-                <Route path="/register" exact={true}>
-                    <Register />
-                </Route>
-                <Route path="/share-article">
-                    <ShareArticle />
-                </Route>
-                <Route path="/" exact={true}>
-                    <Home />
-                </Route>
-                <Route>
-                    <NotFound />
-                </Route>
-            </Switch>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                    <Route path="/login" exact={true}>
+                        <Login />
+                    </Route>
+                    <Route path="/register" exact={true}>
+                        <Register />
+                    </Route>
+                    <Route path="/share-article">
+                        <ShareArticle />
+                    </Route>
+                    <Route path="/" exact={true}>
+                        <Home />
+                    </Route>
+                    <Route>
+                        <NotFound />
+                    </Route>
+                </Switch>
+            </Suspense>
         </div>
     )
 }

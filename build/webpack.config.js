@@ -36,8 +36,8 @@ module.exports = {
     },
     // 开启缓存，加快开发环境构建速度
     cache: {
-        type: 'filesystem'
-        // cacheLocation: resolveFromRootDir('.cache')
+        type: 'filesystem',
+        cacheLocation: resolveFromRootDir('.cache')
     },
     optimization: {
         innerGraph: false,
