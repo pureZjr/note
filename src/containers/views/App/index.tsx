@@ -4,11 +4,11 @@ import { observer } from 'mobx-react'
 
 import styles from './index.scss'
 
-const Home = lazy(() => import('@views/Home'))
-const Login = lazy(() => import('@views/Login'))
-const Register = lazy(() => import('@views/Register'))
-const NotFound = lazy(() => import('@views/NotFound'))
-const ShareArticle = lazy(() => import('@views/ShareArticle'))
+const Home = lazy(() => import(/* webpackChunkName: "Home" */ '@views/Home'))
+const Login = lazy(() => import(/* webpackChunkName: "Login" */ '@views/Login'))
+const Register = lazy(() => import(/* webpackChunkName: "Register" */ '@views/Register'))
+const NotFound = lazy(() => import(/* webpackChunkName: "NotFound" */ '@views/NotFound'))
+const ShareArticle = lazy(() => import(/* webpackChunkName: "ShareArticle" */ '@views/ShareArticle'))
 
 function App() {
     return (
