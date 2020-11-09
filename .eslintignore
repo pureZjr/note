@@ -1,4 +1,3 @@
 /src/**/*.d.ts
-/build/tpl/index.html
-
+/build/*
 README.md

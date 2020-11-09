@@ -1,5 +1,7 @@
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const webpack = require('webpack')
 
 const plugins = require('./plugins')
 const jsRules = require('./rules/jsRules')
@@ -24,7 +26,13 @@ module.exports = {
     module: {
         rules: [...jsRules, ...styleRules, ...fileRules]
     },
-    plugins: [...plugins],
+    plugins: [
+        ...plugins,
+        new webpack.DllReferencePlugin({
+            manifest: require('./build/library/library.json')
+        })
+        // new BundleAnalyzerPlugin()
+    ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', 'jsx'],
         plugins: [
@@ -54,29 +62,6 @@ module.exports = {
                 }
             })
         ],
-
-        // splitChunks: {
-        //     chunks: 'async',
-        //     minSize: 20000,
-        //     minRemainingSize: 0,
-        //     maxSize: 0,
-        //     minChunks: 1,
-        //     maxAsyncRequests: 30,
-        //     maxInitialRequests: 30,
-        //     automaticNameDelimiter: '~',
-        //     enforceSizeThreshold: 50000,
-        //     cacheGroups: {
-        //         defaultVendors: {
-        //             test: /[\\/]node_modules[\\/]/,
-        //             priority: -10
-        //         },
-        //         default: {
-        //             minChunks: 2,
-        //             priority: -20,
-        //             reuseExistingChunk: true
-        //         }
-        //     }
-        // },
         splitChunks: {
             chunks: 'all',
             cacheGroups: {

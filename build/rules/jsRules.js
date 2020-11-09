@@ -5,9 +5,15 @@ module.exports = [
         test: /\.ts(x?)$/,
         use: [
             {
-                loader: 'awesome-typescript-loader',
+                loader: 'thread-loader'
+            },
+            {
+                loader: 'ts-loader',
                 options: {
+                    // disable type checker - we will use it in fork plugin
                     transpileOnly: true,
+                    // 使用happypack 或者 thread-loader 并行构建时候，设置true
+                    happyPackMode: true,
                     getCustomTransformers: () => ({
                         before: [
                             tsImportPluginFactory({
@@ -17,14 +23,9 @@ module.exports = [
                             })
                         ]
                     }),
-                    exclude: /node_modules/
-                }
-            },
-            {
-                loader: 'ts-loader',
-                options: {
-                    // disable type checker - we will use it in fork plugin
-                    transpileOnly: true
+                    compilerOptions: {
+                        module: 'es2015'
+                    }
                 }
             }
         ]

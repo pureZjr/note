@@ -16,6 +16,7 @@ const plugins = [
     new ForkTsCheckerWebpackPlugin({
         tsconfig: require('path').join(__dirname, '../tsconfig.json'),
         eslint: true,
+        // 设置为false编译中途直接报告问题
         async: false
     }),
     new webpack.ProvidePlugin({
