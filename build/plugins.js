@@ -26,6 +26,12 @@ const plugins = [
 
 if (process.env.APP_ENV === 'production') {
     plugins.push(new MiniCssExtractPlugin())
+} else {
+    plugins.push(
+        new webpack.DllReferencePlugin({
+            manifest: require('./build/library/library.json')
+        })
+    )
 }
 
 module.exports = plugins

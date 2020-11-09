@@ -1,7 +1,6 @@
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const webpack = require('webpack')
 
 const plugins = require('./plugins')
 const jsRules = require('./rules/jsRules')
@@ -27,10 +26,7 @@ module.exports = {
         rules: [...jsRules, ...styleRules, ...fileRules]
     },
     plugins: [
-        ...plugins,
-        new webpack.DllReferencePlugin({
-            manifest: require('./build/library/library.json')
-        })
+        ...plugins
         // new BundleAnalyzerPlugin()
     ],
     resolve: {
