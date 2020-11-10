@@ -1,4 +1,4 @@
-const { resolveFromRootDir } = require('../utils')
+const { resolveFromRootDir, assetsPath } = require('../utils')
 
 module.exports = [
     {
@@ -13,7 +13,8 @@ module.exports = [
                 loader: 'url-loader',
                 options: {
                     limit: 8192,
-                    esModule: false
+                    esModule: false,
+                    name: assetsPath(`imgs/[name].[hash:7].[ext]`)
                 }
             }
         ]

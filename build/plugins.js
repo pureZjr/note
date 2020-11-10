@@ -5,6 +5,7 @@ const webpack = require('webpack')
 
 const getClientEnvironment = require('./env.js')
 const env = getClientEnvironment('/')
+const { assetsPath } = require('./utils')
 
 const definePlugin = new webpack.DefinePlugin(env.stringified)
 
@@ -25,7 +26,12 @@ const plugins = [
 ]
 
 if (process.env.APP_ENV === 'production') {
-    plugins.push(new MiniCssExtractPlugin())
+    plugins.push(
+        new MiniCssExtractPlugin({
+            filename: assetsPath('css/[name].[contenthash].css'),
+            chunkFilename: assetsPath('css/[name].[id].[contenthash].css')
+        })
+    )
 } else {
     plugins.push(
         new webpack.DllReferencePlugin({

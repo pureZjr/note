@@ -6,10 +6,12 @@ const plugins = require('./plugins')
 const jsRules = require('./rules/jsRules')
 const styleRules = require('./rules/styleRules')
 const fileRules = require('./rules/fileRules')
-const { resolveFromRootDir } = require('./utils')
+const { APP_ENV } = require('./constants')
+const { resolveFromRootDir, assetsPath } = require('./utils')
+const { assetsRoot } = require('./config')
 
 module.exports = {
-    mode: process.env.APP_ENV,
+    mode: APP_ENV,
     entry: {
         app: { import: resolveFromRootDir('src/index.tsx'), dependOn: 'shared' },
         shared: 'lodash'
@@ -19,8 +21,8 @@ module.exports = {
         hot: true
     },
     output: {
-        path: resolveFromRootDir('dist'),
-        filename: '[name].js'
+        path: assetsRoot,
+        filename: APP_ENV === 'production' ? assetsPath('js/[name].[chunkhash:19].js') : '[name].js'
     },
     module: {
         rules: [...jsRules, ...styleRules, ...fileRules]
@@ -61,6 +63,7 @@ module.exports = {
         splitChunks: {
             chunks: 'all',
             cacheGroups: {
+                // 禁用默认缓存
                 default: false,
                 buildup: {
                     chunks: 'all',

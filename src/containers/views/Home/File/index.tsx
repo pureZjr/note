@@ -21,7 +21,7 @@ import CodeBlock from './CodeBlock'
 import Editor from './Editor'
 import { setTopFile, createShareFileLink } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
-import { SHHARE_BASE_URL, BREAK_IMAGE } from '@constant/index'
+import { SHARE_BASE_URL, BREAK_IMAGE } from '@constant/index'
 import CreateType from '@store/extraStore/CreateType'
 import { ImgView, ImgViewTrigger } from '@components/ImgView'
 import RenderVideo from '@components/RenderVideo'
@@ -111,7 +111,7 @@ const File: React.FC = () => {
         const getShareLink = async () => {
             try {
                 await createShareFileLink({ key: file.key, ts: moment().valueOf() })
-                const link = `${SHHARE_BASE_URL}${file.key}`
+                const link = `${SHARE_BASE_URL}${file.key}`
                 const dialog = Modal.info({
                     title: '分享链接',
                     mask: false,
