@@ -77,7 +77,7 @@ export const getDelFile = data => {
     return get('del-file-get', data)
 }
 
-// 获取回收站的文件
+// 获取最新文件
 export const getNewestFile = data => {
     return get('file-newest', data)
 }
