@@ -4,20 +4,16 @@ import { Empty, Tree } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import { Tabs } from '@store/extraStore'
-import styles from './index.scss'
 import IconFolderOpen from '@assets/svgs/folder-open.svg'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
+import SectionLoading from '@components/SectionLoading'
+import styles from './index.scss'
 
 const { DirectoryTree } = Tree
 
 const FolderTree: React.FC = () => {
     const { folderStore, extraStore, fileStore } = useRootStore()
-
-    React.useEffect(() => {
-        if (extraStore.currTabId === Tabs.MyFolder && !folderStore.treeData.length) {
-            folderStore.getTreeData()
-        }
-    }, [extraStore.currTabId])
+    const { treeData, expandTreeKeys, currSelectedFolderKey, loading } = folderStore
 
     // 点击树
     const onSelect = (keys, info) => {
@@ -53,7 +49,11 @@ const FolderTree: React.FC = () => {
         folderStore.setCurrSelectedFolderKey(info.node.key)
     }
 
-    const { treeData, expandTreeKeys, currSelectedFolderKey } = folderStore
+    React.useEffect(() => {
+        if (extraStore.currTabId === Tabs.MyFolder && !treeData.length) {
+            folderStore.getTreeData()
+        }
+    }, [extraStore.currTabId])
 
     const svgProps = {
         className: 'no-fill',
@@ -63,19 +63,25 @@ const FolderTree: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            {!folderStore.treeData.length ? (
-                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+            {loading ? (
+                <SectionLoading />
             ) : (
-                <DirectoryTree
-                    selectedKeys={[currSelectedFolderKey]}
-                    expandedKeys={expandTreeKeys}
-                    onSelect={onSelect}
-                    treeData={treeData}
-                    onRightClick={onHandleRightClick}
-                    icon={({ expanded }) =>
-                        expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
-                    }
-                />
+                <React.Fragment>
+                    {!treeData.length ? (
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+                    ) : (
+                        <DirectoryTree
+                            selectedKeys={[currSelectedFolderKey]}
+                            expandedKeys={expandTreeKeys}
+                            onSelect={onSelect}
+                            treeData={treeData}
+                            onRightClick={onHandleRightClick}
+                            icon={({ expanded }) =>
+                                expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
+                            }
+                        />
+                    )}
+                </React.Fragment>
             )}
         </div>
     )

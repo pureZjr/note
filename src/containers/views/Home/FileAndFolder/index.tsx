@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import { RollbackOutlined, UnorderedListOutlined, CaretDownFilled } from '@ant-design/icons'
-import { Empty, Spin, Menu, Dropdown } from 'antd'
+import { Empty, Menu, Dropdown } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import FolderList from './FolderList'
@@ -9,6 +9,7 @@ import FileList from './FileList'
 import { Tabs } from '@store/extraStore'
 import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
+import SectionLoading from '@components/SectionLoading'
 import styles from './index.scss'
 
 const FileAndFolder: React.FC = () => {
@@ -101,20 +102,25 @@ const FileAndFolder: React.FC = () => {
                 <div className={styles.name}>{currSelectedFolderName}</div>
                 <Dropdown overlay={menu} trigger={['click']}>
                     <div className={styles.sort}>
-                        <UnorderedListOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.4)' }} />
+                        <UnorderedListOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.4)', marginRight: 6 }} />
                         <CaretDownFilled style={{ fontSize: 12, color: 'rgba(0, 0, 0, 0.4)' }} />
                     </div>
                 </Dropdown>
             </div>
             <div className={styles.content}>
                 <PerfectScroll>
-                    {loading && <Spin className={styles.loading} />}
-                    {empty ? (
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+                    {loading ? (
+                        <SectionLoading />
                     ) : (
                         <React.Fragment>
-                            <FolderList />
-                            <FileList />
+                            {empty ? (
+                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+                            ) : (
+                                <React.Fragment>
+                                    <FolderList />
+                                    <FileList />
+                                </React.Fragment>
+                            )}
                         </React.Fragment>
                     )}
                 </PerfectScroll>

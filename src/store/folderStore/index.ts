@@ -34,15 +34,18 @@ export class FolderStore {
     }
 
     /**
-     * 文件夹数
+     * 文件夹树
      * @memberof FolderStore
      */
+    @observable loading = false
     @observable treeData: IFolderStore.ITreeData[] = []
 
     getTreeData = async () => {
+        this.loading = true
         const res = await getFolderTree()
         runInAction('SET_TREE_DATA', () => {
             this.treeData = res
+            this.loading = false
         })
     }
 

@@ -8,19 +8,27 @@
     background: #fff;
     border-right: 1px solid $black01;
     overflow: hidden;
+    position: relative;
+
+    :global(.ant-empty-normal) {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .header {
     display: flex;
     align-items: center;
-    height: 60px;
+    height: 48px;
     padding: 0 12px;
     border-bottom: 1px solid $black01;
 }
 
 .name {
     flex: 1;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     text-align: center;
     padding: 0 12px;

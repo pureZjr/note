@@ -51,30 +51,33 @@ const Tabs: React.FC<Props> = () => {
             title: '回收站'
         }
     ]
-
-    const onHandleTabClick = (id: EnumTabs) => {
-        setCurrTabId(id)
+    // 重置数据
+    const resetData = () => {
         setCurrSelectedFolderId(null)
         setFolder([])
         setFiles([])
         setCurrSelectedFolderKey(null)
+        setCurrFileId(null)
+    }
+    // 点击最新文档、我的文件夹、回收站
+    const onHandleTabClick = async (id: EnumTabs) => {
+        resetData()
+        setCurrTabId(id)
         const title = id === EnumTabs.NewDoc ? '最新文档' : id === EnumTabs.MyFolder ? '我的文件夹' : '回收站'
         setCurrSelectedFolderName(title)
         switch (id) {
             case EnumTabs.NewDoc:
                 getNewestFolderAndFile()
-                setCurrFileId(null)
                 break
             case EnumTabs.MyFolder:
-                getFolderAndFile(EnumTabs.MyFolder)
+                await getFolderAndFile(EnumTabs.MyFolder)
                 break
             case EnumTabs.Recycle:
                 getDelFolderAndFile()
-                setCurrFileId(null)
                 break
         }
     }
-
+    // 右键
     const onHandleContextMenu = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault()
         const { pageX, pageY } = event
