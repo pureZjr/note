@@ -34,7 +34,7 @@ const Home: React.FC = () => {
         <Layout className={styles.container}>
             <Header />
             <Layout className={styles.layout}>
-                <Sider width={250} className={styles.sider}>
+                <Sider width={220} className={styles.sider}>
                     <Btns />
                     <Tabs />
                 </Sider>

@@ -7,7 +7,6 @@ import { RcFile } from 'antd/lib/upload/index'
 
 import { useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
-import { Tabs } from '@store/extraStore'
 import { QN_UPLOAD_URL, QN_BUCKET, FILE_SIZE_LIMIT, QN_SOURCE_URL } from '@constant/index'
 import message from '@components/AntdMessageExt'
 import { getToken } from '@services/api/qiniu'
@@ -88,24 +87,16 @@ const Btns: React.FC = () => {
         setUploadLoading(false)
     }
 
-    // 最新文档、回收站没有新建功能
-    const disabled = [Tabs.NewDoc, Tabs.Recycle].includes(extraStore.currTabId)
-
     return (
         <div className={styles.container}>
-            <Dropdown overlay={menu()} disabled={disabled}>
-                <div className={classnames(styles.btn, disabled && styles.disabled)}>
-                    <PlusCircleOutlined
-                        width={14}
-                        height={14}
-                        style={{ color: disabled ? 'rgba(0, 0, 0, 0.2)' : 'rgb(25, 144, 255)' }}
-                    />
-                    <span className={styles.add}>新增</span>
+            <Dropdown overlay={menu()}>
+                <div className={classnames(styles.btn)}>
+                    <PlusCircleOutlined className={styles.icon} />
+                    <span className={styles.label}>新增</span>
                 </div>
             </Dropdown>
             <Upload
                 accept="image/*,video/*"
-                disabled={disabled}
                 action={QN_UPLOAD_URL}
                 data={{
                     token: qnToken
@@ -123,11 +114,9 @@ const Btns: React.FC = () => {
                     }
                 }}
             >
-                <div className={classnames(styles.btn, disabled && styles.disabled)}>
-                    <div className={styles.upload}>
-                        <CloudUploadOutlined style={{ color: disabled ? 'rgba(0, 0, 0, 0.2)' : 'rgb(25, 144, 255)' }} />
-                        上传
-                    </div>
+                <div className={classnames(styles.btn)}>
+                    <CloudUploadOutlined className={styles.icon} />
+                    <span className={styles.label}>上传</span>
                 </div>
             </Upload>
             {uploadLoading && <PageLoading />}

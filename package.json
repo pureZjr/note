@@ -6,7 +6,9 @@
     "private": true,
     "dependencies": {
         "axios": "^0.19.2",
+        "perfect-scrollbar": "^1.5.0",
         "qiniu-js": "^3.1.1",
+        "react-virtualized": "^9.22.3",
         "wangeditor": "^3.1.1"
     },
     "scripts": {

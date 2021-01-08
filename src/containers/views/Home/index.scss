@@ -1,4 +1,4 @@
-@import 'var.scss';
+@import 'base.scss';
 .container {
     display: flex;
     width: 100%;
@@ -11,6 +11,8 @@
 
 .sider {
     user-select: none;
+    background: #fff;
+    overflow: hidden;
 
     :global {
         .ant-layout-sider-children {
@@ -24,5 +26,5 @@
 
 .content {
     flex: 1;
-    background: '#fff';
+    background: #f8f8f8;
 }

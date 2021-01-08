@@ -1,11 +1,13 @@
-@import 'var.scss';
-:local(.container) {
+@import 'base.scss';
+
+.container {
     display: flex;
     flex-direction: column;
     width: 250px;
     height: 100%;
     background: #fff;
     border-right: 1px solid $black01;
+    overflow: hidden;
 }
 
 .header {
@@ -33,7 +35,7 @@
 
 .content {
     flex: 1;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
 }
 

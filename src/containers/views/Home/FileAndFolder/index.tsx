@@ -8,6 +8,7 @@ import FolderList from './FolderList'
 import FileList from './FileList'
 import { Tabs } from '@store/extraStore'
 import { LOCALSTORAGE } from '@constant/index'
+import PerfectScroll from '@components/PerfectScroll'
 import styles from './index.scss'
 
 const FileAndFolder: React.FC = () => {
@@ -106,15 +107,17 @@ const FileAndFolder: React.FC = () => {
                 </Dropdown>
             </div>
             <div className={styles.content}>
-                {loading && <Spin className={styles.loading} />}
-                {empty ? (
-                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
-                ) : (
-                    <>
-                        <FolderList />
-                        <FileList />
-                    </>
-                )}
+                <PerfectScroll>
+                    {loading && <Spin className={styles.loading} />}
+                    {empty ? (
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+                    ) : (
+                        <React.Fragment>
+                            <FolderList />
+                            <FileList />
+                        </React.Fragment>
+                    )}
+                </PerfectScroll>
             </div>
         </div>
     )
