@@ -2,12 +2,12 @@
 // Please do not change this file!
 interface CssExports {
   'active': string;
+  'container': string;
   'hide': string;
   'show': string;
   'tabContainer': string;
   'tabName': string;
   'tabParent': string;
-  'tabs-container': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

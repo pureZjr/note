@@ -137,7 +137,7 @@ const FileList: React.FC = () => {
                             {renderSvg(article.type)}
                             <div className={styles.title}>
                                 {renderTitle(article.title)}
-                                {Boolean(article.isTop) && <div className={styles['is-top']} />}
+                                {Boolean(article.isTop) && <div className={styles.isTop} />}
                             </div>
                             {fileAndFolderDisplay === 'list' && (
                                 <div className={styles.updateTime}>

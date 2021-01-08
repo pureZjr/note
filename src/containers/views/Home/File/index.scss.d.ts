@@ -9,11 +9,11 @@ interface CssExports {
   'info': string;
   'loading': string;
   'markdown': string;
-  'md-edit-and-read': string;
-  'textarea-container': string;
+  'mdEditAndRead': string;
+  'textareaContainer': string;
   'tips': string;
   'title': string;
-  'wange-editor': string;
+  'wangeEditor': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

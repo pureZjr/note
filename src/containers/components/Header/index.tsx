@@ -85,7 +85,7 @@ const Header: React.FC = () => {
                 <img src={require('@assets/img/illusion.jpg')} width={40} height={40} />
                 幻象笔记
             </div>
-            <div className={styles['right-container']}>
+            <div className={styles.rightContainer}>
                 <Search
                     className={styles.search}
                     placeholder="输入关键字搜索"

@@ -284,8 +284,8 @@ const File: React.FC = () => {
                 return (
                     <>
                         {mdEditAndRead ? (
-                            <div className={styles['md-edit-and-read']}>
-                                <div className={styles['textarea-container']}>
+                            <div className={styles.mdEditAndRead}>
+                                <div className={styles.textareaContainer}>
                                     {textarea}
                                     {mdDivider()}
                                 </div>

@@ -1,6 +1,6 @@
 @import 'base.scss';
 
-:local(.tabs-container) {
+.container {
     background-color: #fff;
     flex: 1;
     overflow: auto;
@@ -9,7 +9,7 @@
 .tabContainer {
     display: flex;
     flex-direction: column;
-    min-height: 50px;
+    height: 48px;
     background: #fff;
 }
 
@@ -17,9 +17,10 @@
     display: flex;
     flex: 1;
     align-items: center;
-    min-height: 50px;
+    height: 48px;
     padding: 0 12px;
     cursor: pointer;
+
     &:hover {
         background-color: #eff0f1;
     }

@@ -56,8 +56,8 @@ function RenderVideo({ videoSrc, width, height, style, useMateriaFn, disableAuto
             {renderVideo}
             {!noPlay && (
                 <div className={styles.mask} onClick={play}>
-                    <PlayCircleOutlined className={styles['play-icon']} />
-                    <PlayAngel className={styles['play-angel']} />
+                    <PlayCircleOutlined className={styles.playIcon} />
+                    <PlayAngel className={styles.playAngel} />
                 </div>
             )}
         </div>

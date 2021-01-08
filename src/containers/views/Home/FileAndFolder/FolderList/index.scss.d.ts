@@ -4,7 +4,7 @@ interface CssExports {
   'active': string;
   'container': string;
   'title': string;
-  'title-container': string;
+  'titleContainer': string;
   'updateTime': string;
   'wrapper': string;
 }

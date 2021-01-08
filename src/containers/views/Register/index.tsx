@@ -47,7 +47,7 @@ const Register: React.FC = () => {
             onFinishFailed={onFinishFailed}
         >
             <div className={styles.bg} style={{ backgroundImage: `url(${require('@assets/img/login-banner.jpg')})` }} />
-            <div className={styles['input-container']}>
+            <div className={styles.inputContainer}>
                 <Form.Item
                     style={itemStyle}
                     label="用户名"

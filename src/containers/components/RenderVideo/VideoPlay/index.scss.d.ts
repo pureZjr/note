@@ -3,12 +3,12 @@
 interface CssExports {
   'container': string;
   'content': string;
-  'down-load-icon': string;
-  'icon-close': string;
+  'downLoadIcon': string;
+  'iconClose': string;
   'overlay': string;
   'title': string;
   'video': string;
-  'video-box': string;
+  'videoBox': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

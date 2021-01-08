@@ -14,14 +14,13 @@
     background: #fff;
     overflow: hidden;
 
-    :global {
-        .ant-layout-sider-children {
-            display: flex;
-            flex-direction: column;
-            background-color: #fff;
-            border-right: 1px solid $black01;
-        }
-    }
+    // :global {
+    //     .ant-layout-sider-children {
+    //         display: flex;
+    //         flex-direction: column;
+    //         background-color: #fff;
+    //     }
+    // }
 }
 
 .content {

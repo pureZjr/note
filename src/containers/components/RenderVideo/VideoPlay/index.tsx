@@ -121,7 +121,7 @@ class VideoPlay extends React.Component<VideoPlayProps> {
         const { url, width, height, title, content, poster, disableDownload, disableAutoplay } = this.props
         return (
             <div className={styles.container}>
-                <div className={styles['video-box']}>
+                <div className={styles.videoBox}>
                     <video
                         ref={this.setVideoRef}
                         className={styles.video}
@@ -133,10 +133,8 @@ class VideoPlay extends React.Component<VideoPlayProps> {
                     >
                         <source src={url} type="video/mp4" />
                     </video>
-                    <IconClose className={styles['icon-close']} width={50} height={50} onClick={this.beforeHide} />
-                    {!disableDownload && (
-                        <IconDownload onClick={this.downloadEvent} className={styles['down-load-icon']} />
-                    )}
+                    <IconClose className={styles.iconClose} width={50} height={50} onClick={this.beforeHide} />
+                    {!disableDownload && <IconDownload onClick={this.downloadEvent} className={styles.downLoadIcon} />}
                 </div>
                 <div className={styles.overlay} onClick={this.beforeHide} />
                 {title && (

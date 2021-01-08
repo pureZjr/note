@@ -94,7 +94,7 @@ const Tabs: React.FC<Props> = () => {
     })
 
     return (
-        <div className={styles['tabs-container']}>
+        <div className={styles.container}>
             {tabs.map(tab => {
                 const active = tab.id === currTabId
                 return (

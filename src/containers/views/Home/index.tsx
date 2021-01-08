@@ -11,6 +11,7 @@ import { useRootStore, useOnMount } from '@utils/customHooks'
 import CreateFolderAndFile from '@components/CreateFolderAndFile'
 import RightClickMenus from '@components/RightClickMenus'
 import { LOCALSTORAGE } from '@constant/index'
+import PerfectScroll from '@components/PerfectScroll'
 
 import styles from './index.scss'
 
@@ -34,10 +35,12 @@ const Home: React.FC = () => {
         <Layout className={styles.container}>
             <Header />
             <Layout className={styles.layout}>
-                <Sider width={220} className={styles.sider}>
-                    <Btns />
-                    <Tabs />
-                </Sider>
+                <PerfectScroll style={{ background: '#fff', borderRight: '1px solid rgba(0, 0, 0, 0.1)' }}>
+                    <Sider width={220} className={styles.sider}>
+                        <Btns />
+                        <Tabs />
+                    </Sider>
+                </PerfectScroll>
                 <FileAndFolder />
                 <Content className={styles.content}>
                     <File />

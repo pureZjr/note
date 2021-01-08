@@ -35,7 +35,7 @@ class PortalsContainer extends React.Component<PortalsContainerProps> {
 
     render() {
         const { className, style } = this.props
-        const classNamesTop = classNames(styles['portals-container'], className)
+        const classNamesTop = classNames(styles.portalsContainer, className)
         const element = (
             <div style={style} className={classNamesTop}>
                 {this.props.children}

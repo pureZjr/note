@@ -2,7 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'anticon': string;
-  'icon-close': string;
+  'iconClose': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

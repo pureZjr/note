@@ -4,7 +4,7 @@ interface CssExports {
   'active': string;
   'bottom': string;
   'container': string;
-  'is-top': string;
+  'isTop': string;
   'item': string;
   'parentFolderTitle': string;
   'size': string;

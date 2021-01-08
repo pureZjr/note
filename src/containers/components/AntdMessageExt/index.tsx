@@ -20,7 +20,7 @@ function notice(
     const newContent: React.ReactNode = (
         <span>
             {content}
-            <CloseOutlined className={styles['icon-close']} onClick={message.destroy} />
+            <CloseOutlined className={styles.iconClose} onClick={message.destroy} />
         </span>
     )
     AntdMessage.destroy()

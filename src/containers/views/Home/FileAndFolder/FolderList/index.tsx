@@ -106,7 +106,7 @@ const FolderList: React.FC = () => {
                         onClick={() => onHandleClickItem(folder)}
                         onContextMenu={e => onHandleContextMenu(e, folder)}
                     >
-                        <div className={styles['title-container']}>
+                        <div className={styles.titleContainer}>
                             <IconFolderClose width={20} height={20} className="no-fill" />
                             <div className={styles.title}>{renderTitle(folder.title)}</div>
                         </div>

@@ -2,7 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'container': string;
-  'right-container': string;
+  'rightContainer': string;
   'search': string;
   'title': string;
 }

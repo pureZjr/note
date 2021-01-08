@@ -37,7 +37,7 @@ const Editor: React.FC<Props> = ({ defaultValue, onChange }: Props) => {
         init()
     })
 
-    return <div className={styles['wange-editor']} ref={ref}></div>
+    return <div className={styles.wangeEditor} ref={ref}></div>
 }
 
 export default Editor

@@ -4,8 +4,8 @@ interface CssExports {
   'container': string;
   'loading': string;
   'mask': string;
-  'play-angel': string;
-  'play-icon': string;
+  'playAngel': string;
+  'playIcon': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
