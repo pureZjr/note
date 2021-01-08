@@ -7,12 +7,12 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { javascript, jsx } from 'react-syntax-highlighter/dist/esm/languages/prism'
 import { isUndefined } from 'lodash'
 
-interface IProps {
+interface Props {
     language?: any
     value?: any
 }
 
-class CodeBlock extends PureComponent<IProps> {
+class CodeBlock extends PureComponent<Props> {
     static propTypes = {
         language: PropTypes.string
     }

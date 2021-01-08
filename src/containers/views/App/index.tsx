@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 
+import PageLoading from '@components/PageLoading'
 import styles from './index.scss'
 
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ '@views/Home'))
@@ -13,7 +14,7 @@ const ShareArticle = lazy(() => import(/* webpackChunkName: "ShareArticle" */ '@
 function App() {
     return (
         <div className={styles.container}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<PageLoading Icon={<img src={require('@assets/gifs/loading-pen.gif')} />} />}>
                 <Switch>
                     <Route path="/login" exact={true}>
                         <Login />

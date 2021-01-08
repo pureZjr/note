@@ -10,13 +10,13 @@ import message from '@components/AntdMessageExt'
 
 import styles from './index.scss'
 
-interface IProps {
+interface Props {
     close: () => void
 }
 
 const { TextArea } = Input
 
-const UserInfo: React.FC<IProps> = ({ close }: IProps) => {
+const UserInfo: React.FC<Props> = ({ close }: Props) => {
     const [info, setInfo] = React.useState<IUserInfoStore.IUserInfo>({})
     const [qnToken, setQnToken] = React.useState('')
 

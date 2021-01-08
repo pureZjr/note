@@ -4,12 +4,12 @@ import WangeEditor from 'wangeditor'
 import { useOnMount } from '@utils/customHooks'
 import styles from './index.scss'
 
-interface IProps {
+interface Props {
     defaultValue?: string
     onChange: (txt: string) => void
 }
 
-const Editor: React.FC<IProps> = ({ defaultValue, onChange }: IProps) => {
+const Editor: React.FC<Props> = ({ defaultValue, onChange }: Props) => {
     const ref = React.useRef(null)
 
     const create = editor => {

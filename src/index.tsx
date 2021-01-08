@@ -3,6 +3,7 @@ import * as ReactDom from 'react-dom'
 import { HashRouter, Router } from 'react-router-dom'
 import { createHashHistory } from 'history'
 import { syncHistoryWithStore } from 'mobx-react-router'
+import 'antd/dist/antd.css'
 
 import * as store from '@store/index'
 import { RootProvider } from '@components/RootProvider'

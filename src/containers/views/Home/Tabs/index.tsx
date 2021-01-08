@@ -10,9 +10,9 @@ import { Tabs as EnumTabs } from '@store/extraStore'
 import IconFolderOpen from '@assets/svgs/folder-open.svg'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
 
-interface IProps {}
+interface Props {}
 
-const Tabs: React.FC<IProps> = () => {
+const Tabs: React.FC<Props> = () => {
     const {
         extraStore: {
             currTabId,

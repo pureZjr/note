@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown, Menu, Upload, Spin } from 'antd'
+import { Dropdown, Menu, Upload } from 'antd'
 import { PlusCircleOutlined, CloudUploadOutlined } from '@ant-design/icons'
 import { observer } from 'mobx-react'
 import classnames from 'classnames'
@@ -12,7 +12,7 @@ import { QN_UPLOAD_URL, QN_BUCKET, FILE_SIZE_LIMIT, QN_SOURCE_URL } from '@const
 import message from '@components/AntdMessageExt'
 import { getToken } from '@services/api/qiniu'
 import { create } from '@services/api/file'
-import PortalsContainer from '@components/PortalsContainer'
+import PageLoading from '@components/PageLoading'
 import styles from './index.scss'
 
 const Btns: React.FC = () => {
@@ -130,11 +130,7 @@ const Btns: React.FC = () => {
                     </div>
                 </div>
             </Upload>
-            {uploadLoading && (
-                <PortalsContainer style={{ backgroundColor: 'transparent', zIndex: 100 }}>
-                    <Spin className={styles.loading} />
-                </PortalsContainer>
-            )}
+            {uploadLoading && <PageLoading />}
         </div>
     )
 }

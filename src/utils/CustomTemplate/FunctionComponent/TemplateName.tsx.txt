@@ -2,9 +2,9 @@ import * as React from 'react'
 
 import styles from './index.scss'
 
-interface IProps {}
+interface Props {}
 
-const ${ComponentName}: React.FC = (props: IProps) => {
+const ${ComponentName}: React.FC = (props: Props) => {
     return <div className={styles.container}>${ComponentName}</div>
 }
 
