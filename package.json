@@ -14,8 +14,7 @@
         "lint": "eslint src  --ext .ts,.tsx && stylelint \"./src/**/*.scss\"",
         "add": "add-component",
         "build": "cross-env APP_ENV=production NODE_ENV=production webpack --config ./build/webpack.config.js",
-        "deployProd": "./deploy/deployProd.sh",
-        "dll": "webpack --config ./build/webpack.dll.js"
+        "deployProd": "./deploy/deployProd.sh"
     },
     "devDependencies": {
         "@svgr/webpack": "^4.3.2",
