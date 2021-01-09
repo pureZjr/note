@@ -13,17 +13,18 @@
     user-select: none;
     background: #fff;
     overflow: hidden;
-
-    // :global {
-    //     .ant-layout-sider-children {
-    //         display: flex;
-    //         flex-direction: column;
-    //         background-color: #fff;
-    //     }
-    // }
 }
 
 .content {
     flex: 1;
     background: #f8f8f8;
+    position: relative;
+}
+
+.emptyImg {
+    width: 84px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

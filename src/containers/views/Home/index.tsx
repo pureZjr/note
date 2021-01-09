@@ -42,7 +42,13 @@ const Home: React.FC = () => {
                     </Sider>
                 </PerfectScroll>
                 <FileAndFolder />
-                <Content className={styles.content}>{!!fileStore.currFileInfo && <File />}</Content>
+                <Content className={styles.content}>
+                    {!!fileStore.currFileInfo ? (
+                        <File />
+                    ) : (
+                        <img className={styles.emptyImg} src={require('@assets/img/note.png')} />
+                    )}
+                </Content>
             </Layout>
             <CreateFolderAndFile />
             <RightClickMenus />
