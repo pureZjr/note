@@ -14,13 +14,7 @@ import styles from './index.scss'
 
 const FileAndFolder: React.FC = () => {
     const {
-        folderStore: {
-            folders,
-            currSelectedFolderName,
-            currSelectedFolderKey,
-            setCurrSelectedFolderKey,
-            setNameByParentKey
-        },
+        folderStore: { folders, currFolderInfo, setCurrFolderInfo, setNameByParentKey },
         fileStore: { files },
         extraStore: {
             loading,
@@ -39,8 +33,13 @@ const FileAndFolder: React.FC = () => {
         return !folders.length && !files.length
     }, [folders, files])
 
+    /**
+     * 通过currSelectedFolderKey判断是否有返回上一级
+     * currSelectedFolderKey通过 ’-‘ 拼接父子key
+     * 所有判断 ’-‘ 的数量是否大于1就能知道当前是否在子文件夹
+     */
     const canBack =
-        !!currSelectedFolderKey && (currSelectedFolderKey.match(/-/g) || []).length > 1 && currTabId === Tabs.MyFolder
+        !!currFolderInfo.key && (currFolderInfo.key.match(/-/g) || []).length > 1 && currTabId === Tabs.MyFolder
     const rollbackOutlinedStyle = canBack
         ? { color: 'rgba(0, 0, 0, 0.4)', cursor: 'pointer' }
         : { color: 'rgba(0, 0, 0, 0.1)', cursor: 'not-allowed' }
@@ -49,18 +48,19 @@ const FileAndFolder: React.FC = () => {
         if (canBack) {
             let parentKey = '2'
             // 根据当前的key获取父key,key是一层层拼接的所以可以经过下面判断获取父key
-            const parentKeyLength = (currSelectedFolderKey.match(/-/g) || []).length / 5
-            const item = currSelectedFolderKey.split('-')
+            const parentKeyLength = (currFolderInfo.key.match(/-/g) || []).length / 5
+            const item = currFolderInfo.key.split('-')
             for (let i = 0; i < parentKeyLength - 1; i++) {
                 parentKey += `-${item[1 + 5 * i]}-${item[2 + 5 * i]}-${item[3 + 5 * i]}-${item[4 + 5 * i]}-${
                     item[5 + 5 * i]
                 }`
             }
             getFolderAndFile(parentKey)
-            setCurrSelectedFolderKey(parentKey)
+            setCurrFolderInfo({ key: parentKey })
             setNameByParentKey(parentKey)
         }
     }
+    // 处理列表排序操作项
     const onHandleList = (key: string) => {
         switch (key) {
             case 'abstract':
@@ -74,7 +74,7 @@ const FileAndFolder: React.FC = () => {
                 localStorage.setItem(LOCALSTORAGE.FILEANDFOLDERSORT, key)
                 setFileAndFolderSort(key)
                 if (currTabId === Tabs.MyFolder) {
-                    getFolderAndFile(currSelectedFolderKey || '2')
+                    getFolderAndFile(currFolderInfo.key || '2')
                 } else if (currTabId === Tabs.NewDoc) {
                     getNewestFolderAndFile(key)
                 } else {
@@ -83,7 +83,7 @@ const FileAndFolder: React.FC = () => {
                 break
         }
     }
-
+    // 列表排序项
     const menu = (
         <Menu onClick={e => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
             <Menu.Item key="abstract">摘要</Menu.Item>
@@ -99,7 +99,7 @@ const FileAndFolder: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.header}>
                 <RollbackOutlined style={{ fontSize: 18, ...rollbackOutlinedStyle }} onClick={onBlack} />
-                <div className={styles.name}>{currSelectedFolderName}</div>
+                <div className={styles.name}>{currFolderInfo.title}</div>
                 <Dropdown overlay={menu} trigger={['click']}>
                     <div className={styles.sort}>
                         <UnorderedListOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.4)', marginRight: 6 }} />

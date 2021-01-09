@@ -22,8 +22,8 @@ const Tabs: React.FC<Props> = () => {
             getNewestFolderAndFile,
             setMenuProps
         },
-        folderStore: { setCurrSelectedFolderId, setCurrSelectedFolderName, setCurrSelectedFolderKey, setFolder },
-        fileStore: { setCurrFileId, setFiles }
+        folderStore: { setCurrFolderInfo, setFolder },
+        fileStore: { setCurrFileInfo, setFiles }
     } = useRootStore()
 
     const svgProps = {
@@ -53,18 +53,17 @@ const Tabs: React.FC<Props> = () => {
     ]
     // 重置数据
     const resetData = () => {
-        setCurrSelectedFolderId(null)
         setFolder([])
         setFiles([])
-        setCurrSelectedFolderKey(null)
-        setCurrFileId(null)
+        setCurrFolderInfo(null)
+        setCurrFileInfo(null)
     }
     // 点击最新文档、我的文件夹、回收站
     const onHandleTabClick = async (id: EnumTabs) => {
         resetData()
         setCurrTabId(id)
         const title = id === EnumTabs.NewDoc ? '最新文档' : id === EnumTabs.MyFolder ? '我的文件夹' : '回收站'
-        setCurrSelectedFolderName(title)
+        setCurrFolderInfo({ title })
         switch (id) {
             case EnumTabs.NewDoc:
                 getNewestFolderAndFile()
@@ -89,7 +88,7 @@ const Tabs: React.FC<Props> = () => {
             key: EnumTabs.MyFolder,
             isFolder: true
         })
-        setCurrSelectedFolderKey(EnumTabs.MyFolder)
+        setCurrFolderInfo({ key: EnumTabs.MyFolder })
     }
 
     useOnMount(() => {

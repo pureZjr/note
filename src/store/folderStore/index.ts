@@ -38,7 +38,7 @@ export class FolderStore {
      * @memberof FolderStore
      */
     @observable loading = false
-    @observable treeData: IFolderStore.ITreeData[] = []
+    @observable treeData: IFolderStore.TreeData[] = []
 
     getTreeData = async () => {
         this.loading = true
@@ -50,27 +50,19 @@ export class FolderStore {
     }
 
     /**
-     * 当前选中文件夹的id
+     * 当前选中文件夹的信息
      *
      * @memberof FolderStore
      */
     @observable
-    currSelectedFolderId: string = null
-    @action
-    setCurrSelectedFolderId = (id: string) => {
-        this.currSelectedFolderId = id
+    currFolderInfo: IFolderStore.Folder = {
+        id: '',
+        key: '',
+        title: '最新文档'
     }
-
-    /**
-     * 当前选中文件夹的keey
-     *
-     * @memberof FolderStore
-     */
-    @observable
-    currSelectedFolderKey: string = null
     @action
-    setCurrSelectedFolderKey = (key: string) => {
-        this.currSelectedFolderKey = key
+    setCurrFolderInfo = (info: IFolderStore.Folder) => {
+        this.currFolderInfo = info ? { ...this.currFolderInfo, ...info } : null
     }
 
     /**
@@ -79,9 +71,9 @@ export class FolderStore {
      * @memberof FolderStore
      */
     @observable
-    folders: IFolderStore.ITreeData[] = []
+    folders: IFolderStore.TreeData[] = []
     @action
-    setFolder = (folders: IFolderStore.ITreeData[]) => {
+    setFolder = (folders: IFolderStore.TreeData[]) => {
         this.folders = folders
     }
 
@@ -94,17 +86,6 @@ export class FolderStore {
         const res = await getFolder({ parentKey, sort: extraStore.fileAndFolderSort })
         this.setFolder(res)
         return res
-    }
-
-    /**
-     * 当前文件夹的名字
-     *
-     * @memberof FolderStore
-     */
-    @observable currSelectedFolderName: string = '最新文档'
-    @action
-    setCurrSelectedFolderName = (name: string) => {
-        this.currSelectedFolderName = name
     }
 
     /**
@@ -126,7 +107,7 @@ export class FolderStore {
     setNameByParentKey = (key: string) => {
         getFolderInfo({ key }).then(res => {
             if (!!res.length) {
-                this.setCurrSelectedFolderName(res[0].title)
+                this.setCurrFolderInfo({ title: res[0].title })
             } else {
                 const title =
                     extraStore.currTabId === Tabs.NewDoc
@@ -134,7 +115,7 @@ export class FolderStore {
                         : extraStore.currTabId === Tabs.MyFolder
                         ? '我的文件夹'
                         : '回收站'
-                this.setCurrSelectedFolderName(title)
+                this.setCurrFolderInfo({ title })
             }
         })
     }

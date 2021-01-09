@@ -4,7 +4,7 @@ export as namespace IFileStore
 
 export interface FileStore extends FileStoreModel {}
 
-export interface IFile {
+export interface File {
     id?: string
     title?: string
     createTime?: number

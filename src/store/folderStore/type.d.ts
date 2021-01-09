@@ -4,10 +4,17 @@ export as namespace IFolderStore
 
 export interface FolderStore extends FolderStoreModel {}
 
-interface ITreeData {
-    id: string
-    title: string
+interface FolderBase {
+    id?: string
+    title?: string
+    updateTime?: number
+}
+
+interface TreeData extends FolderBase {
+    children?: TreeData[]
     key: string
-    updateTime: number
-    children?: ITreeData[]
+}
+
+interface Folder extends FolderBase {
+    key?: string
 }

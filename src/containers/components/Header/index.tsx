@@ -34,14 +34,14 @@ const Header: React.FC = () => {
 
     const handleSearch = (val: string) => {
         const { currTabId, searchFolderAndFile, setIsSearching } = extraStore
-        const { currSelectedFolderKey } = folderStore
+        const { currFolderInfo } = folderStore
         const data = {
             keyword: val,
             type: currTabId
         }
         if (currTabId === Tabs.MyFolder) {
             Object.assign(data, {
-                key: currSelectedFolderKey
+                key: currFolderInfo.key
             })
         }
         searchFolderAndFile(data)

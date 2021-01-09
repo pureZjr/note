@@ -18,7 +18,7 @@ import styles from './index.scss'
 const { Sider, Content } = Layout
 
 const Home: React.FC = () => {
-    const { routerStore, userInfoStore } = useRootStore()
+    const { routerStore, userInfoStore, fileStore } = useRootStore()
 
     function checkLocalUserInfo() {
         const userInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
@@ -42,9 +42,7 @@ const Home: React.FC = () => {
                     </Sider>
                 </PerfectScroll>
                 <FileAndFolder />
-                <Content className={styles.content}>
-                    <File />
-                </Content>
+                <Content className={styles.content}>{!!fileStore.currFileInfo && <File />}</Content>
             </Layout>
             <CreateFolderAndFile />
             <RightClickMenus />

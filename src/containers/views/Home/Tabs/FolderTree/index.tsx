@@ -13,24 +13,17 @@ const { DirectoryTree } = Tree
 
 const FolderTree: React.FC = () => {
     const { folderStore, extraStore, fileStore } = useRootStore()
-    const { treeData, expandTreeKeys, currSelectedFolderKey, loading } = folderStore
+    const { treeData, expandTreeKeys, currFolderInfo, loading } = folderStore
 
     // 点击树
     const onSelect = (keys, info) => {
-        const {
-            setExpandTreeKeys,
-            setCurrSelectedFolderId,
-            setCurrSelectedFolderKey,
-            setCurrSelectedFolderName
-        } = folderStore
+        const { setExpandTreeKeys, setCurrFolderInfo } = folderStore
         const { getFolderAndFile } = extraStore
-        setCurrSelectedFolderId(info.node.id)
-        setCurrSelectedFolderName(info.node.title)
         const key = keys[0]
-        setCurrSelectedFolderKey(key)
+        setCurrFolderInfo({ id: info.node.id, title: info.node.title, key })
         setExpandTreeKeys(key)
         getFolderAndFile(key)
-        fileStore.setCurrFileId(null)
+        fileStore.setCurrFileInfo(null)
     }
 
     // 右击
@@ -46,7 +39,7 @@ const FolderTree: React.FC = () => {
             isTree: true,
             title: info.node.title
         })
-        folderStore.setCurrSelectedFolderKey(info.node.key)
+        folderStore.setCurrFolderInfo({ key: info.node.key })
     }
 
     React.useEffect(() => {
@@ -71,7 +64,7 @@ const FolderTree: React.FC = () => {
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
                     ) : (
                         <DirectoryTree
-                            selectedKeys={[currSelectedFolderKey]}
+                            selectedKeys={[currFolderInfo.key]}
                             expandedKeys={expandTreeKeys}
                             onSelect={onSelect}
                             treeData={treeData}

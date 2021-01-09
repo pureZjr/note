@@ -24,30 +24,28 @@ const CreateFolderAndFile: React.FC = () => {
             return message.error('名称不能为空')
         }
         const {
-            currSelectedFolderId,
             expandTreeKeys,
-            currSelectedFolderKey,
+            currFolderInfo,
             setExpandTreeKeys,
             getTreeData,
-            setCurrSelectedFolderKey,
+            setCurrFolderInfo,
             setFolder
         } = folderStore
-        const { setCurrFileId, insertFile, setFiles, setFileContent } = fileStore
+        const { setCurrFileInfo, insertFile, setFiles } = fileStore
 
         const { currTabId } = extraStore
-        const fid = currSelectedFolderId || currTabId
+        const fid = currFolderInfo.id || currTabId
         try {
             if (extraStore.createFileFolderType === CreateType.Folder) {
-                const { key } = await createFolder({ title: name, id: fid, key: currSelectedFolderKey || '2' })
-                setCurrSelectedFolderKey(key)
-                if (!expandTreeKeys.includes(currSelectedFolderKey)) {
-                    setExpandTreeKeys(currSelectedFolderKey)
+                const { key } = await createFolder({ title: name, id: fid, key: currFolderInfo.key || '2' })
+                setCurrFolderInfo({ key })
+                if (!expandTreeKeys.includes(currFolderInfo.key)) {
+                    setExpandTreeKeys(currFolderInfo.key)
                 }
                 getTreeData()
                 setFiles([])
                 setFolder([])
-                setCurrFileId(null)
-                setFileContent('')
+                setCurrFileInfo(null)
             } else {
                 const res = await createFile({
                     title: name,
@@ -56,7 +54,7 @@ const CreateFolderAndFile: React.FC = () => {
                     parentId: fid
                 })
                 insertFile(res)
-                setCurrFileId(res.id)
+                setCurrFileInfo({ id: res.id })
             }
         } catch {}
         close()

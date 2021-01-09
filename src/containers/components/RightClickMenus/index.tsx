@@ -47,8 +47,8 @@ const RightClickMenus: React.FC = () => {
     }
 
     const handleClick = async ({ key }) => {
-        const { setCurrSelectedFolderId, getTreeData } = folderStore
-        setCurrSelectedFolderId(folderId)
+        const { setCurrFolderInfo, getTreeData } = folderStore
+        setCurrFolderInfo({ id: folderId })
 
         switch (key) {
             case '1':
@@ -62,17 +62,12 @@ const RightClickMenus: React.FC = () => {
             case '3':
                 ;(isFolder ? delFolder : delFile)({ id: isFolder ? folderId : articleId, type }).then(() => {
                     if (isFolder) {
-                        const {
-                            delFolder,
-                            setExpandTreeKeys,
-                            setCurrSelectedFolderKey,
-                            setNameByParentKey
-                        } = folderStore
+                        const { delFolder, setExpandTreeKeys, setCurrFolderInfo, setNameByParentKey } = folderStore
                         getTreeData()
                         delFolder(folderId)
                         setExpandTreeKeys(folderKey)
                         const parentKey = folderKey.replace(`-${folderId}`, '')
-                        setCurrSelectedFolderKey(parentKey)
+                        setCurrFolderInfo({ key: parentKey })
                         getFolderAndFile(parentKey)
                         setNameByParentKey(parentKey)
                         if (isTree) {

@@ -10,15 +10,8 @@ import { setAllKeysByCurrKey } from '@utils/common'
 
 const FolderList: React.FC = () => {
     const {
-        folderStore: {
-            folders,
-            currSelectedFolderId,
-            setCurrSelectedFolderId,
-            setCurrSelectedFolderName,
-            setCurrSelectedFolderKey,
-            setExpandTreeKeys
-        },
-        fileStore: { setCurrFileId },
+        folderStore: { folders, currFolderInfo, setCurrFolderInfo, setExpandTreeKeys },
+        fileStore: { setCurrFileInfo },
         extraStore: {
             currTabId,
             isSearching,
@@ -31,17 +24,15 @@ const FolderList: React.FC = () => {
     } = useRootStore()
 
     // 点击文件夹，更新阅读时间
-    const onHandleClickItem = ({ id, title, key }: IFolderStore.ITreeData) => {
-        setCurrSelectedFolderName(title)
+    const onHandleClickItem = ({ id, title, key }: IFolderStore.TreeData) => {
         if (Tabs.Recycle === currTabId) {
             return
         }
         if (Tabs.NewDoc === currTabId) {
             setCurrTabId(Tabs.MyFolder)
         }
-        setCurrFileId(null)
-        setCurrSelectedFolderId(id)
-        setCurrSelectedFolderKey(key)
+        setCurrFileInfo(null)
+        setCurrFolderInfo({ title, id, key })
         getFolderAndFile(key)
         if (isSearching) {
             setAllKeysByCurrKey(key)
@@ -52,7 +43,7 @@ const FolderList: React.FC = () => {
 
     const onHandleContextMenu = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        { id, key, title }: IFolderStore.ITreeData
+        { id, key, title }: IFolderStore.TreeData
     ) => {
         event.preventDefault()
         const { pageX, pageY } = event
@@ -65,7 +56,7 @@ const FolderList: React.FC = () => {
             isFolder: true,
             title
         })
-        setCurrSelectedFolderKey(key)
+        setCurrFolderInfo({ key })
     }
 
     const renderTitle = (title: string) => {
@@ -100,7 +91,7 @@ const FolderList: React.FC = () => {
             {folders.map(folder => {
                 return (
                     <div
-                        className={`${styles.wrapper} ${folder.id === currSelectedFolderId ? styles.active : ''}`}
+                        className={`${styles.wrapper} ${folder.id === currFolderInfo.id ? styles.active : ''}`}
                         style={itemStyle}
                         key={folder.id}
                         onClick={() => onHandleClickItem(folder)}

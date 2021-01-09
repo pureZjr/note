@@ -9,9 +9,26 @@
     position: relative;
 
     :global {
-        .ant-tree-treenode {
-            min-height: 50px;
-            align-items: center;
+        .ant-tree {
+            min-width: fit-content;
+            width: 100%;
+
+            .ant-tree-treenode {
+                min-height: 50px;
+                align-items: center;
+
+                .ant-tree-node-content-wrapper {
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+
+                    .ant-tree-treenode span {
+                        height: 50px;
+                        display: block;
+                        flex: 1;
+                    }
+                }
+            }
         }
     }
 }

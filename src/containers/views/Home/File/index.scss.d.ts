@@ -5,12 +5,15 @@ interface CssExports {
   'container': string;
   'content': string;
   'divider': string;
+  'editMdContainer': string;
   'header': string;
+  'hideMarkdown': string;
+  'hideToolBar': string;
+  'icon': string;
   'info': string;
   'loading': string;
   'markdown': string;
   'mdEditAndRead': string;
-  'textareaContainer': string;
   'tips': string;
   'title': string;
   'wangeEditor': string;

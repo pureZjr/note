@@ -195,6 +195,8 @@ export class ExtraStore {
 
     /**
      * 文件文件夹列表显示方式
+     * abstract: 摘要
+     * list: 列表
      *
      * @memberof ExtraStore
      */

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import moment from 'moment'
+import { get } from 'lodash'
 
 import { useRootStore } from '@utils/customHooks'
 import IconMarkdown from '@assets/svgs/markdown.svg'
@@ -16,13 +17,8 @@ import IconFolderClose from '@assets/svgs/folder-close.svg'
 
 const FileList: React.FC = () => {
     const {
-        fileStore: { files, currFileId, setFileContent, setCurrFileId, setContentLoading },
-        folderStore: {
-            setCurrSelectedFolderId,
-            setCurrSelectedFolderKey,
-            setExpandTreeKeys,
-            setCurrSelectedFolderName
-        },
+        fileStore: { files, currFileInfo, setCurrFileInfo, setContentLoading },
+        folderStore: { setCurrFolderInfo, setExpandTreeKeys },
         extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
     } = useRootStore()
 
@@ -45,36 +41,44 @@ const FileList: React.FC = () => {
     }
 
     // 点击文章，更新阅读时间
-    const onHandleClickItem = async ({ id, parentId, parentKey, type, parentFolderTitle }: IFileStore.IFile) => {
-        if ([Tabs.MyFolder, Tabs.NewDoc].includes(currTabId)) {
-            setCurrFileId(id)
-        }
+    const onHandleClickItem = async ({
+        id,
+        parentId,
+        parentKey,
+        type,
+        parentFolderTitle,
+        title,
+        isTop
+    }: IFileStore.File) => {
+        setCurrFileInfo(null)
         if (Tabs.MyFolder === currTabId) {
-            setCurrSelectedFolderName(parentFolderTitle)
-            setCurrSelectedFolderId(parentId)
-            setCurrSelectedFolderKey(parentKey)
+            setCurrFolderInfo({
+                title: parentFolderTitle,
+                id: parentId,
+                key: parentKey
+            })
         }
         try {
             setContentLoading(true)
             const res = await getFileContent({ id, type })
-            setFileContent(res)
-            setContentLoading(false)
+            setCurrFileInfo({ content: res, id, title, type, isTop, parentKey, parentFolderTitle })
         } catch {}
+        setContentLoading(false)
     }
-
-    // 跳转我的文件
+    // 跳转我的文件夹
     const gotoMyFolder = (key: string, id: string) => {
         setExpandTreeKeys()
         setCurrTabId(Tabs.MyFolder)
         setAllKeysByCurrKey(key)
-        setCurrSelectedFolderId(id)
-        setCurrSelectedFolderKey(key)
+        setCurrFolderInfo({
+            id,
+            key
+        })
     }
-
     // 鼠标右键
     const onHandleContextMenu = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        { parentId, parentKey, id, type, title, isTop }: IFileStore.IFile
+        { parentId, parentKey, id, type, title, isTop }: IFileStore.File
     ) => {
         event.preventDefault()
         const { pageX, pageY } = event
@@ -89,7 +93,7 @@ const FileList: React.FC = () => {
             title,
             isTop
         })
-        setCurrSelectedFolderKey(parentKey)
+        setCurrFolderInfo({ key: parentKey })
     }
 
     const renderTitle = (title: string) => {
@@ -122,7 +126,7 @@ const FileList: React.FC = () => {
     return (
         <div className={styles.container}>
             {files.map(article => {
-                const active = article.id === currFileId
+                const active = article.id === get(currFileInfo, 'id', '')
                 return (
                     <div
                         className={`${styles.item} ${active ? styles.active : ''}`}
@@ -136,7 +140,7 @@ const FileList: React.FC = () => {
                         <div className={styles.top}>
                             {renderSvg(article.type)}
                             <div className={styles.title}>
-                                {renderTitle(article.title)}
+                                {renderTitle(article.title || '')}
                                 {Boolean(article.isTop) && <div className={styles.isTop} />}
                             </div>
                             {fileAndFolderDisplay === 'list' && (

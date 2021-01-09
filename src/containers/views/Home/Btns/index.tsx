@@ -78,10 +78,10 @@ const Btns: React.FC = () => {
                 type: type,
                 content,
                 size,
-                parentId: folderStore.currSelectedFolderId
+                parentId: folderStore.currFolderInfo.id
             })
             fileStore.insertFile(res)
-            fileStore.setCurrFileId(res.id)
+            fileStore.setCurrFileInfo({ id: res.id })
             message.success('上传成功')
         } catch {}
         setUploadLoading(false)

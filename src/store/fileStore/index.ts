@@ -39,7 +39,7 @@ export class FileStore {
      * @memberof FileStore
      */
     @action
-    insertFile = (file: IFileStore.IFile) => {
+    insertFile = (file: IFileStore.File) => {
         const arr = JSON.parse(JSON.stringify(this.files))
         arr.splice(0, 0, file)
         this.setFiles(arr)
@@ -64,9 +64,9 @@ export class FileStore {
      * @memberof FileStore
      */
     @observable
-    files: IFileStore.IFile[] = []
+    files: IFileStore.File[] = []
     @action
-    setFiles = (files: IFileStore.IFile[]) => {
+    setFiles = (files: IFileStore.File[]) => {
         this.files = files
     }
 
@@ -79,18 +79,6 @@ export class FileStore {
         const res = await getFileInFolder({ parentKey, sort: extraStore.fileAndFolderSort })
         this.setFiles(res)
         return res
-    }
-
-    /**
-     * 当前选中文件的id
-     *
-     * @memberof FileStore
-     */
-    @observable
-    currFileId: string = null
-    @action
-    setCurrFileId = (id: string) => {
-        this.currFileId = id
     }
 
     /**
@@ -111,7 +99,7 @@ export class FileStore {
      * @memberof FileStore
      */
     @action
-    updateFile = (args: IFileStore.IFile) => {
+    updateFile = (args: IFileStore.File) => {
         const arr = [...this.files]
         const index = arr.findIndex(a => a.id === args.id)
         arr[index] = {
@@ -122,15 +110,19 @@ export class FileStore {
     }
 
     /**
-     * 文件内容
+     * 当前文件信息
      *
      * @memberof FileStore
      */
     @observable
-    fileContent = ''
+    currFileInfo: IFileStore.File = {
+        id: '',
+        content: '',
+        title: ''
+    }
     @action
-    setFileContent = (content: string) => {
-        this.fileContent = content
+    setCurrFileInfo = (info: IFileStore.File) => {
+        this.currFileInfo = info ? { ...this.currFileInfo, ...info } : null
     }
 }
 

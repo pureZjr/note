@@ -80,7 +80,7 @@ export const byteConvert = bytes => {
  * 根据当前的key设置所有父key
  */
 export const setAllKeysByCurrKey = (currKey: string) => {
-    const { setExpandTreeKeys, setCurrSelectedFolderName } = store.folderStore
+    const { setExpandTreeKeys, setCurrFolderInfo } = store.folderStore
     let key = '2'
     const parentKeyLength = (currKey.match(/-/g) || []).length / 5
     const item = currKey.split('-')
@@ -90,7 +90,7 @@ export const setAllKeysByCurrKey = (currKey: string) => {
     }
     store.extraStore.getFolderAndFile(currKey)
     getFolderInfo({ key: currKey }).then(res => {
-        setCurrSelectedFolderName(get(res, '[0].title', '我的文件夹'))
+        setCurrFolderInfo({ title: get(res, '[0].title', '我的文件夹') })
     })
 }
 

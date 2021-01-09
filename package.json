@@ -9,7 +9,7 @@
         "perfect-scrollbar": "^1.5.0",
         "qiniu-js": "^3.1.1",
         "react-virtualized": "^9.22.3",
-        "wangeditor": "^3.1.1"
+        "wangeditor": "^4.6.2"
     },
     "scripts": {
         "dev": "NODE_ENV=development webpack serve --mode development --env development --config ./build/webpack.config.js",
