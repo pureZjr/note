@@ -30,17 +30,16 @@ const Home: React.FC = () => {
     }
 
     useOnMount(checkLocalUserInfo)
-
     return (
         <Layout className={styles.container}>
             <Header />
             <Layout className={styles.layout}>
-                <PerfectScroll style={{ background: '#fff', borderRight: '1px solid rgba(0, 0, 0, 0.1)' }}>
-                    <Sider width={220} className={styles.sider}>
-                        <Btns />
+                <Sider width={220} className={styles.sider}>
+                    <Btns />
+                    <PerfectScroll style={{ background: '#fff', borderRight: '1px solid rgba(0, 0, 0, 0.1)' }}>
                         <Tabs />
-                    </Sider>
-                </PerfectScroll>
+                    </PerfectScroll>
+                </Sider>
                 <FileAndFolder />
                 <Content className={styles.content}>
                     {!!fileStore.currFileInfo ? (

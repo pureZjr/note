@@ -1,6 +1,10 @@
 import { get } from 'lodash'
 import axios from 'axios'
+import BMF from 'browser-md5-file'
+import path from 'path'
 
+import { getToken } from '@services/api/qiniu'
+import { QN_UPLOAD_URL, QN_BUCKET, QN_SOURCE_URL } from '@constant/index'
 import * as store from '@store/index'
 import { getFolderInfo } from '@services/api/folder'
 
@@ -120,7 +124,6 @@ export function copyToClipboard(text: string): void {
 /**
  * 下载远程文件 filename需要带后缀
  */
-
 export const downloadRemoteFile = (fileurl: string, filename: string) => {
     return new Promise((resolve, reject) => {
         axios
@@ -137,5 +140,82 @@ export const downloadRemoteFile = (fileurl: string, filename: string) => {
             .catch(err => {
                 reject(err)
             })
+    })
+}
+
+/**
+ * 生成上传到七牛的key, 使用文件md5值作为文件名
+ */
+export async function generateKey(file: File) {
+    if (!file) {
+        return null
+    }
+    try {
+        const md5 = await getFileMd5(file)
+        const ext = path.extname(file.name)
+        return md5 + ext
+    } catch (err) {
+        console.error(err)
+        return `${String(Date.now())}/${file.name}`
+    }
+}
+
+/**
+ * 获取文件md5
+ */
+const bmf = new BMF()
+export function getFileMd5(file: File) {
+    return new Promise<string>((resolve, reject) => {
+        bmf.md5(file, (err: Error, md5: string) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(md5)
+            }
+        })
+    })
+}
+
+/**
+ * 获取七牛上传的前置数据
+ */
+async function qnUpload(file: File): Promise<UploadData> {
+    const token = await getToken({
+        bucket: QN_BUCKET
+    })
+    const data: UploadData = { token }
+    data.key = await generateKey(file as File)
+    return data
+}
+
+/**
+ * 手动上传
+ */
+export function uploadFile(file: File): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const uploadData = await qnUpload(file)
+            const formData = new FormData()
+            formData.append('key', uploadData.key)
+            formData.append('token', uploadData.token)
+            formData.append('file', file as Blob)
+            const request = new XMLHttpRequest()
+            request.open('POST', QN_UPLOAD_URL)
+            request.send(formData)
+            request.onreadystatechange = res => {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        let { response } = res.target as any
+                        response = JSON.parse(response)
+                        const url = `${QN_SOURCE_URL}/${response.key}`
+                        resolve(url)
+                    } else {
+                        reject('上传失败')
+                    }
+                }
+            }
+        } catch (err) {
+            reject(err)
+        }
     })
 }

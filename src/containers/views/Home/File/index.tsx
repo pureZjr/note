@@ -171,18 +171,16 @@ const File: React.FC = () => {
                         style={{
                             padding: 12,
                             width: '100%',
-                            height: '100%',
-                            justifyContent: 'center',
-                            display: 'flex'
+                            height: '100%'
                         }}
                     >
                         <ImgViewTrigger>
                             <img
                                 style={{
-                                    marginRight: 10
+                                    marginRight: 10,
+                                    maxHeight: '100%',
+                                    maxWidth: '100%'
                                 }}
-                                width={100}
-                                height={100}
                                 src={content}
                                 ref={ref => {
                                     if (ref) {

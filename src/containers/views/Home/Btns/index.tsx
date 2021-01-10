@@ -7,18 +7,20 @@ import { RcFile } from 'antd/lib/upload/index'
 
 import { useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
-import { QN_UPLOAD_URL, QN_BUCKET, FILE_SIZE_LIMIT, QN_SOURCE_URL } from '@constant/index'
+import { FILE_SIZE_LIMIT } from '@constant/index'
 import message from '@components/AntdMessageExt'
-import { getToken } from '@services/api/qiniu'
 import { create } from '@services/api/file'
 import PageLoading from '@components/PageLoading'
+import SelectFolder from '@shared/SelectFolder'
+import { uploadFile } from '@utils/common'
 import styles from './index.scss'
 
 const Btns: React.FC = () => {
-    const [qnToken, setQnToken] = React.useState('')
     const [uploadLoading, setUploadLoading] = React.useState(false)
+    const [currFile, setCurrFile] = React.useState<File>(null)
+    const [showSelectFolder, setShowSelectFolder] = React.useState(false)
 
-    const { extraStore, folderStore, fileStore } = useRootStore()
+    const { extraStore, fileStore } = useRootStore()
 
     const menu = () => {
         const { setCreateFileFolderDialogvisible, setCreateFileFolderType } = extraStore
@@ -56,32 +58,41 @@ const Btns: React.FC = () => {
     }
 
     const beforeUpload = async (file: RcFile) => {
+        if (file.size > FILE_SIZE_LIMIT) {
+            message.error('文件不能超过50M')
+            return Promise.reject(false)
+        }
+        setShowSelectFolder(true)
+        setCurrFile(file)
+    }
+
+    const onUpload = async (id: string) => {
         try {
-            if (file.size > FILE_SIZE_LIMIT) {
-                message.error('文件不能超过50M')
-                return Promise.reject(false)
-            }
             setUploadLoading(true)
-            const token = await getToken({
-                bucket: QN_BUCKET
+            const url = await uploadFile(currFile)
+            onSuccessUpload({
+                title: currFile.name,
+                size: currFile.size,
+                type: currFile.type.includes('image') ? 'image' : 'video',
+                content: url,
+                folderId: id
             })
-            setQnToken(token)
         } catch {
             setUploadLoading(false)
         }
     }
 
-    const onSuccessUpload = async ({ title, type, content, size }) => {
+    const onSuccessUpload = async ({ title, type, content, size, folderId }) => {
         try {
             const res = await create({
                 title,
                 type: type,
                 content,
                 size,
-                parentId: folderStore.currFolderInfo.id
+                parentId: folderId
             })
             fileStore.insertFile(res)
-            fileStore.setCurrFileInfo({ id: res.id })
+            fileStore.setCurrFileInfo({ ...res, content })
             message.success('上传成功')
         } catch {}
         setUploadLoading(false)
@@ -95,31 +106,22 @@ const Btns: React.FC = () => {
                     <span className={styles.label}>新增</span>
                 </div>
             </Dropdown>
-            <Upload
-                accept="image/*,video/*"
-                action={QN_UPLOAD_URL}
-                data={{
-                    token: qnToken
-                }}
-                beforeUpload={beforeUpload}
-                showUploadList={false}
-                onChange={fileInfo => {
-                    if (fileInfo.file.status === 'done') {
-                        onSuccessUpload({
-                            title: fileInfo.file.name,
-                            size: fileInfo.file.size,
-                            type: fileInfo.file.type.includes('image') ? 'image' : 'video',
-                            content: `${QN_SOURCE_URL}/${fileInfo.file.response.hash}`
-                        })
-                    }
-                }}
-            >
+            <Upload accept="image/*,video/*" beforeUpload={beforeUpload} showUploadList={false}>
                 <div className={classnames(styles.btn)}>
                     <CloudUploadOutlined className={styles.icon} />
                     <span className={styles.label}>上传</span>
                 </div>
             </Upload>
             {uploadLoading && <PageLoading />}
+            {showSelectFolder && (
+                <SelectFolder
+                    file={currFile}
+                    defaultParentId={'2'}
+                    defaultPath={'/'}
+                    onSelectFolder={onUpload}
+                    close={() => setShowSelectFolder(false)}
+                />
+            )}
         </div>
     )
 }

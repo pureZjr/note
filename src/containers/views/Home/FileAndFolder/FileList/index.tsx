@@ -4,16 +4,12 @@ import moment from 'moment'
 import { get } from 'lodash'
 
 import { useRootStore } from '@utils/customHooks'
-import IconMarkdown from '@assets/svgs/markdown.svg'
-import IconDocument from '@assets/svgs/document.svg'
-import IconImage from '@assets/svgs/image.svg'
-import IconVideo from '@assets/svgs/video.svg'
 import { getFileContent } from '@services/api/file'
 import { byteConvert, setAllKeysByCurrKey } from '@utils/common'
 import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
-import CreateType from '@store/extraStore/CreateType'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
+import RenderFileIcon from '@shared/RenderFileIcon'
 
 const FileList: React.FC = () => {
     const {
@@ -21,24 +17,6 @@ const FileList: React.FC = () => {
         folderStore: { setCurrFolderInfo, setExpandTreeKeys },
         extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
     } = useRootStore()
-
-    const renderSvg = (type: string) => {
-        const svgProps = {
-            className: 'no-fill',
-            width: 20,
-            height: 20
-        }
-        switch (type) {
-            case CreateType.MarkDown:
-                return <IconMarkdown {...svgProps} />
-            case CreateType.Article:
-                return <IconDocument {...svgProps} />
-            case CreateType.Img:
-                return <IconImage {...svgProps} />
-            case CreateType.Video:
-                return <IconVideo {...svgProps} />
-        }
-    }
 
     // 点击文章，更新阅读时间
     const onHandleClickItem = async ({
@@ -138,7 +116,7 @@ const FileList: React.FC = () => {
                         onContextMenu={e => onHandleContextMenu(e, article)}
                     >
                         <div className={styles.top}>
-                            {renderSvg(article.type)}
+                            <RenderFileIcon type={article.type} />
                             <div className={styles.title}>
                                 {renderTitle(article.title || '')}
                                 {Boolean(article.isTop) && <div className={styles.isTop} />}
