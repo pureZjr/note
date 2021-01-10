@@ -75,6 +75,9 @@ const RightClickMenus: React.FC = () => {
                         }
                     } else {
                         fileStore.delFile(articleId)
+                        if (articleId === fileStore.currFileInfo.id) {
+                            fileStore.setCurrFileInfo(null)
+                        }
                     }
                 })
                 break

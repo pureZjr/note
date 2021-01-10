@@ -20,7 +20,11 @@ const Btns: React.FC = () => {
     const [currFile, setCurrFile] = React.useState<File>(null)
     const [showSelectFolder, setShowSelectFolder] = React.useState(false)
 
-    const { extraStore, fileStore } = useRootStore()
+    const {
+        extraStore,
+        fileStore,
+        folderStore: { currFolderInfo }
+    } = useRootStore()
 
     const menu = () => {
         const { setCreateFileFolderDialogvisible, setCreateFileFolderType } = extraStore
@@ -91,8 +95,10 @@ const Btns: React.FC = () => {
                 size,
                 parentId: folderId
             })
-            fileStore.insertFile(res)
-            fileStore.setCurrFileInfo({ ...res, content })
+            if (folderId === currFolderInfo.id) {
+                fileStore.insertFile(res)
+                fileStore.setCurrFileInfo({ ...res, content })
+            }
             message.success('上传成功')
         } catch {}
         setUploadLoading(false)
@@ -106,7 +112,14 @@ const Btns: React.FC = () => {
                     <span className={styles.label}>新增</span>
                 </div>
             </Dropdown>
-            <Upload accept="image/*,video/*" beforeUpload={beforeUpload} showUploadList={false}>
+            <Upload
+                customRequest={() => {
+                    return true
+                }}
+                accept="image/*,video/*"
+                beforeUpload={beforeUpload}
+                showUploadList={false}
+            >
                 <div className={classnames(styles.btn)}>
                     <CloudUploadOutlined className={styles.icon} />
                     <span className={styles.label}>上传</span>
@@ -116,8 +129,8 @@ const Btns: React.FC = () => {
             {showSelectFolder && (
                 <SelectFolder
                     file={currFile}
-                    defaultParentId={'2'}
-                    defaultPath={'/'}
+                    defaultParentId={currFolderInfo ? currFolderInfo.id : '2'}
+                    defaultPath={currFolderInfo ? currFolderInfo.title : '/'}
                     onSelectFolder={onUpload}
                     close={() => setShowSelectFolder(false)}
                 />
