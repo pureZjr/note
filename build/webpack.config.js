@@ -84,5 +84,6 @@ module.exports = {
             }
         },
         runtimeChunk: true
-    }
+    },
+    devtool: 'inline-source-map'
 }

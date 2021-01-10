@@ -3,6 +3,7 @@ import * as ReactDom from 'react-dom'
 import { HashRouter, Router } from 'react-router-dom'
 import { createHashHistory } from 'history'
 import { syncHistoryWithStore } from 'mobx-react-router'
+import 'mobx-react-lite/batchingForReactDom'
 import 'antd/dist/antd.css'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
 

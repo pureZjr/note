@@ -32,8 +32,8 @@ const Login: React.FC = () => {
             routerStore.history.push('/')
         } catch (err) {
             console.log(err)
+            setSubmitLoading(false)
         }
-        setSubmitLoading(false)
     }
 
     const onFinishFailed = errorInfo => {
