@@ -83,7 +83,7 @@ const Header: React.FC = () => {
         >
             <div className={styles.title}>
                 <img src={require('@assets/img/illusion.jpg')} width={40} height={40} />
-                幻象笔记
+                码农笔记
             </div>
             <div className={styles.rightContainer}>
                 <Search
