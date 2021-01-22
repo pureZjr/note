@@ -1,98 +1,153 @@
 import * as React from 'react'
-import { Form, Input, Button } from 'antd'
-import qs from 'qs'
+import { Button } from 'antd'
+import classnames from 'classnames'
 
-import { login } from '@services/api/account'
+import { login, register } from '@services/api/account'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import { LOCALSTORAGE } from '@constant/index'
+import message from '@components/AntdMessageExt'
+import PageLoading from '@components/PageLoading'
 import styles from './index.scss'
 
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 }
-}
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 }
-}
-const itemStyle = { width: 300 }
-
 const Login: React.FC = () => {
-    const [submitLoading, setSubmitLoading] = React.useState(false)
+    const [loading, setLoading] = React.useState(false)
+    const [handleLogin, setHandleLogin] = React.useState(true)
 
-    const formRef = React.useRef(null)
+    const [formData, setFormData] = React.useState({
+        email: '',
+        username: '',
+        password: '',
+        insure: ''
+    })
 
     const { routerStore, userInfoStore } = useRootStore()
 
-    const onFinish = async values => {
-        setSubmitLoading(true)
-        try {
-            const res = await login(values)
-            localStorage.setItem(LOCALSTORAGE.USERINFO, JSON.stringify(res))
-            userInfoStore.setUserInfo(res)
-            routerStore.history.push('/')
-        } catch (err) {
-            console.log(err)
-            setSubmitLoading(false)
+    const onHandleChangeUsername = (val: string) => {
+        setFormData({
+            ...formData,
+            username: val
+        })
+    }
+    const onHandleChangeEmail = (val: string) => {
+        setFormData({
+            ...formData,
+            email: val
+        })
+    }
+    const onHandleChangePassword = (val: string) => {
+        setFormData({
+            ...formData,
+            password: val
+        })
+    }
+    const onHandleInsurePassword = (val: string) => {
+        setFormData({
+            ...formData,
+            insure: val
+        })
+    }
+    const submit = async () => {
+        setLoading(true)
+        if (handleLogin) {
+            try {
+                const res = await login({
+                    email: formData.email,
+                    password: formData.password
+                })
+                localStorage.setItem(LOCALSTORAGE.USERINFO, JSON.stringify(res))
+                userInfoStore.setUserInfo(res)
+                routerStore.history.push('/')
+            } catch (err) {
+                console.log(err)
+                setLoading(false)
+            }
+        } else {
+            await register(formData)
+            setLoading(false)
+            message.success('注册成功，赶紧登录体验吧！')
         }
+        setLoading(false)
     }
-
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo)
-    }
-
-    const handleRegister = () => {
-        routerStore.history.push('/register')
+    const tigger = () => {
+        setHandleLogin(!handleLogin)
     }
 
     useOnMount(() => {
-        const loginParam = qs.parse(routerStore.location.search.replace(/\?/, ''))
-        formRef.current.setFieldsValue({
-            remember: true,
-            email: loginParam.email || '',
-            password: loginParam.password || ''
-        })
         if (localStorage.getItem(LOCALSTORAGE.USERINFO)) {
             routerStore.history.push('/')
         }
     })
 
     return (
-        <Form
-            className={styles.container}
-            {...layout}
-            name="basic"
-            ref={formRef}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-        >
-            <div className={styles.bg} style={{ backgroundImage: `url(${require('@assets/img/login-banner.jpg')})` }} />
-            <div className={styles.inputContainer}>
-                <Form.Item
-                    style={itemStyle}
-                    label="邮箱"
-                    name="email"
-                    rules={[{ required: true, message: '邮箱不能为空!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    style={itemStyle}
-                    label="密码"
-                    name="password"
-                    rules={[{ required: true, message: '密码不能为空!' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-                <Form.Item style={{ ...itemStyle, marginTop: 8 }} {...tailLayout}>
-                    <Button type="primary" htmlType="submit" loading={submitLoading}>
-                        提交
-                    </Button>
-                    <Button style={{ float: 'right' }} type="primary" htmlType="button" onClick={handleRegister}>
-                        注册
-                    </Button>
-                </Form.Item>
+        <div className={styles.container}>
+            <div className={styles.bgImgs}>
+                <div className={styles.bgImgsMask} />
             </div>
-        </Form>
+            <div className={classnames(styles.wrapper, handleLogin ? styles.handleLogin : styles.handleRegister)}>
+                <div className={styles.wrapperMask} />
+                <div className={styles.formWrapper}>
+                    <h1>{handleLogin ? '欢迎回来' : '立即注册'}</h1>
+                    <div className={styles.form}>
+                        {!handleLogin && (
+                            <div className={styles.item}>
+                                <label>昵称</label>
+                                <input
+                                    autoComplete="off"
+                                    value={formData.username}
+                                    onChange={e => onHandleChangeUsername(e.target.value)}
+                                />
+                            </div>
+                        )}
+                        <div className={styles.item}>
+                            <label>邮箱</label>
+                            <input
+                                autoComplete="off"
+                                value={formData.email}
+                                onChange={e => onHandleChangeEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.item}>
+                            <label>密码</label>
+                            <input
+                                type="password"
+                                value={formData.password}
+                                onChange={e => onHandleChangePassword(e.target.value)}
+                            />
+                        </div>
+                        {!handleLogin && (
+                            <div className={styles.item}>
+                                <label>确认密码</label>
+                                <input
+                                    type="password"
+                                    value={formData.insure}
+                                    onChange={e => onHandleInsurePassword(e.target.value)}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <Button type="primary" shape="round" className={styles.submit} onClick={submit}>
+                        {handleLogin ? '登录' : '注册'}
+                    </Button>
+                </div>
+                <div className={styles.subCount}>
+                    <div className={styles.subCountWrap}>
+                        <div className={styles.desc}>
+                            <h2>{handleLogin ? '还没注册?' : '已有帐号？'}</h2>
+                            <span>{handleLogin ? '立即注册体验一下吧！' : '有帐号就登录吧，好久不见了！'}</span>
+                        </div>
+                        <div className={styles.btn} onClick={tigger}>
+                            <div className={handleLogin ? styles.loginBtn : styles.registerBtn}>
+                                <div>注册</div>
+                                <div>登录</div>
+                            </div>
+                        </div>
+                        <img src={require('@assets/img/coder.png')} width="900" height="550" />
+                        <div className={styles.mask} />
+                    </div>
+                </div>
+            </div>
+            {loading && <PageLoading />}
+        </div>
     )
 }
 

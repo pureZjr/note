@@ -9,6 +9,9 @@ body {
     margin: 0;
     overflow: hidden;
     overflow: auto;
+    min-width: 1200px;
+    min-height: 900px;
+    overflow: auto;
 }
 
 :global {

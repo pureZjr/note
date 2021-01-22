@@ -2,8 +2,25 @@
 // Please do not change this file!
 interface CssExports {
   'bg': string;
+  'bgImgs': string;
+  'bgImgsMask': string;
+  'btn': string;
   'container': string;
-  'inputContainer': string;
+  'desc': string;
+  'form': string;
+  'formWrapper': string;
+  'handleLogin': string;
+  'handleRegister': string;
+  'item': string;
+  'loginBtn': string;
+  'loginContainer': string;
+  'mask': string;
+  'registerBtn': string;
+  'subCount': string;
+  'subCountWrap': string;
+  'submit': string;
+  'wrapper': string;
+  'wrapperMask': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

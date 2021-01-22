@@ -7,7 +7,6 @@ import styles from './index.scss'
 
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ '@views/Home'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ '@views/Login'))
-const Register = lazy(() => import(/* webpackChunkName: "Register" */ '@views/Register'))
 const NotFound = lazy(() => import(/* webpackChunkName: "NotFound" */ '@views/NotFound'))
 const ShareArticle = lazy(() => import(/* webpackChunkName: "ShareArticle" */ '@views/ShareArticle'))
 
@@ -18,9 +17,6 @@ function App() {
                 <Switch>
                     <Route path="/login" exact={true}>
                         <Login />
-                    </Route>
-                    <Route path="/register" exact={true}>
-                        <Register />
                     </Route>
                     <Route path="/share-article">
                         <ShareArticle />
