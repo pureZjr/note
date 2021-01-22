@@ -47,9 +47,12 @@ const Login: React.FC = () => {
         })
     }
     const submit = async () => {
-        setLoading(true)
         if (handleLogin) {
             try {
+                if (!formData.email || !formData.password) {
+                    return message.warn('请确保输入完整')
+                }
+                setLoading(true)
                 const res = await login({
                     email: formData.email,
                     password: formData.password
@@ -58,12 +61,19 @@ const Login: React.FC = () => {
                 userInfoStore.setUserInfo(res)
                 routerStore.history.push('/')
             } catch (err) {
-                console.log(err)
                 setLoading(false)
             }
         } else {
+            if (!formData.email || !formData.password || !formData.username || !formData.insure) {
+                return message.warn('请确保输入完整')
+            }
+            if (formData.password !== formData.insure) {
+                return message.warn('两次密码不一致，请重新输入')
+            }
+            setLoading(true)
             await register(formData)
             setLoading(false)
+            tigger()
             message.success('注册成功，赶紧登录体验吧！')
         }
         setLoading(false)
