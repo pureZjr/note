@@ -17,8 +17,9 @@ module.exports = {
         shared: 'lodash'
     },
     devServer: {
-        port: 9000,
-        hot: true
+        hot: true,
+        liveReload: false,
+        port: 9000
     },
     output: {
         path: assetsRoot,
