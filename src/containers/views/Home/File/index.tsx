@@ -10,7 +10,7 @@ import {
 import ReactMarkdown from 'react-markdown'
 import { isUndefined } from 'lodash'
 import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import message from '@components/AntdMessageExt'
 import { useRootStore } from '@utils/customHooks'
@@ -81,7 +81,7 @@ const File: React.FC = () => {
         // 获取分享链接
         const getShareLink = async () => {
             try {
-                await createShareFileLink({ key, ts: moment().valueOf() })
+                await createShareFileLink({ key, ts: dayjs().valueOf() })
                 const link = `${SHARE_BASE_URL}${key}`
                 const dialog = Modal.info({
                     title: '分享链接',
@@ -120,11 +120,11 @@ const File: React.FC = () => {
                 <div className={styles.info}>
                     <div>
                         <label>创建时间：</label>
-                        <span>{moment(createTime).format('YYYY-MM-DD')}</span>
+                        <span>{dayjs(createTime).format('YYYY-MM-DD')}</span>
                     </div>
                     <div>
                         <label>修改时间：</label>
-                        <span>{moment(updateTime).format('YYYY-MM-DD')}</span>
+                        <span>{dayjs(updateTime).format('YYYY-MM-DD')}</span>
                     </div>
                     <div>
                         <label>文件夹：</label>

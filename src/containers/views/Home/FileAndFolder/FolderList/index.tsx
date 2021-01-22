@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { useRootStore } from '@utils/customHooks'
 import IconFolderClose from '@assets/svgs/folder-close.svg'
@@ -101,7 +101,7 @@ const FolderList: React.FC = () => {
                             <IconFolderClose width={20} height={20} className="no-fill" />
                             <div className={styles.title}>{renderTitle(folder.title)}</div>
                         </div>
-                        <div className={styles.updateTime}>{moment(folder.updateTime).format('YYYY-MM-DD')}</div>
+                        <div className={styles.updateTime}>{dayjs(folder.updateTime).format('YYYY-MM-DD')}</div>
                     </div>
                 )
             })}

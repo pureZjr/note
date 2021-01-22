@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { get } from 'lodash'
 
 import { useRootStore } from '@utils/customHooks'
@@ -123,7 +123,7 @@ const FileList: React.FC = () => {
                             </div>
                             {fileAndFolderDisplay === 'list' && (
                                 <div className={styles.updateTime}>
-                                    {moment(article.updateTime).format('YYYY-MM-DD')}
+                                    {dayjs(article.updateTime).format('YYYY-MM-DD')}
                                 </div>
                             )}
                         </div>
@@ -140,7 +140,7 @@ const FileList: React.FC = () => {
                                 ) : (
                                     <>
                                         <div className={styles.updateTime}>
-                                            {moment(article.updateTime).format('YYYY-MM-DD')}
+                                            {dayjs(article.updateTime).format('YYYY-MM-DD')}
                                         </div>
                                         <div className={styles.size}>{byteConvert(article.size)}</div>
                                     </>
