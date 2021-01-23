@@ -10,6 +10,7 @@ import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import UserInfo from '@shared/UserInfo'
 import { LOCALSTORAGE } from '@constant/index'
+import IconLogo from '@assets/svgs/logo.svg'
 
 const { Search } = Input
 
@@ -75,14 +76,9 @@ const Header: React.FC = () => {
     )
 
     return (
-        <div
-            className={styles.container}
-            style={{
-                backgroundImage: `url(${require('@assets/img/header-bg.png')})`
-            }}
-        >
+        <div className={styles.container}>
             <div className={styles.title}>
-                <img src={require('@assets/img/illusion.jpg')} width={40} height={40} />
+                <IconLogo className="no-fill" width={40} height={40} />
                 码农笔记
             </div>
             <div className={styles.rightContainer}>

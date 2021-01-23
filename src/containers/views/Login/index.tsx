@@ -89,71 +89,69 @@ const Login: React.FC = () => {
     })
 
     return (
-        <div className={styles.container}>
+        <div className={classnames(styles.container, handleLogin ? styles.handleLogin : styles.handleRegister)}>
             <div className={styles.bgImgs}>
                 <div className={styles.bgImgsMask} />
             </div>
-            <div className={classnames(styles.wrapper, handleLogin ? styles.handleLogin : styles.handleRegister)}>
-                <div className={styles.wrapperMask} />
-                <div className={styles.formWrapper}>
-                    <h1>{handleLogin ? '欢迎回来' : '立即注册'}</h1>
-                    <div className={styles.form}>
-                        {!handleLogin && (
-                            <div className={styles.item}>
-                                <label>昵称</label>
-                                <input
-                                    autoComplete="off"
-                                    value={formData.username}
-                                    onChange={e => onHandleChangeUsername(e.target.value)}
-                                />
-                            </div>
-                        )}
+            <div className={styles.wrapperMask} />
+            <div className={styles.formWrapper}>
+                <h1>{handleLogin ? '欢迎回来' : '立即注册'}</h1>
+                <div className={styles.form}>
+                    {!handleLogin && (
                         <div className={styles.item}>
-                            <label>邮箱</label>
+                            <label>昵称</label>
                             <input
                                 autoComplete="off"
-                                value={formData.email}
-                                onChange={e => onHandleChangeEmail(e.target.value)}
+                                value={formData.username}
+                                onChange={e => onHandleChangeUsername(e.target.value)}
                             />
                         </div>
+                    )}
+                    <div className={styles.item}>
+                        <label>邮箱</label>
+                        <input
+                            autoComplete="off"
+                            value={formData.email}
+                            onChange={e => onHandleChangeEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className={styles.item}>
+                        <label>密码</label>
+                        <input
+                            type="password"
+                            value={formData.password}
+                            onChange={e => onHandleChangePassword(e.target.value)}
+                        />
+                    </div>
+                    {!handleLogin && (
                         <div className={styles.item}>
-                            <label>密码</label>
+                            <label>确认密码</label>
                             <input
                                 type="password"
-                                value={formData.password}
-                                onChange={e => onHandleChangePassword(e.target.value)}
+                                value={formData.insure}
+                                onChange={e => onHandleInsurePassword(e.target.value)}
                             />
                         </div>
-                        {!handleLogin && (
-                            <div className={styles.item}>
-                                <label>确认密码</label>
-                                <input
-                                    type="password"
-                                    value={formData.insure}
-                                    onChange={e => onHandleInsurePassword(e.target.value)}
-                                />
-                            </div>
-                        )}
-                    </div>
-                    <Button type="primary" shape="round" className={styles.submit} onClick={submit}>
-                        {handleLogin ? '登录' : '注册'}
-                    </Button>
+                    )}
                 </div>
-                <div className={styles.subCount}>
-                    <div className={styles.subCountWrap}>
-                        <div className={styles.desc}>
-                            <h2>{handleLogin ? '还没注册?' : '已有帐号？'}</h2>
-                            <span>{handleLogin ? '立即注册体验一下吧！' : '有帐号就登录吧，好久不见了！'}</span>
-                        </div>
-                        <div className={styles.btn} onClick={tigger}>
-                            <div className={handleLogin ? styles.loginBtn : styles.registerBtn}>
-                                <div>注册</div>
-                                <div>登录</div>
-                            </div>
-                        </div>
-                        <img src={require('@assets/img/coder.png')} width="900" height="550" />
-                        <div className={styles.mask} />
+                <Button type="primary" shape="round" className={styles.submit} onClick={submit}>
+                    {handleLogin ? '登录' : '注册'}
+                </Button>
+            </div>
+            <div className={styles.subCount}>
+                <div className={styles.subCountWrap}>
+                    <div className={styles.desc}>
+                        <h2>{handleLogin ? '还没注册?' : '已有帐号？'}</h2>
+                        <span>{handleLogin ? '立即注册体验一下吧！' : '有帐号就登录吧，好久不见了！'}</span>
                     </div>
+                    <div className={styles.btn} onClick={tigger}>
+                        <div className={handleLogin ? styles.loginBtn : styles.registerBtn}>
+                            <div>注册</div>
+                            <div>登录</div>
+                        </div>
+                    </div>
+                    <img src={require('@assets/gifs/code-maker.gif')} width="900" height="550" />
+                    <div className={styles.mask} />
                 </div>
             </div>
             {loading && <PageLoading />}

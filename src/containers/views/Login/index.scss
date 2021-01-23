@@ -18,10 +18,12 @@
 }
 
 .bgImgs {
-    background-image: url('../../../assets/img/code-maker.jpeg');
+    background-image: url('../../../assets/img/bg.png');
     width: 100%;
     height: 100%;
     position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .bgImgsMask {
@@ -32,36 +34,44 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 900px;
+    width: 760px;
     height: 549px;
     transform: translate(-50%, -50%);
     overflow: hidden;
     background: #e5e5e5;
     z-index: 1;
-    background-image: url('../../../assets/img/code-maker.jpeg');
+    background-image: url('../../../assets/img/bg.png');
 }
 
 .handleLogin {
     .formWrapper {
-        left: 0;
+        left: calc(50% - 380px);
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .subCount {
-        right: 0;
+        right: calc(50% - 380px);
+        top: 50%;
+        transform: translateY(-50%);
 
         img {
-            left: -640px;
+            left: -500px;
         }
     }
 }
 
 .handleRegister {
     .formWrapper {
-        left: 260px;
+        left: calc(50% - 120px);
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .subCount {
-        right: 640px;
+        right: calc(50% + 120px);
+        top: 50%;
+        transform: translateY(-50%);
 
         img {
             left: 0px;
@@ -79,7 +89,7 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    width: 640px;
+    width: 500px;
     transition: left 0.6s ease-in-out;
     z-index: 2;
 
@@ -150,7 +160,7 @@
 
 .subCount {
     width: 260px;
-    height: 100%;
+    height: 550px;
     position: absolute;
     top: 0;
     z-index: 2;
@@ -216,7 +226,7 @@
             > div {
                 width: 100%;
                 min-height: 30px;
-                line-height: 30px;
+                line-height: 27px;
                 left: 0;
             }
         }
@@ -235,7 +245,7 @@
 }
 
 .bg {
-    width: 900px;
+    width: 760px;
     height: 550px;
     z-index: 1;
     padding: 1px;
