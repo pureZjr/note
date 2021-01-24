@@ -10,12 +10,12 @@
 .title {
     display: flex;
     align-items: center;
-    font-size: 20px;
-    text-align: center;
-    color: #fff;
     width: 250px;
     height: 100%;
     padding-left: 32px;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
 
     svg {
         margin: 0 12px 0 0 !important;
@@ -23,23 +23,23 @@
 }
 
 .rightContainer {
-    flex: 1;
     display: flex;
-    justify-content: flex-end;
+    flex: 1;
     align-items: center;
+    justify-content: flex-end;
     padding-right: 32px;
 }
 
 .search {
     width: 250px !important;
-    border-radius: 16px !important;
     height: 32px;
     margin-right: 32px;
+    border-radius: 16px !important;
 
     ::placeholder {
+        padding-left: 8px;
         font-size: 12px;
         color: $black04;
-        padding-left: 8px;
     }
 }
 

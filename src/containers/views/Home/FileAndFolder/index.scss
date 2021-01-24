@@ -1,19 +1,19 @@
 @import 'base.scss';
 
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 250px;
     height: 100%;
+    overflow: hidden;
     background: #fff;
     border-right: 1px solid $black01;
-    overflow: hidden;
-    position: relative;
 
     :global(.ant-empty-normal) {
         position: absolute;
-        left: 50%;
         top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%);
     }
 }
@@ -28,10 +28,10 @@
 
 .name {
     flex: 1;
+    padding: 0 12px;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    padding: 0 12px;
     @include ellipsis;
 }
 
@@ -42,9 +42,9 @@
 }
 
 .content {
+    position: relative;
     flex: 1;
     overflow: hidden;
-    position: relative;
 }
 
 .loading {

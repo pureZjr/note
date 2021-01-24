@@ -1,28 +1,28 @@
 @import 'base.scss';
 
 .container {
-    align-items: center;
-    background-color: rgba(49, 49, 49, 0.85);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    left: 0;
-    min-height: 100%;
-    min-width: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: rgba(49, 49, 49, 0.85);
 }
 
 .downLoadIcon {
+    position: absolute;
+    top: 24px;
+    right: -35px;
+    z-index: 10;
+    width: 24px;
+    height: 24px;
     color: white;
     cursor: pointer;
-    height: 24px;
-    position: absolute;
-    right: -35px;
-    top: 24px;
-    width: 24px;
-    z-index: 10;
 }
 
 .videoBox {
@@ -30,19 +30,19 @@
 }
 
 .video {
-    background: #000;
     position: relative;
     z-index: 3;
+    background: #000;
 }
 
 .iconClose {
+    position: absolute;
+    top: -45px;
+    right: -45px;
+    z-index: 2;
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    position: absolute;
-    right: -45px;
-    top: -45px;
     transition: color 0.5s;
-    z-index: 2;
 
     &:hover {
         color: white;
@@ -50,25 +50,25 @@
 }
 
 .overlay {
-    left: 0;
-    min-height: 100%;
-    min-width: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 1;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .title {
-    color: #fff;
-    font-size: 20px;
-    margin-bottom: 16px;
     margin-top: 24px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    color: #fff;
     word-break: break-all;
 }
 
 .content {
-    color: $input-border-gray;
     font-size: 14px;
-    white-space: pre-line;
+    color: $input-border-gray;
     word-break: break-all;
+    white-space: pre-line;
 }

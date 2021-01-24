@@ -1,31 +1,31 @@
 @import 'base.scss';
 
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: auto;
     background: #fff;
-    position: relative;
 
     :global {
         .ant-tree {
-            min-width: fit-content;
             width: 100%;
+            min-width: fit-content;
 
             .ant-tree-treenode {
-                min-height: 50px;
                 align-items: center;
+                min-height: 50px;
 
                 .ant-tree-node-content-wrapper {
-                    height: 50px;
                     display: flex;
                     align-items: center;
+                    height: 50px;
 
                     .ant-tree-treenode span {
-                        height: 50px;
                         display: block;
                         flex: 1;
+                        height: 50px;
                     }
                 }
             }

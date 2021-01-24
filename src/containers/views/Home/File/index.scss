@@ -1,16 +1,16 @@
 @import 'base.scss';
 
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
     background: #fff;
-    position: relative;
 }
 
 .markdown {
-    padding: 12px;
     flex: 1;
+    padding: 12px;
     overflow: auto;
     word-break: break-all;
 
@@ -26,9 +26,9 @@
         }
         th {
             display: table-cell;
-            vertical-align: inherit;
             font-weight: bold;
             text-align: -internal-center;
+            vertical-align: inherit;
         }
     }
 }
@@ -42,15 +42,15 @@
 }
 
 .title {
-    color: $black08;
     font-size: 19px;
     font-weight: 500;
+    color: $black08;
 }
 
 .content {
+    position: relative;
     flex: 1;
     overflow: auto;
-    position: relative;
 
     :global {
         textarea {
@@ -75,28 +75,30 @@
 }
 
 .wangeEditor {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
 
     > div {
         border: 0 !important;
     }
 
-    :global(.w-e-text-container) {
-        height: 100% !important;
-    }
+    :global {
+        .w-e-text-container {
+            height: 100% !important;
+        }
 
-    :global(.w-e-toolbar) {
-        border-bottom: 1px solid $black01 !important;
+        .w-e-toolbar {
+            border-bottom: 1px solid $black01 !important;
+        }
     }
 }
 
 .info {
     :global(label) {
-        width: 70px;
         display: inline-block;
+        width: 70px;
         text-align: right;
     }
 }
@@ -106,22 +108,22 @@
 }
 
 .mdEditAndRead {
-    display: flex;
     position: relative;
+    display: flex;
     height: 100%;
 }
 
 .editMdContainer {
+    position: relative;
     flex: 1;
     height: 100%;
-    position: relative;
     word-break: break-all;
 }
 
 .divider {
-    cursor: pointer;
-    height: 100%;
     width: 10px;
+    height: 100%;
+    cursor: pointer;
     background: $black01;
 
     &:hover {
@@ -131,8 +133,8 @@
 
 .icon {
     margin-left: 8px;
-    cursor: pointer;
     font-size: 18px;
+    cursor: pointer;
 }
 
 .hideToolBar {

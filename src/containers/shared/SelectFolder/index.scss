@@ -2,16 +2,16 @@
 
 .pathWrapper {
     display: flex;
-    width: 353px;
     flex-direction: column;
+    width: 353px;
     margin-top: 24px;
 }
 
 .selectedFile {
+    display: flex;
+    align-items: center;
     height: 32px;
     margin-bottom: 12px;
-    align-items: center;
-    display: flex;
 
     span {
         margin-left: 12px;
@@ -20,10 +20,10 @@
 }
 
 .path {
-    height: 32px;
-    border: 1px solid $black01;
     display: flex;
     align-items: center;
+    height: 32px;
+    border: 1px solid $black01;
 
     > span {
         flex: 1;

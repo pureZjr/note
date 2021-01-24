@@ -19,11 +19,14 @@ const { TextArea } = Input
 const UserInfo: React.FC<Props> = ({ close }: Props) => {
     const [info, setInfo] = React.useState<IUserInfoStore.IUserInfo>({})
     const [qnToken, setQnToken] = React.useState('')
+    const [uploading, setUploading] = React.useState(false)
+    const [loading, setloading] = React.useState(false)
 
     const { userInfoStore } = useRootStore()
 
     const onSubmit = async () => {
         try {
+            setloading(true)
             await editAccount(info)
             const newInfo = { ...userInfoStore.userInfo, ...info }
             userInfoStore.setUserInfo(newInfo)
@@ -33,42 +36,24 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
         } catch {
             message.error('修改失败')
         }
+        setloading(false)
     }
 
     const beforeUpload = async () => {
         try {
+            setUploading(true)
             const token = await getToken({
                 bucket: QN_BUCKET
             })
             setQnToken(token)
         } catch {}
+        setUploading(false)
     }
 
-    const onChangeEmail = value => {
+    const onHandleChange = prop => {
         setInfo({
             ...info,
-            email: value
-        })
-    }
-
-    const onChangeSex = value => {
-        setInfo({
-            ...info,
-            sex: value
-        })
-    }
-
-    const onChangeArea = value => {
-        setInfo({
-            ...info,
-            area: value
-        })
-    }
-
-    const onChangeSign = value => {
-        setInfo({
-            ...info,
-            sign: value
+            ...prop
         })
     }
 
@@ -77,11 +62,22 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
     })
 
     return (
-        <Modal className={styles.container} title="个人信息" visible={true} onOk={onSubmit} onCancel={close}>
-            <div>
-                <span>头像</span>
+        <Modal
+            width={300}
+            title="个人信息"
+            okText="确认"
+            cancelText="取消"
+            okButtonProps={{
+                loading
+            }}
+            visible={true}
+            onOk={onSubmit}
+            onCancel={close}
+        >
+            <div className={styles.item}>
+                <label>头像</label>
                 <div className={styles.rightContainer}>
-                    <Avatar src={info.avatar} />
+                    <Avatar src={info.avatar} className={styles.avatar} />
                     <div className={styles.upload}>
                         <Upload
                             accept="image/*"
@@ -100,41 +96,50 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
                                 }
                             }}
                         >
-                            <Button>
+                            <Button loading={uploading} size="small" style={{ fontSize: 12 }}>
                                 <UploadOutlined /> 上传新头像
                             </Button>
                         </Upload>
                     </div>
                 </div>
             </div>
-            <div>
-                <span>邮箱</span>
+            <div className={styles.item}>
+                <label>邮箱</label>
                 <div className={styles.rightContainer}>
-                    <Input type="email" value={info.email} onChange={e => onChangeEmail(e.target.value)} />
+                    <Input
+                        size="small"
+                        type="email"
+                        value={info.email}
+                        onChange={e => onHandleChange({ email: e.target.value })}
+                    />
                 </div>
             </div>
-            <div>
-                <span>昵称</span>
+            <div className={styles.item}>
+                <label>昵称</label>
                 <div className={styles.rightContainer}>
-                    <Input value={info.nickname} />
+                    <Input
+                        size="small"
+                        value={info.username}
+                        onChange={e => onHandleChange({ username: e.target.value })}
+                    />
                 </div>
             </div>
-            <div>
-                <span>性别</span>
+            <div className={styles.item}>
+                <label>性别</label>
                 <div className={styles.rightContainer}>
-                    <Radio.Group value={info.sex} onChange={e => onChangeSex(e.target.value)}>
+                    <Radio.Group value={info.sex} onChange={e => onHandleChange({ sex: e.target.value })}>
                         <Radio value={1}>男</Radio>
                         <Radio value={2}>女</Radio>
                     </Radio.Group>
                 </div>
             </div>
-            <div>
-                <span>地区</span>
-                <Input value={info.area} onChange={e => onChangeArea(e.target.value)} />
+            <div className={styles.item}>
+                <label>地区</label>
+                <Input size="small" value={info.area} onChange={e => onHandleChange({ area: e.target.value })} />
             </div>
-            <div>
-                <span>签名</span>
-                <TextArea value={info.sign} onChange={e => onChangeSign(e.target.value)} />
+            <div className={styles.item}>
+                <label>签名</label>
+                <TextArea value={info.sign} onChange={e => onHandleChange({ sign: e.target.value })} />
             </div>
         </Modal>
     )

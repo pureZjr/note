@@ -7,12 +7,12 @@
 }
 
 .item {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 6px 12px;
-    border-bottom: 1px solid $black01;
     cursor: pointer;
-    position: relative;
+    border-bottom: 1px solid $black01;
 
     &:hover {
         background-color: #eff0f1;
@@ -27,9 +27,9 @@
 
 .title {
     flex: 1;
+    padding-right: 4px;
     padding-left: 10px;
     color: $black08;
-    padding-right: 4px;
     @include ellipsis;
 }
 
@@ -46,11 +46,11 @@
 }
 
 .parentFolderTitle {
-    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 12px;
     color: $black02;
+    cursor: pointer;
 
     &:hover {
         text-decoration: underline;
@@ -67,11 +67,11 @@
 }
 
 .isTop {
-    border-left: 8px solid transparent;
-    border-top: 8px solid $primary;
-    height: 0;
     position: absolute;
-    right: 2px;
     top: 2px;
+    right: 2px;
     width: 0;
+    height: 0;
+    border-top: 8px solid $primary;
+    border-left: 8px solid transparent;
 }
