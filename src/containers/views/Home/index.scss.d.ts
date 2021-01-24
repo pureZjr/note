@@ -3,7 +3,7 @@
 interface CssExports {
   'container': string;
   'content': string;
-  'emptyImg': string;
+  'empty': string;
   'layout': string;
   'sider': string;
 }

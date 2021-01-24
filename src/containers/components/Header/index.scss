@@ -18,7 +18,7 @@
     padding-left: 32px;
 
     svg {
-        margin: 0 8px 0 0 !important;
+        margin: 0 12px 0 0 !important;
     }
 }
 
@@ -41,4 +41,10 @@
         color: $black04;
         padding-left: 8px;
     }
+}
+
+.avatarContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 32px;
 }

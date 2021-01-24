@@ -78,7 +78,7 @@ const Header: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.title}>
-                <IconLogo className="no-fill" width={40} height={40} />
+                <IconLogo className="no-fill" width={32} height={32} />
                 码农笔记
             </div>
             <div className={styles.rightContainer}>
@@ -101,14 +101,25 @@ const Header: React.FC = () => {
                 />
             </div>
             <Dropdown overlay={menu}>
-                <div className={styles.container}>
+                <div className={styles.avatarContainer}>
                     <Avatar
                         shape="square"
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                        size={46}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 4,
+                            marginRight: 4
+                        }}
+                        size={38}
                         icon={<img src={userInfo.avatar} width={24} height={24} />}
                     />
-                    <CaretDownOutlined />
+                    <CaretDownOutlined
+                        style={{
+                            cursor: 'pointer',
+                            color: '#fff'
+                        }}
+                    />
                 </div>
             </Dropdown>
             {userInfoVisible && <UserInfo close={() => setUserInfoVisible(false)} />}

@@ -12,6 +12,7 @@ import CreateFolderAndFile from '@components/CreateFolderAndFile'
 import RightClickMenus from '@components/RightClickMenus'
 import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
+import IconWrite from '@assets/svgs/write.svg'
 
 import styles from './index.scss'
 
@@ -45,7 +46,10 @@ const Home: React.FC = () => {
                     {!!fileStore.currFileInfo ? (
                         <File />
                     ) : (
-                        <img className={styles.emptyImg} src={require('@assets/img/note.png')} />
+                        <div className={styles.empty}>
+                            <IconWrite className={'no-fill'} width={40} height={40} />
+                            <div>当前没有笔记，赶紧去新建吧！</div>
+                        </div>
                     )}
                 </Content>
             </Layout>
