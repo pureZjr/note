@@ -15,7 +15,7 @@ scp -r ${DEPLOYFILES} root@${SERVER_1}:${FILEPATH}/tarfiles
 rm -rf ./*
 
 # 解压文件
-ssh -o StrictHostKeyChecking=no root@${SERVER_1} tar xzf ${FILEPATH}/tarfiles/${DEPLOYFILES} -C ${FILEPATH}/production
+ssh -o StrictHostKeyChecking=no root@${SERVER_1} tar xzf ${FILEPATH}/tarfiles/${DEPLOYFILES} -C ${FILEPATH}
 
 if [ $? -ne 0 ]; then
     echo "部署失败"
