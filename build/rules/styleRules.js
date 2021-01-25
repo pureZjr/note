@@ -8,7 +8,7 @@ const commonLoader =
         ? {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                  publicPath: ''
+                  publicPath: '../../'
               }
           }
         : 'style-loader'
