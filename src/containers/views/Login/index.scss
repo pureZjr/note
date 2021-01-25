@@ -30,19 +30,6 @@
     @include mask;
 }
 
-.wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    width: 760px;
-    height: 549px;
-    overflow: hidden;
-    background: #e5e5e5;
-    background-image: url('../../../assets/img/bg.png');
-    transform: translate(-50%, -50%);
-}
-
 .formWrapper {
     position: absolute;
     top: 0;

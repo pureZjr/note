@@ -19,7 +19,6 @@ interface CssExports {
   'subCount': string;
   'subCountWrap': string;
   'submit': string;
-  'wrapper': string;
   'wrapperMask': string;
 }
 export const cssExports: CssExports;

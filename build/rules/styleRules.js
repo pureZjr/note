@@ -3,7 +3,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { resolveFromRootDir } = require('../utils')
 const theme = require(resolveFromRootDir('theme.js'))
 
-const commonLoader = process.env.APP_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader'
+const commonLoader =
+    process.env.APP_ENV === 'production'
+        ? {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                  publicPath: ''
+              }
+          }
+        : 'style-loader'
 
 module.exports = [
     {
