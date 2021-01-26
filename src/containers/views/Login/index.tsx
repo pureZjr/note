@@ -12,6 +12,7 @@ import styles from './index.scss'
 const Login: React.FC = () => {
     const [loading, setLoading] = React.useState(false)
     const [handleLogin, setHandleLogin] = React.useState(true)
+    const [bgImg, setBgImg] = React.useState('')
 
     const [formData, setFormData] = React.useState({
         email: '',
@@ -81,16 +82,35 @@ const Login: React.FC = () => {
     const tigger = () => {
         setHandleLogin(!handleLogin)
     }
+    const loadBg = () => {
+        const img = new Image()
+        img.src = require('@assets/img/bg.png')
+        img.onload = () => {
+            setBgImg(img.src)
+        }
+    }
 
     useOnMount(() => {
         if (localStorage.getItem(LOCALSTORAGE.USERINFO)) {
             routerStore.history.push('/')
+        } else {
+            loadBg()
         }
     })
-
     return (
         <div className={classnames(styles.container, handleLogin ? styles.handleLogin : styles.handleRegister)}>
-            <div className={styles.bgImgs}>
+            <div
+                className={styles.bgImgs}
+                style={{
+                    backgroundImage: `url(${bgImg})`
+                }}
+            >
+                <img
+                    src={require('@assets/img/bg-small.png')}
+                    style={{
+                        opacity: Number(!bgImg)
+                    }}
+                />
                 <div className={styles.bgImgsMask} />
             </div>
             <div className={styles.wrapperMask} />

@@ -21,9 +21,15 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background-image: url('../../../assets/img/bg.png');
     background-repeat: no-repeat;
     background-size: cover;
+
+    img {
+        width: 100%;
+        height: 100%;
+        filter: blur(20px);
+        transition: opacity 0.8s;
+    }
 }
 
 .bgImgsMask {
