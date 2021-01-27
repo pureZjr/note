@@ -11,6 +11,7 @@ import styles from './index.scss'
 
 const CreateFolderAndFile: React.FC = () => {
     const [name, setName] = React.useState('')
+    const [loading, setLoading] = React.useState(false)
 
     const { extraStore, folderStore, fileStore } = useRootStore()
 
@@ -36,9 +37,10 @@ const CreateFolderAndFile: React.FC = () => {
         const { currTabId } = extraStore
         const fid = currFolderInfo.id || currTabId
         try {
+            setLoading(true)
             if (extraStore.createFileFolderType === CreateType.Folder) {
-                const { key } = await createFolder({ title: name, id: fid, key: currFolderInfo.key || '2' })
-                setCurrFolderInfo({ key })
+                const { doc } = await createFolder({ title: name, id: fid, key: currFolderInfo.key || '2' })
+                setCurrFolderInfo({ ...doc })
                 if (!expandTreeKeys.includes(currFolderInfo.key)) {
                     setExpandTreeKeys(currFolderInfo.key)
                 }
@@ -54,9 +56,10 @@ const CreateFolderAndFile: React.FC = () => {
                     parentId: fid
                 })
                 insertFile(res)
-                setCurrFileInfo({ id: res.id })
+                setCurrFileInfo(res)
             }
         } catch {}
+        setLoading(false)
         close()
     }
 
@@ -73,6 +76,9 @@ const CreateFolderAndFile: React.FC = () => {
         <Modal
             title={modalTitle}
             visible={extraStore.createFileFolderDialogvisible}
+            okButtonProps={{
+                loading
+            }}
             okText={'确定'}
             cancelText={'取消'}
             onOk={submit}

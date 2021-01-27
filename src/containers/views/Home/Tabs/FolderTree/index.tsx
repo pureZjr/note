@@ -56,26 +56,23 @@ const FolderTree: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            {loading ? (
-                <SectionLoading />
-            ) : (
-                <React.Fragment>
-                    {!treeData.length ? (
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
-                    ) : (
-                        <DirectoryTree
-                            selectedKeys={[currFolderInfo.key]}
-                            expandedKeys={expandTreeKeys}
-                            onSelect={onSelect}
-                            treeData={treeData}
-                            onRightClick={onHandleRightClick}
-                            icon={({ expanded }) =>
-                                expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
-                            }
-                        />
-                    )}
-                </React.Fragment>
-            )}
+            {loading && <SectionLoading />}
+            <React.Fragment>
+                {!treeData.length ? (
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+                ) : (
+                    <DirectoryTree
+                        selectedKeys={[currFolderInfo.key]}
+                        expandedKeys={expandTreeKeys}
+                        onSelect={onSelect}
+                        treeData={treeData}
+                        onRightClick={onHandleRightClick}
+                        icon={({ expanded }) =>
+                            expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
+                        }
+                    />
+                )}
+            </React.Fragment>
         </div>
     )
 }
