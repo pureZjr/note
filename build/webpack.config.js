@@ -10,7 +10,7 @@ const { APP_ENV } = require('./constants')
 const { resolveFromRootDir, assetsPath } = require('./utils')
 const { assetsRoot } = require('./config')
 
-module.exports = {
+const config = {
     mode: APP_ENV,
     entry: {
         app: { import: resolveFromRootDir('src/index.tsx'), dependOn: 'shared' },
@@ -42,10 +42,7 @@ module.exports = {
         fallback: { path: require.resolve('path-browserify') }
     },
     // 开启缓存，加快开发环境构建速度
-    cache: {
-        type: 'filesystem',
-        cacheLocation: resolveFromRootDir('.cache')
-    },
+
     optimization: {
         innerGraph: false,
         minimize: true,
@@ -88,3 +85,13 @@ module.exports = {
     },
     devtool: 'inline-source-map'
 }
+
+// 开启缓存，加快开发环境构建速度
+if (process.env.NODE_ENV === 'development') {
+    config.cache = {
+        type: 'filesystem',
+        cacheLocation: resolveFromRootDir('.cache')
+    }
+}
+
+module.exports = config
