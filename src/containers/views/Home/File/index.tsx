@@ -24,6 +24,7 @@ import { SHARE_BASE_URL, BREAK_IMAGE } from '@constant/index'
 import CreateType from '@store/extraStore/CreateType'
 import { ImgView, ImgViewTrigger } from '@components/ImgView'
 import RenderVideo from '@components/RenderVideo'
+import MarkDownEditor from './MarkDownEditor'
 
 const File: React.FC = () => {
     const {
@@ -235,13 +236,7 @@ const File: React.FC = () => {
                 return (
                     <div className={styles.mdEditAndRead}>
                         <div className={styles.editMdContainer}>
-                            <Editor
-                                className={styles.hideToolBar}
-                                isGetText
-                                defaultValue={content}
-                                onChange={setContent}
-                                onSave={save}
-                            />
+                            <MarkDownEditor defaultValue={content} onChange={setContent} onSave={save} />
                         </div>
                         <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
                         <ReactMarkdown
