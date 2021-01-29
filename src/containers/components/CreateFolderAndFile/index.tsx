@@ -56,6 +56,7 @@ const CreateFolderAndFile: React.FC = () => {
                     parentId: fid
                 })
                 insertFile(res)
+                setCurrFileInfo(null)
                 setCurrFileInfo(res)
             }
         } catch {}

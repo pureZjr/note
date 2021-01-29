@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import { Empty, Tree } from 'antd'
+import { Tree } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import { Tabs } from '@store/extraStore'
@@ -57,22 +57,18 @@ const FolderTree: React.FC = () => {
     return (
         <div className={styles.container}>
             {loading && <SectionLoading />}
-            <React.Fragment>
-                {!treeData.length ? (
-                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
-                ) : (
-                    <DirectoryTree
-                        selectedKeys={[currFolderInfo.key]}
-                        expandedKeys={expandTreeKeys}
-                        onSelect={onSelect}
-                        treeData={treeData}
-                        onRightClick={onHandleRightClick}
-                        icon={({ expanded }) =>
-                            expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
-                        }
-                    />
-                )}
-            </React.Fragment>
+            {!!treeData.length && (
+                <DirectoryTree
+                    selectedKeys={[currFolderInfo.key]}
+                    expandedKeys={expandTreeKeys}
+                    onSelect={onSelect}
+                    treeData={treeData}
+                    onRightClick={onHandleRightClick}
+                    icon={({ expanded }) =>
+                        expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
+                    }
+                />
+            )}
         </div>
     )
 }

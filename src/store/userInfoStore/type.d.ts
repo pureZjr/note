@@ -12,4 +12,5 @@ interface IUserInfo {
     area?: string
     sign?: string
     token?: string
+    lastLoginTime?: number
 }

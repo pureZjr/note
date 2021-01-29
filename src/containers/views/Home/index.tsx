@@ -13,6 +13,7 @@ import RightClickMenus from '@components/RightClickMenus'
 import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
 import IconWrite from '@assets/svgs/write.svg'
+import SectionLoading from '@components/SectionLoading'
 
 import styles from './index.scss'
 
@@ -43,7 +44,9 @@ const Home: React.FC = () => {
                 </Sider>
                 <FileAndFolder />
                 <Content className={styles.content}>
-                    {!!fileStore.currFileInfo ? (
+                    {fileStore.contentLoading ? (
+                        <SectionLoading />
+                    ) : !!fileStore.currFileInfo ? (
                         <File />
                     ) : (
                         <div className={styles.empty}>

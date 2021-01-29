@@ -15,6 +15,9 @@ const FileList: React.FC = () => {
     const {
         fileStore: { files, currFileInfo, setCurrFileInfo, setContentLoading },
         folderStore: { setCurrFolderInfo, setExpandTreeKeys },
+        userInfoStore: {
+            userInfo: { lastLoginTime }
+        },
         extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
     } = useRootStore()
 
@@ -100,6 +103,13 @@ const FileList: React.FC = () => {
             marginLeft: 4
         }
     }
+
+    React.useEffect(() => {
+        // 没有上次登录时间，说明是首次登录，首次登录默认打开欢迎文章
+        if (!lastLoginTime) {
+            onHandleClickItem(files[0])
+        }
+    }, [lastLoginTime])
 
     return (
         <div className={styles.container}>

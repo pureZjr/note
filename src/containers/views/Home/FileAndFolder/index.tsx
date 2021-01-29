@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import { RollbackOutlined, UnorderedListOutlined, CaretDownFilled } from '@ant-design/icons'
-import { Empty, Menu, Dropdown } from 'antd'
+import { Menu, Dropdown, Button } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import FolderList from './FolderList'
+import { createFile } from '@services/api/file'
 import FileList from './FileList'
 import { Tabs } from '@store/extraStore'
 import { LOCALSTORAGE } from '@constant/index'
@@ -15,7 +16,7 @@ import styles from './index.scss'
 const FileAndFolder: React.FC = () => {
     const {
         folderStore: { folders, currFolderInfo, setCurrFolderInfo, setNameByParentKey },
-        fileStore: { files },
+        fileStore: { files, insertFile, setCurrFileInfo },
         extraStore: {
             loading,
             currTabId,
@@ -83,6 +84,20 @@ const FileAndFolder: React.FC = () => {
                 break
         }
     }
+    // 新建笔记
+    const createArticle = async () => {
+        const fid = currFolderInfo.id || '2'
+        const res = await createFile({
+            title: '无标题笔记',
+            type: 'article',
+            content: '',
+            parentId: fid
+        })
+        insertFile(res)
+        setCurrFileInfo(null)
+        setCurrFileInfo(res)
+    }
+
     // 列表排序项
     const menu = (
         <Menu onClick={e => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
@@ -114,7 +129,12 @@ const FileAndFolder: React.FC = () => {
                     ) : (
                         <React.Fragment>
                             {empty ? (
-                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'没数据'} />
+                                <div className={styles.empty}>
+                                    <label>没有找到文件</label>
+                                    <Button size="small" type="primary" onClick={createArticle}>
+                                        新建笔记
+                                    </Button>
+                                </div>
                             ) : (
                                 <React.Fragment>
                                     <FolderList />

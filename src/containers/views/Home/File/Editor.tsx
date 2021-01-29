@@ -8,13 +8,11 @@ import styles from './index.scss'
 interface Props {
     className?: string
     defaultValue?: string
-    colors?: string[]
-    isGetText?: boolean
     onSave: (content: string) => void
     onChange: (txt: string) => void
 }
 
-const Editor: React.FC<Props> = ({ className, defaultValue, colors = [], isGetText, onSave, onChange }: Props) => {
+const Editor: React.FC<Props> = ({ className, defaultValue, onSave, onChange }: Props) => {
     const ref = React.useRef(null)
     const editorRef = React.useRef(null)
 
@@ -28,18 +26,13 @@ const Editor: React.FC<Props> = ({ className, defaultValue, colors = [], isGetTe
 
     const bindOnTxtChange = editor => {
         editor.config.onchange = html => {
-            if (isGetText) {
-                onChange(editor.txt.text())
-            } else {
-                onChange(html)
-            }
+            onChange(html)
         }
     }
 
     const init = () => {
         const editor = new WangeEditor(ref.current)
         editorRef.current = editor
-        editor.config.colors = colors
         bindOnTxtChange(editor)
         create(editor)
         setTxt(defaultValue, editor)
@@ -48,7 +41,7 @@ const Editor: React.FC<Props> = ({ className, defaultValue, colors = [], isGetTe
     useOnMount(() => init())
 
     useOnUnMount(() => {
-        onSave(editorRef.current.txt.text())
+        onSave(editorRef.current.txt.html())
     })
 
     return <div className={classname(styles.wangeEditor, className)} ref={ref}></div>

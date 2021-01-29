@@ -52,3 +52,19 @@
     top: 50%;
     left: 50%;
 }
+
+.empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-50%, -50%);
+
+    > label {
+        margin-bottom: 4px;
+        font-size: 12px;
+        color: $black04;
+    }
+}

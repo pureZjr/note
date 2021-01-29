@@ -3,6 +3,7 @@
 interface CssExports {
   'container': string;
   'content': string;
+  'empty': string;
   'header': string;
   'loading': string;
   'name': string;

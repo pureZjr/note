@@ -72,12 +72,13 @@ const Login: React.FC = () => {
                 return message.warn('两次密码不一致，请重新输入')
             }
             setLoading(true)
-            await register(formData)
+            try {
+                await register(formData)
+                tigger()
+                message.success('注册成功，赶紧登录体验吧！')
+            } catch {}
             setLoading(false)
-            tigger()
-            message.success('注册成功，赶紧登录体验吧！')
         }
-        setLoading(false)
     }
     const tigger = () => {
         setHandleLogin(!handleLogin)
