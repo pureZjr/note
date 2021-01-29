@@ -5,11 +5,17 @@ import PortalsContainer from '@components/PortalsContainer'
 import styles from './index.scss'
 
 interface Props {
+    hasMask?: boolean
     Icon?: React.ReactElement
 }
 
-function PageLoading({ Icon }: Props) {
-    return <PortalsContainer className={styles.wrapper}>{Icon || <Spin />}</PortalsContainer>
+function PageLoading({ hasMask, Icon }: Props) {
+    return (
+        <PortalsContainer className={styles.wrapper}>
+            {hasMask && <div className={styles.mask} />}
+            {Icon || <Spin />}
+        </PortalsContainer>
+    )
 }
 
 export default PageLoading

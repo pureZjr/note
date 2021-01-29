@@ -11,10 +11,13 @@ import { Tabs } from '@store/extraStore'
 import UserInfo from '@shared/UserInfo'
 import { LOCALSTORAGE } from '@constant/index'
 import IconLogo from '@assets/svgs/logo.svg'
+import PageLoading from '@components/PageLoading'
 
 const { Search } = Input
 
 const Header: React.FC = () => {
+    const [loading, setLoading] = React.useState(false)
+
     const { routerStore, extraStore, folderStore, userInfoStore } = useRootStore()
 
     const { userInfoVisible, setUserInfoVisible, userInfo } = userInfoStore
@@ -28,7 +31,9 @@ const Header: React.FC = () => {
     const debounceWrapper = debounce(val => handleSearch(val), 1000)
 
     const onHandleLogout = async () => {
+        setLoading(true)
         await logout()
+        setLoading(false)
         localStorage.removeItem(LOCALSTORAGE.USERINFO)
         routerStore.history.push('/login')
     }
@@ -123,6 +128,7 @@ const Header: React.FC = () => {
                 </div>
             </Dropdown>
             {userInfoVisible && <UserInfo close={() => setUserInfoVisible(false)} />}
+            {loading && <PageLoading hasMask />}
         </div>
     )
 }

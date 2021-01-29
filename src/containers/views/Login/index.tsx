@@ -6,7 +6,6 @@ import { login, register } from '@services/api/account'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import { LOCALSTORAGE } from '@constant/index'
 import message from '@components/AntdMessageExt'
-import PageLoading from '@components/PageLoading'
 import styles from './index.scss'
 
 const Login: React.FC = () => {
@@ -159,7 +158,7 @@ const Login: React.FC = () => {
                         </div>
                     )}
                 </div>
-                <Button type="primary" shape="round" className={styles.submit} onClick={submit}>
+                <Button type="primary" shape="round" loading={loading} className={styles.submit} onClick={submit}>
                     {handleLogin ? '登录' : '注册'}
                 </Button>
             </div>
@@ -179,7 +178,6 @@ const Login: React.FC = () => {
                     <div className={styles.mask} />
                 </div>
             </div>
-            {loading && <PageLoading />}
         </div>
     )
 }
