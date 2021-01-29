@@ -48,6 +48,10 @@ const Login: React.FC = () => {
         })
     }
     const submit = async () => {
+        const reg = /^[A-Za-zd0-9]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/
+        if (!reg.test(formData.email)) {
+            return message.warn('请确保邮箱正确')
+        }
         if (handleLogin) {
             try {
                 if (!formData.email || !formData.password) {
