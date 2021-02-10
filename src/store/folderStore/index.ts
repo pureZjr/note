@@ -123,12 +123,14 @@ export class FolderStore {
     /**
      * 重命名
      *
-     * @memberof ArticleStore
+     * @memberof FolderStore
      */
     @action
     setFolderName = (id: string, title: string) => {
-        const currFolder = this.folders.find(v => v.id === id)
-        currFolder.title = title
+        try {
+            const currFolder = this.folders.find(v => v.id === id)
+            currFolder.title = title
+        } catch {}
     }
 }
 

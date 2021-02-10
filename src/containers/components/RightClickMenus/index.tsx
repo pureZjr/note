@@ -150,6 +150,11 @@ const RightClickMenus: React.FC = () => {
                         api = renameFile
                     }
                     try {
+                        modal.update({
+                            okButtonProps: {
+                                loading: true
+                            }
+                        })
                         await api(data)
                         if (isFolder) {
                             folderStore.getTreeData()
@@ -159,13 +164,14 @@ const RightClickMenus: React.FC = () => {
                         }
                         message.success('操作成功')
                         modal.destroy()
-                    } catch {}
+                    } catch (err) {
+                        console.log(err)
+                    }
                 }
                 const modal = Modal.confirm({
                     title: '重命名',
-                    okButtonProps: {
-                        style: { display: 'none' }
-                    },
+                    onOk: onOk,
+                    okText: '确认',
                     cancelButtonProps: {
                         style: { display: 'none' }
                     },
@@ -189,8 +195,8 @@ const RightClickMenus: React.FC = () => {
                             <div
                                 style={{
                                     position: 'absolute',
-                                    right: 32,
-                                    marginTop: 18
+                                    right: 96,
+                                    marginTop: 42
                                 }}
                             >
                                 <Button
@@ -200,9 +206,6 @@ const RightClickMenus: React.FC = () => {
                                     onClick={() => modal.destroy()}
                                 >
                                     取消
-                                </Button>
-                                <Button type="primary" onClick={onOk}>
-                                    确认
                                 </Button>
                             </div>
                         </div>
