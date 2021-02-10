@@ -64,6 +64,7 @@ export default class Http {
                         message.error(res.data.text)
                 }
             } catch (err) {
+                message.error('网络错误')
                 reject(new Error('请求出错'))
             }
         })
