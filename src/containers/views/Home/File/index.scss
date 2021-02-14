@@ -104,7 +104,19 @@
 }
 
 .tips {
+    margin-bottom: 8px;
     color: $black02;
+}
+
+.copyLinkBtn {
+    width: fit-content;
+    padding: 0 4px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #fff;
+    cursor: pointer;
+    background: $primary;
+    border-radius: 4px;
 }
 
 .mdEditAndRead {

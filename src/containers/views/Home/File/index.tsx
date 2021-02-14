@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { isUndefined } from 'lodash'
-import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
+import { Input, Spin, Tooltip, Dropdown, Menu, Modal } from 'antd'
 import dayjs from 'dayjs'
 
 import message from '@components/AntdMessageExt'
@@ -25,6 +25,7 @@ import CreateType from '@store/extraStore/CreateType'
 import { ImgView, ImgViewTrigger } from '@components/ImgView'
 import RenderVideo from '@components/RenderVideo'
 import MarkDownEditor from './MarkDownEditor'
+import PageLoading from '@components/PageLoading'
 
 const File: React.FC = () => {
     const {
@@ -36,6 +37,7 @@ const File: React.FC = () => {
     const [editing, setEditing] = React.useState(false)
     const [content, setContent] = React.useState('')
     const [mdEditAndRead, setMdEditAndRead] = React.useState(true)
+    const [loading, setLoading] = React.useState(false)
 
     const title = React.useRef('')
 
@@ -82,32 +84,31 @@ const File: React.FC = () => {
         // 获取分享链接
         const getShareLink = async () => {
             try {
+                setLoading(true)
                 await createShareFileLink({ key, ts: dayjs().valueOf() })
                 const link = `${SHARE_BASE_URL}${key}`
                 const dialog = Modal.info({
+                    width: 350,
                     title: '分享链接',
                     mask: false,
-                    okButtonProps: { title: '关闭' },
+                    okButtonProps: { style: { display: 'none' } },
                     content: (
                         <div>
                             <span className={styles.tips}>链接生成成功, 复制链接分享给好友吧</span>
-                            <div>
-                                <span>{link}</span>
-                                <Button
-                                    type="primary"
-                                    size="small"
-                                    onClick={() => {
-                                        copy(link)
-                                        dialog.destroy()
-                                    }}
-                                >
-                                    复制链接
-                                </Button>
+                            <div
+                                className={styles.copyLinkBtn}
+                                onClick={() => {
+                                    copy(link)
+                                    dialog.destroy()
+                                }}
+                            >
+                                复制链接
                             </div>
                         </div>
                     )
                 })
             } catch {}
+            setLoading(false)
         }
 
         const menu = () => (
@@ -275,6 +276,7 @@ const File: React.FC = () => {
                 {contentLoading && <Spin className={styles.loading} />}
                 {editing ? renderEditingContent() : renderReadingContent()}
             </div>
+            {loading && <PageLoading />}
         </div>
     )
 }

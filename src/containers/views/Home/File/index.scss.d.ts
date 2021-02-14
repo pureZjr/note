@@ -4,6 +4,7 @@ interface CssExports {
   'btns': string;
   'container': string;
   'content': string;
+  'copyLinkBtn': string;
   'divider': string;
   'editMdContainer': string;
   'header': string;
