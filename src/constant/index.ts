@@ -2,7 +2,7 @@ const NODE_ENV = process.env.NODE_ENV
 export const SHARE_BASE_URL =
     NODE_ENV === 'development'
         ? `http://localhost:9000/#/share-article/`
-        : `http://note.cnd.purevivi.chat/#/share-article/`
+        : `https://note.cdn.purevivi.chat/#/share-article/`
 
 // 上传资源大小
 export const IMAGE_SIZE_LIMIT = 20 * 1024 * 1024
