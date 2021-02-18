@@ -30,7 +30,7 @@ import { getFolderInfo } from '@services/api/folder'
  * @param  {String} charset utf-8, utf-16
  * @return {Number} - size
  */
-export const sizeof = (str, charset) => {
+export const sizeof = (str = '', charset) => {
     let total = 0,
         charCode,
         i,

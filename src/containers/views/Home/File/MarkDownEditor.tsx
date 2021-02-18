@@ -26,7 +26,7 @@ const MarkDownEditor: React.FC<Props> = ({ className, defaultValue, onSave, onCh
             className={className}
             mode="javascript"
             theme="twilight"
-            onChange={onChange}
+            onChange={val => onChange(val)}
             defaultValue={defaultValue}
             name="blah2"
             height="1000%"
