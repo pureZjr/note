@@ -31,6 +31,7 @@ const MarkDownEditor: React.FC<Props> = ({ className, defaultValue, onSave, onCh
             name="blah2"
             height="1000%"
             width="1000%"
+            setOptions={{ useWorker: false }}
             editorProps={{ $blockScrolling: true }}
         />
     )
