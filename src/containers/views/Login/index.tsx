@@ -93,6 +93,11 @@ const Login: React.FC = () => {
             setBgImg(img.src)
         }
     }
+    const onEnter = e => {
+        if (e.keyCode === 13) {
+            submit()
+        }
+    }
 
     useOnMount(() => {
         if (localStorage.getItem(LOCALSTORAGE.USERINFO)) {
@@ -144,6 +149,7 @@ const Login: React.FC = () => {
                         <input
                             type="password"
                             value={formData.password}
+                            onKeyDown={handleLogin ? onEnter : null}
                             onChange={e => onHandleChangePassword(e.target.value)}
                         />
                     </div>
@@ -153,6 +159,7 @@ const Login: React.FC = () => {
                             <input
                                 type="password"
                                 value={formData.insure}
+                                onKeyDown={onEnter}
                                 onChange={e => onHandleInsurePassword(e.target.value)}
                             />
                         </div>

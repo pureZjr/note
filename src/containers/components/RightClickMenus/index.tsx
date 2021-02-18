@@ -159,6 +159,11 @@ const RightClickMenus: React.FC = () => {
                         if (isFolder) {
                             folderStore.getTreeData()
                             folderStore.setFolderName(folderId, currTitle)
+                            if (folderStore.currFolderInfo.id === folderId) {
+                                folderStore.setCurrFolderInfo({
+                                    title: currTitle
+                                })
+                            }
                         } else {
                             fileStore.setFileName(articleId, currTitle)
                         }
@@ -182,6 +187,11 @@ const RightClickMenus: React.FC = () => {
                             }}
                         >
                             <Input
+                                ref={ref => {
+                                    setTimeout(() => {
+                                        ref.focus()
+                                    }, 100)
+                                }}
                                 autoFocus
                                 maxLength={20}
                                 onKeyDown={e => {
