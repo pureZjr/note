@@ -188,9 +188,11 @@ const RightClickMenus: React.FC = () => {
                         >
                             <Input
                                 ref={ref => {
-                                    setTimeout(() => {
-                                        ref.focus()
-                                    }, 100)
+                                    if (!!ref) {
+                                        setTimeout(() => {
+                                            ref.focus()
+                                        }, 100)
+                                    }
                                 }}
                                 autoFocus
                                 maxLength={20}
