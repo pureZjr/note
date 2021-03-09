@@ -13,7 +13,7 @@ const ShareArticle = lazy(() => import(/* webpackChunkName: "ShareArticle" */ '@
 function App() {
     return (
         <div className={styles.container}>
-            <Suspense fallback={<PageLoading Icon={<img src={require('@assets/gifs/loading-pen.gif')} />} />}>
+            <Suspense fallback={<PageLoading Icon={<img src={'https://note.ss.purevivi.chat/loading-pen.gif'} />} />}>
                 <Switch>
                     <Route path="/login" exact={true}>
                         <Login />

@@ -1,14 +1,16 @@
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+// webpack5自带terser-webpack-plugin
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const plugins = require('./plugins')
 const jsRules = require('./rules/jsRules')
 const styleRules = require('./rules/styleRules')
 const fileRules = require('./rules/fileRules')
-const { APP_ENV } = require('./constants')
+const { APP_ENV, FILE_EXTENSIONS } = require('./constants')
 const { resolveFromRootDir, assetsPath } = require('./utils')
 const { assetsRoot } = require('./config')
+const optimization = require('./optimization')
+require('./cleanup-folder')
 
 const config = {
     mode: APP_ENV,
@@ -30,10 +32,10 @@ const config = {
     },
     plugins: [
         ...plugins
-        // new BundleAnalyzerPlugin()
+        //  new BundleAnalyzerPlugin()
     ],
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', 'jsx'],
+        extensions: FILE_EXTENSIONS,
         plugins: [
             new TsconfigPathsWebpackPlugin({
                 configFile: resolveFromRootDir('tsconfig.json')
@@ -42,52 +44,13 @@ const config = {
         fallback: { path: require.resolve('path-browserify') }
     },
     // 开启缓存，加快开发环境构建速度
-
-    optimization: {
-        innerGraph: false,
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                // 匹配需要压缩的文件、可以指定文件夹
-                // 提供include、exclude
-                test: /\.js(\?.*)?$/i,
-                // 默认开启并行提高构建速度
-                parallel: true,
-                terserOptions: {
-                    // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-                }
-            })
-        ],
-        splitChunks: {
-            chunks: 'all',
-            cacheGroups: {
-                // 禁用默认缓存
-                default: false,
-                buildup: {
-                    chunks: 'all',
-                    test: /[\\/]node_modules[\\/]/
-                },
-                reactBase: {
-                    name: 'reactBase',
-                    test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
-                    chunks: 'all',
-                    priority: 10
-                },
-                mobxBase: {
-                    name: 'mobxBase',
-                    test: /[\\/]node_modules[\\/](mobx|mobx-react|mobx-react-router)[\\/]/,
-                    chunks: 'all',
-                    priority: 9
-                }
-            }
-        },
-        runtimeChunk: true
-    },
-    devtool: 'inline-source-map'
+    optimization,
+    devtool: APP_ENV === 'development' ? 'eval-source-map' : false,
+    stats: 'minimal'
 }
 
 // 开启缓存，加快开发环境构建速度
-if (process.env.NODE_ENV === 'development') {
+if (APP_ENV === 'development') {
     config.cache = {
         type: 'filesystem',
         cacheLocation: resolveFromRootDir('.cache')
