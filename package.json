@@ -5,6 +5,8 @@
     "author": "pure",
     "private": true,
     "dependencies": {
+        "@sentry/react": "^6.2.1",
+        "@sentry/tracing": "^6.2.1",
         "axios": "^0.19.2",
         "browser-md5-file": "^1.1.1",
         "dayjs": "^1.10.3",
@@ -12,7 +14,8 @@
         "qiniu-js": "^3.1.1",
         "react-ace": "^9.3.0",
         "react-virtualized": "^9.22.3",
-        "wangeditor": "^4.6.2"
+        "wangeditor": "^4.6.2",
+        "webpack-sentry-plugin": "^2.0.3"
     },
     "scripts": {
         "dev": "NODE_ENV=development webpack serve --mode development --env development --config ./build/webpack.config.js",
