@@ -12,7 +12,7 @@ import CreateFolderAndFile from '@components/CreateFolderAndFile'
 import RightClickMenus from '@components/RightClickMenus'
 import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
-import IconWrite from '@assets/svgs/write.svg'
+import Icon from '@components/Icon'
 import SectionLoading from '@components/SectionLoading'
 
 import styles from './index.scss'
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
                         <File />
                     ) : (
                         <div className={styles.empty}>
-                            <IconWrite className={'no-fill'} width={40} height={40} />
+                            <Icon type="iconwrite" width={40} height={40} />
                             <div>当前没有笔记，赶紧去新建吧！</div>
                         </div>
                     )}

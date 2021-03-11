@@ -1,14 +1,11 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import IconDustbin from '@assets/svgs/dustbin.svg'
-import IconNnewestArticle from '@assets/svgs/newest-article.svg'
 import FolderTree from './FolderTree'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import styles from './index.scss'
 import { Tabs as EnumTabs } from '@store/extraStore'
-import IconFolderOpen from '@assets/svgs/folder-open.svg'
-import IconFolderClose from '@assets/svgs/folder-close.svg'
+import Icon from '@components/Icon'
 
 interface Props {}
 
@@ -27,7 +24,6 @@ const Tabs: React.FC<Props> = () => {
     } = useRootStore()
 
     const svgProps = {
-        className: 'no-fill',
         width: 16,
         height: 16
     }
@@ -35,19 +31,23 @@ const Tabs: React.FC<Props> = () => {
     const tabs = [
         {
             id: EnumTabs.NewDoc,
-            icon: <IconNnewestArticle {...svgProps} />,
+            icon: <Icon type="iconnewest-article" {...svgProps} />,
             title: '最新文档'
         },
         {
             id: EnumTabs.MyFolder,
             icon:
-                currTabId === EnumTabs.MyFolder ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />,
+                currTabId === EnumTabs.MyFolder ? (
+                    <Icon type="iconfolder-open" {...svgProps} />
+                ) : (
+                    <Icon type="iconfolder-close" {...svgProps} />
+                ),
             title: '我的文件夹',
             children: <FolderTree />
         },
         {
             id: EnumTabs.Recycle,
-            icon: <IconDustbin {...svgProps} />,
+            icon: <Icon type="dustbin" {...svgProps} />,
             title: '回收站'
         }
     ]

@@ -10,7 +10,7 @@ import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import UserInfo from '@shared/UserInfo'
 import { LOCALSTORAGE } from '@constant/index'
-import IconLogo from '@assets/svgs/logo.svg'
+import Icon from '@components/Icon'
 import PageLoading from '@components/PageLoading'
 
 const { Search } = Input
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.title}>
-                <IconLogo className="no-fill" width={32} height={32} />
+                <Icon type="iconlogo" width={32} height={32} />
                 码农笔记
             </div>
             <div className={styles.rightContainer}>

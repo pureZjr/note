@@ -1,6 +1,7 @@
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 // webpack5自带terser-webpack-plugin
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 
 const plugins = require('./plugins')
 const jsRules = require('./rules/jsRules')
@@ -52,9 +53,12 @@ const config = {
 // 开启缓存，加快开发环境构建速度
 if (APP_ENV === 'development') {
     config.cache = {
-        type: 'filesystem',
+        type: 'config',
         cacheLocation: resolveFromRootDir('.cache')
     }
 }
+
+const smp = new SpeedMeasurePlugin()
+webpackConfig = smp.wrap(config)
 
 module.exports = config

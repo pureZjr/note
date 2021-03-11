@@ -2,7 +2,7 @@ import React from 'react'
 import { Spin } from 'antd'
 
 import styles from './index.scss'
-import PlayAngel from '@assets/svgs/play-angle.svg'
+import Icon from '@components/Icon'
 import VideoPlay from './VideoPlay'
 import { PlayCircleOutlined } from '@ant-design/icons'
 
@@ -57,7 +57,7 @@ function RenderVideo({ videoSrc, width, height, style, useMateriaFn, disableAuto
             {!noPlay && (
                 <div className={styles.mask} onClick={play}>
                     <PlayCircleOutlined className={styles.playIcon} />
-                    <PlayAngel className={styles.playAngel} />
+                    <Icon type="iconplay-angle" className={styles.playAngel} />
                 </div>
             )}
         </div>

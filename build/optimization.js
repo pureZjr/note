@@ -1,4 +1,5 @@
 const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
     innerGraph: false,
@@ -12,6 +13,10 @@ module.exports = {
                 // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
             },
             extractComments: false
+        }),
+        new CssMinimizerPlugin({
+            parallel: true,
+            cache: true
         })
     ],
     splitChunks: {

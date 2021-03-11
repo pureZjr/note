@@ -8,8 +8,8 @@ import { getFileContent } from '@services/api/file'
 import { byteConvert, setAllKeysByCurrKey } from '@utils/common'
 import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
-import IconFolderClose from '@assets/svgs/folder-close.svg'
 import RenderFileIcon from '@shared/RenderFileIcon'
+import Icon from '@components/Icon'
 
 const FileList: React.FC = () => {
     const {
@@ -96,7 +96,6 @@ const FileList: React.FC = () => {
     }
 
     const svgProps = {
-        className: 'no-fill',
         width: 12,
         height: 12,
         style: {
@@ -145,7 +144,7 @@ const FileList: React.FC = () => {
                                         className={styles.parentFolderTitle}
                                         onClick={() => gotoMyFolder(article.parentKey, article.id)}
                                     >
-                                        <IconFolderClose {...svgProps} />
+                                        <Icon type="iconfolder-close" {...svgProps} />
                                         {article.parentFolderTitle}
                                     </div>
                                 ) : (

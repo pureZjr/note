@@ -2,10 +2,9 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import styles from './index.scss'
-import IconClose from '@assets/svgs/v2-close-png.svg'
-import IconDownload from '@assets/svgs/download.svg'
 import { downloadRemoteFile } from '@utils/common'
 import message from '@components/AntdMessageExt'
+import Icon from '@components/Icon'
 
 export interface ShowOptions {
     width?: number
@@ -133,8 +132,16 @@ class VideoPlay extends React.Component<VideoPlayProps> {
                     >
                         <source src={url} type="video/mp4" />
                     </video>
-                    <IconClose className={styles.iconClose} width={50} height={50} onClick={this.beforeHide} />
-                    {!disableDownload && <IconDownload onClick={this.downloadEvent} className={styles.downLoadIcon} />}
+                    <Icon
+                        type="iconv2-close-png"
+                        className={styles.iconClose}
+                        width={50}
+                        height={50}
+                        onClick={this.beforeHide}
+                    />
+                    {!disableDownload && (
+                        <Icon type="icondownload" onClick={this.downloadEvent} className={styles.downLoadIcon} />
+                    )}
                 </div>
                 <div className={styles.overlay} onClick={this.beforeHide} />
                 {title && (

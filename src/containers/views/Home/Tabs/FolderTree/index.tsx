@@ -4,8 +4,7 @@ import { Tree } from 'antd'
 
 import { useRootStore } from '@utils/customHooks'
 import { Tabs } from '@store/extraStore'
-import IconFolderOpen from '@assets/svgs/folder-open.svg'
-import IconFolderClose from '@assets/svgs/folder-close.svg'
+import Icon from '@components/Icon'
 import SectionLoading from '@components/SectionLoading'
 import styles from './index.scss'
 
@@ -49,7 +48,6 @@ const FolderTree: React.FC = () => {
     }, [extraStore.currTabId])
 
     const svgProps = {
-        className: 'no-fill',
         width: 14,
         height: 14
     }
@@ -65,7 +63,11 @@ const FolderTree: React.FC = () => {
                     treeData={treeData}
                     onRightClick={onHandleRightClick}
                     icon={({ expanded }) =>
-                        expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
+                        expanded ? (
+                            <Icon type="iconfolder-open" {...svgProps} />
+                        ) : (
+                            <Icon type="iconfolder-close" {...svgProps} />
+                        )
                     }
                 />
             )}

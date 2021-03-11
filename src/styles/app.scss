@@ -13,10 +13,3 @@ body {
     overflow: auto;
     overflow: auto;
 }
-
-:global {
-    svg:not(.no-fill),
-    svg:not(.no-fill) path {
-        fill: currentcolor;
-    }
-}

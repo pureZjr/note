@@ -16,7 +16,7 @@ import '../src/styles/app.scss'
 import 'viewerjs/dist/viewer.min.css'
 
 Sentry.init({
-    dsn: 'http://130d8b5250b74213ac96c3927df88737@sentry.purevivi.chat/2',
+    dsn: 'https://1acbb6a203324896bdf6f136b10e8f6c@o547927.ingest.sentry.io/5670826',
     integrations: [new Integrations.BrowserTracing()],
 
     // We recommend adjusting this value in production, or using tracesSampler

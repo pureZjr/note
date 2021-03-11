@@ -1,9 +1,6 @@
 import * as React from 'react'
 
-import IconMarkdown from '@assets/svgs/markdown.svg'
-import IconDocument from '@assets/svgs/document.svg'
-import IconImage from '@assets/svgs/image.svg'
-import IconVideo from '@assets/svgs/video.svg'
+import Icon from '@components/Icon'
 import CreateType from '@store/extraStore/CreateType'
 
 interface Props {
@@ -15,7 +12,6 @@ const RenderFileIcon: React.FC<Props> = ({ type, size = 20 }: Props) => {
     const { MarkDown, Article, Img, Video } = CreateType
 
     const svgProps = {
-        className: 'no-fill',
         width: size,
         height: size,
         style: {
@@ -25,10 +21,10 @@ const RenderFileIcon: React.FC<Props> = ({ type, size = 20 }: Props) => {
 
     return (
         <React.Fragment>
-            {type === MarkDown && <IconMarkdown {...svgProps} />}
-            {type === Article && <IconDocument {...svgProps} />}
-            {type === Img && <IconImage {...svgProps} />}
-            {type === Video && <IconVideo {...svgProps} />}
+            {type === MarkDown && <Icon type="iconmarkdown" {...svgProps} />}
+            {type === Article && <Icon type="icondocument" {...svgProps} />}
+            {type === Img && <Icon type="iconimage" {...svgProps} />}
+            {type === Video && <Icon type="iconvideo" {...svgProps} />}
         </React.Fragment>
     )
 }

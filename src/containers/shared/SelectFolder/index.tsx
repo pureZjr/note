@@ -2,8 +2,7 @@ import * as React from 'react'
 import { Modal, Tree, Button } from 'antd'
 import { observer } from 'mobx-react'
 
-import IconFolderOpen from '@assets/svgs/folder-open.svg'
-import IconFolderClose from '@assets/svgs/folder-close.svg'
+import Icon from '@components/Icon'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import RenderFileIcon from '@shared/RenderFileIcon'
 import CreateType from '@store/extraStore/CreateType'
@@ -53,7 +52,6 @@ const SelectFolder: React.FC<Props> = ({ file, defaultPath, defaultParentId, onS
     })
 
     const svgProps = {
-        className: 'no-fill',
         width: 14,
         height: 14,
         style: {
@@ -86,7 +84,11 @@ const SelectFolder: React.FC<Props> = ({ file, defaultPath, defaultParentId, onS
                                 onSelect={onSelect}
                                 treeData={[{ title: '我的文件夹', key: '2', children: treeData }]}
                                 icon={({ expanded }) =>
-                                    expanded ? <IconFolderOpen {...svgProps} /> : <IconFolderClose {...svgProps} />
+                                    expanded ? (
+                                        <Icon type="iconfolder-open" {...svgProps} />
+                                    ) : (
+                                        <Icon type="iconfolder-close" {...svgProps} />
+                                    )
                                 }
                             />
                         </PerfectScroll>

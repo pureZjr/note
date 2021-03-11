@@ -3,10 +3,10 @@ import { observer } from 'mobx-react'
 import dayjs from 'dayjs'
 
 import { useRootStore } from '@utils/customHooks'
-import IconFolderClose from '@assets/svgs/folder-close.svg'
 import styles from './index.scss'
 import { Tabs } from '@store/extraStore'
 import { setAllKeysByCurrKey } from '@utils/common'
+import Icon from '@components/Icon'
 
 const FolderList: React.FC = () => {
     const {
@@ -98,7 +98,7 @@ const FolderList: React.FC = () => {
                         onContextMenu={e => onHandleContextMenu(e, folder)}
                     >
                         <div className={styles.titleContainer}>
-                            <IconFolderClose width={20} height={20} className="no-fill" />
+                            <Icon type="iconfolder-close" width={20} height={20} />
                             <div className={styles.title}>{renderTitle(folder.title)}</div>
                         </div>
                         <div className={styles.updateTime}>{dayjs(folder.updateTime).format('YYYY-MM-DD')}</div>

@@ -7,6 +7,7 @@ const webpack = require('webpack')
 const getClientEnvironment = require('./env.js')
 const env = getClientEnvironment('/')
 const { assetsPath, resolveFromRootDir } = require('./utils')
+const { APP_ENV } = require('./constants')
 
 const definePlugin = new webpack.DefinePlugin(env.stringified)
 
@@ -19,14 +20,14 @@ const plugins = [
         tsconfig: resolveFromRootDir('tsconfig.json'),
         eslint: true,
         // 设置为false编译中途直接报告问题
-        async: false
+        async: APP_ENV === 'development'
     }),
     new webpack.ProvidePlugin({
         process: 'process/browser'
     })
 ]
 
-if (process.env.APP_ENV === 'production') {
+if (APP_ENV === 'production') {
     plugins.push(
         new MiniCssExtractPlugin({
             filename: assetsPath('css/[name].[contenthash].css'),
