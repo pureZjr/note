@@ -47,7 +47,7 @@ const Tabs: React.FC<Props> = () => {
         },
         {
             id: EnumTabs.Recycle,
-            icon: <Icon type="dustbin" {...svgProps} />,
+            icon: <Icon type="icondustbin" {...svgProps} />,
             title: '回收站'
         }
     ]

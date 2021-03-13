@@ -262,11 +262,7 @@ const File: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.header}>
                 {editing ? (
-                    <Input
-                        defaultValue={currFileInfo.title}
-                        onChange={event => (title.current = event.target.value)}
-                        style={{ width: 150 }}
-                    />
+                    <Input defaultValue={currFileInfo.title} onChange={event => (title.current = event.target.value)} />
                 ) : (
                     <span className={styles.title}>{currFileInfo.title}</span>
                 )}
