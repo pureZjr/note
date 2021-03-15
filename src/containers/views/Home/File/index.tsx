@@ -266,7 +266,7 @@ const File: React.FC = () => {
     }
 
     React.useEffect(() => {
-        setContent(currFileInfo.content)
+        setContent(currFileInfo.content || '')
         title.current = currFileInfo.title
     }, [currFileInfo])
 
@@ -278,6 +278,11 @@ const File: React.FC = () => {
                 ) : (
                     <div
                         contentEditable={true}
+                        onKeyDown={e => {
+                            if (e.keyCode === 13) {
+                                ;(e.target as HTMLDivElement).blur()
+                            }
+                        }}
                         className={styles.title}
                         onBlur={e => editTitle(e.target.innerText)}
                         dangerouslySetInnerHTML={{ __html: currFileInfo.title }}
