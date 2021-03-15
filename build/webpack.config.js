@@ -1,6 +1,6 @@
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 // webpack5自带terser-webpack-plugin
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 
 const plugins = require('./plugins')
@@ -33,7 +33,7 @@ const config = {
     },
     plugins: [
         ...plugins
-        //  new BundleAnalyzerPlugin()
+        // , new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: FILE_EXTENSIONS,
@@ -58,7 +58,7 @@ if (APP_ENV === 'development') {
     }
 }
 
-const smp = new SpeedMeasurePlugin()
-webpackConfig = smp.wrap(config)
+// const smp = new SpeedMeasurePlugin()
+// webpackConfig = smp.wrap(config)
 
 module.exports = config

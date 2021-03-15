@@ -49,9 +49,11 @@
 }
 
 .title {
+    padding: 0 12px;
     font-size: 19px;
     font-weight: 500;
     color: $black08;
+    @include textEllipsis;
 }
 
 .content {

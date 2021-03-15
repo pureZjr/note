@@ -33,7 +33,7 @@ const File: React.FC = () => {
         extraStore: { currTabId, getNewestFolderAndFile }
     } = useRootStore()
 
-    const { id, type, key, isTop, parentFolderTitle, createTime, updateTime } = currFileInfo
+    const { id, type, key, isTop, parentFolderTitle, createTime, updateTime, size } = currFileInfo
     const [editing, setEditing] = React.useState(false)
     const [content, setContent] = React.useState('')
     const [mdEditAndRead, setMdEditAndRead] = React.useState(true)
@@ -252,6 +252,18 @@ const File: React.FC = () => {
                 )
         }
     }
+    // 编辑标题
+    const editTitle = (val: string) => {
+        try {
+            editFile({ content, id, title: val, type })
+            updateFile({
+                content,
+                size,
+                id,
+                title: val
+            })
+        } catch {}
+    }
 
     React.useEffect(() => {
         setContent(currFileInfo.content)
@@ -264,7 +276,12 @@ const File: React.FC = () => {
                 {editing ? (
                     <Input defaultValue={currFileInfo.title} onChange={event => (title.current = event.target.value)} />
                 ) : (
-                    <span className={styles.title}>{currFileInfo.title}</span>
+                    <div
+                        contentEditable={true}
+                        className={styles.title}
+                        onBlur={e => editTitle(e.target.innerText)}
+                        dangerouslySetInnerHTML={{ __html: currFileInfo.title }}
+                    />
                 )}
                 {!!currFileInfo.id && renderBtns()}
             </div>
