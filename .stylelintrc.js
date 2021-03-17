@@ -8,7 +8,8 @@ module.exports = {
         '**/*.js',
         '.prettierrc.js',
         '.eslintrc.js',
-        '.stylelintrc.js'
+        '.stylelintrc.js',
+        'dist/**/*.css'
     ],
     extends: ['stylelint-config-recommended', 'stylelint-config-recess-order'],
     rules: {

@@ -262,6 +262,7 @@ const File: React.FC = () => {
                 id,
                 title: val
             })
+            setCurrFileInfo({ ...currFileInfo, title: val })
         } catch {}
     }
 
