@@ -1,0 +1,76 @@
+name: note build
+# 触发workflow的条件
+on:
+  push:
+    # 只有master分支发生push事件时，才会触发workflow
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  MY_V2_SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
+  MY_V2_USER: ${{ secrets.USER_NAME }}
+  MY_V2_IP: ${{ secrets.SERVER_HOST }}
+  cache-name: note
+    
+# jobs表示执行的一项或多项任务
+jobs:
+  # 任务的job_id，具体名称自定义，这里build代表打包
+  build:
+    # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
+    runs-on: ubuntu-latest
+    # 用于配置当前workflow的参数
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    # steps字段指定每个job的运行步骤，可以包含一个或多个步骤，每个步骤都可以配置指定字段
+    steps:
+    # 拉代码
+    - name: Checkout
+    uses: actions/checkout@master
+    
+    #缓存依赖
+    - name: Cache nodemodules
+    uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    
+    # 装依赖
+    - name: Install
+    run: yarn
+    
+    # 打包
+    - name: Build
+    run: yarn build
+
+    # 上传打包资源
+    - name: Upload result
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: dist
+    
+deploy:
+  name: Deploy
+  needs: build-production
+  runs-on: ubuntu-latest
+  steps:
+  - name: Download result
+    uses: actions/download-artifact@v1
+    with:
+      name: dist
+
+  - name: rsync deployments
+    uses: contention/rsync-deployments@v1.0.0
+    env:
+      DEPLOY_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
+    with:
+      args: "-avzr --delete ${{ env.testParcelActions }}@${{ env.testParcelActions }}:~/testParcelActions/"
