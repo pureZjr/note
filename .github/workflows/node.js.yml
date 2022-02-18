@@ -65,6 +65,6 @@ jobs:
       - name: rsync deployments
         uses: contention/rsync-deployments@v1.0.0
         env:
-          DEPLOY_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
+          DEPLOY_KEY: ${{ env.MY_V2_SERVER_PRIVATE_KEY }}
         with:
-          args: '-avzr --delete ${{ env.testParcelActions }}@${{ env.testParcelActions }}:~/testParcelActions/'
+          args: '-avzr --delete ${{ env.MY_V2_USER }}@${{ env.MY_V2_IP }}:~/testParcelActions/'
