@@ -16,7 +16,7 @@ env:
 # jobs表示执行的一项或多项任务
 jobs:
   # 任务的job_id，具体名称自定义，这里build代表打包
-  build:
+  build-production:
     runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
     # 用于配置当前workflow的参数
     strategy:
