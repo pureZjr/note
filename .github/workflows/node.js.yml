@@ -50,7 +50,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: build-production
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download result
