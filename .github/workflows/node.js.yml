@@ -51,20 +51,14 @@ jobs:
         with:
           name: dist
           path: dist
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download result
-        uses: actions/download-artifact@v1
-        with:
-          name: dist
-
-      - name: rsync deployments
-        uses: contention/rsync-deployments@v1.0.0
+          
+      # Deploy
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@v2.0.7
         env:
-          DEPLOY_KEY: ${{ secrets.MY_V2_SERVER_PRIVATE_KEY }}
-        with:
-          args: '-avzr --delete root@47.107.72.163:~/testParcelActions/'
+          SSH_PRIVATE_KEY: ${{ secrets.MY_V2_SERVER_PRIVATE_KEY }}
+          ARGS: "-avz --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.SERVER_HOST }}
+          TARGET: ./home
