@@ -67,4 +67,4 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.MY_V2_SERVER_PRIVATE_KEY }}
         with:
-          args: '-avzr --delete ${{ env.MY_V2_USER }}@${{ env.MY_V2_IP }}:~/testParcelActions/'
+          args: '-avzr --delete root@47.107.72.163:~/testParcelActions/'
