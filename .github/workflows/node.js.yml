@@ -61,4 +61,4 @@ jobs:
           SOURCE: "dist/"
           REMOTE_HOST: ${{ secrets.SERVER_HOST }}
           REMOTE_USER: ${{ secrets.USER_NAME }}
-          TARGET: ./home
+          TARGET: /testParcelActions
