@@ -1,64 +1,57 @@
 name: note build
 # 触发workflow的条件
 on:
-  push:
-    # 只有master分支发生push事件时，才会触发workflow
-    branches: [master]
-  pull_request:
-    branches: [master]
+    push:
+        # 只有master分支发生push事件时，才会触发workflow
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 env:
-  MY_V2_SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
-  MY_V2_USER: ${{ secrets.USER_NAME }}
-  MY_V2_IP: ${{ secrets.SERVER_HOST }}
-  cache-name: note
+    SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
+    SERVER_HOST: ${{ secrets.SERVER_HOST }}
+    USER_NAME: ${{ secrets.USER_NAME }}
+    cache-name: note
 
 # jobs表示执行的一项或多项任务
 jobs:
-  build: # 任务的job_id，具体名称自定义，这里build代表打包
-    runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
-    steps:
-      - uses: actions/checkout@master
+    build: # 任务的job_id，具体名称自定义，这里build代表打包
+        runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
+        steps:
+            - uses: actions/checkout@master
 
-      - uses: actions/setup-node@v1
-        with:
-          node-version: v14.17.0
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: v14.17.0
 
-      #缓存依赖
-      - name: Cache nodemodules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ./node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            #缓存依赖
+            - name: Cache nodemodules
+              uses: actions/cache@v1
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  path: ./node_modules
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
 
-      # 装依赖
-      - name: Install
-        run: yarn
+            # 装依赖
+            - name: Install
+              run: yarn
 
-      # 打包
-      - name: Build
-        run: yarn build
+            # 打包
+            - name: Build
+              run: yarn build
 
-      # 上传打包资源
-      - name: Upload result
-        uses: actions/upload-artifact@v1
-        with:
-          name: dist
-          path: dist
-          
-      # Deploy
-      - name: Deploy
-        uses: easingthemes/ssh-deploy@v2.0.7
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
-          ARGS: "-avz --delete"
-          SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
-          REMOTE_USER: ${{ secrets.USER_NAME }}
-          TARGET: /testParcelActions
+            # 上传打包资源
+            - name: Deploy
+              uses: easingthemes/ssh-deploy@v2.0.7
+              env:
+                  SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
+                  ARGS: '-avz --delete'
+                  SOURCE: 'dist/'
+                  REMOTE_HOST: ${{ env.SERVER_HOST }}
+                  REMOTE_USER: ${{ env.USER_NAME }}
+                  TARGET: /testParcelActions
