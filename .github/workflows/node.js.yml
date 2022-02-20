@@ -9,8 +9,8 @@ on:
 
 env:
     SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
-    SERVER_HOST: ${{ secrets.SERVER_HOST }}
-    USER_NAME: ${{ secrets.USER_NAME }}
+    SERVER_HOST: ${{ secrets.SERVER_HOST }} # 服务器IP地址
+    USER_NAME: ${{ secrets.USER_NAME }} # 服务器用户名
     cache-name: note
 
 # jobs表示执行的一项或多项任务
@@ -56,4 +56,4 @@ jobs:
                   SOURCE: 'dist/'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: /home/note
+                  TARGET: /home/note # 服务器目标路径
