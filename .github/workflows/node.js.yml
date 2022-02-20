@@ -26,6 +26,7 @@ jobs:
 
             #缓存依赖
             - name: Cache nodemodules
+              id: MyCacheStep
               uses: actions/cache@v1
               env:
                   cache-name: cache-node-modules
@@ -39,6 +40,7 @@ jobs:
 
             # 装依赖
             - name: Install
+              if: steps.MyCacheStep.outputs.cache-hit != 'true'
               run: yarn
 
             # 打包
