@@ -9,8 +9,8 @@ on:
 
 env:
     SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
-    SERVER_HOST: ${{ secrets.SERVER_HOST }}
-    USER_NAME: ${{ secrets.USER_NAME }}
+    SERVER_HOST: ${{ secrets.SERVER_HOST }} # 服务器IP地址
+    USER_NAME: ${{ secrets.USER_NAME }} # 服务器用户名
     cache-name: note
 
 # jobs表示执行的一项或多项任务
@@ -23,20 +23,6 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: v14.17.0
-
-            #缓存依赖
-            - name: Cache nodemodules
-              uses: actions/cache@v1
-              env:
-                  cache-name: cache-node-modules
-              with:
-                  path: ./node_modules
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-${{ env.cache-name }}-
-                      ${{ runner.os }}-build-
-                      ${{ runner.os }}-
-
             # 装依赖
             - name: Install
               run: yarn
@@ -54,4 +40,4 @@ jobs:
                   SOURCE: 'dist/'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: /home/note
+                  TARGET: /home/note # 服务器目标路径
