@@ -1,5 +1,4 @@
 import React from 'react'
-import 'antd/lib/icon/style/index'
 
 interface Props extends React.SVGAttributes<SVGElement> {
     type: string

@@ -3,7 +3,7 @@ import WangeEditor from 'wangeditor'
 import classname from 'classnames'
 
 import { useOnMount, useOnUnMount } from '@utils/customHooks'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 interface Props {
     className?: string

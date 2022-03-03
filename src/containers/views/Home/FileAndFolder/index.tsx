@@ -11,7 +11,7 @@ import { Tabs } from '@store/extraStore'
 import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
 import SectionLoading from '@components/SectionLoading'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const FileAndFolder: React.FC = () => {
     const {

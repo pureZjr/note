@@ -4,8 +4,8 @@ import { HashRouter, Router } from 'react-router-dom'
 import { createHashHistory } from 'history'
 import { syncHistoryWithStore } from 'mobx-react-router'
 import 'mobx-react-lite/batchingForReactDom'
-import 'antd/dist/antd.css'
-import 'perfect-scrollbar/css/perfect-scrollbar.css'
+import '@nm/antd/dist/antd.css'
+import '@nm/perfect-scrollbar/css/perfect-scrollbar.css'
 // import * as Sentry from '@sentry/react'
 // import { Integrations } from '@sentry/tracing'
 
@@ -13,7 +13,7 @@ import * as store from '@store/index'
 import { RootProvider } from '@components/RootProvider'
 import App from '@views/App'
 import '../src/styles/app.scss'
-import 'viewerjs/dist/viewer.min.css'
+import '@nm/viewerjs/dist/viewer.min.css'
 
 // Sentry.init({
 //     dsn: 'https://1acbb6a203324896bdf6f136b10e8f6c@o547927.ingest.sentry.io/5670826',

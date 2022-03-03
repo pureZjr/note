@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 export interface PortalsContainerProps {
     containers?: HTMLElement

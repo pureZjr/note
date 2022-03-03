@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 
 import FolderTree from './FolderTree'
 import { useRootStore, useOnMount } from '@utils/customHooks'
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { Tabs as EnumTabs } from '@store/extraStore'
 import Icon from '@components/Icon'
 

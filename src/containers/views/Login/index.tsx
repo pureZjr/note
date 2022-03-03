@@ -6,7 +6,7 @@ import { login, register } from '@services/api/account'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import { LOCALSTORAGE } from '@constant/index'
 import message from '@components/AntdMessageExt'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const Login: React.FC = () => {
     const [loading, setLoading] = React.useState(false)

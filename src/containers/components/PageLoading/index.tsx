@@ -2,7 +2,7 @@ import React from 'react'
 import { Spin } from 'antd'
 
 import PortalsContainer from '@components/PortalsContainer'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 interface Props {
     hasMask?: boolean

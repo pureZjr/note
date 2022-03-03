@@ -6,7 +6,7 @@ import { debounce } from 'lodash'
 
 import { logout } from '@services/api/account'
 import { useRootStore } from '@utils/customHooks'
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { Tabs } from '@store/extraStore'
 import UserInfo from '@shared/UserInfo'
 import { LOCALSTORAGE } from '@constant/index'

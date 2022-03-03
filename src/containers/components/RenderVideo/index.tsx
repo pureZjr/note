@@ -1,7 +1,7 @@
 import React from 'react'
 import { Spin } from 'antd'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 import Icon from '@components/Icon'
 import VideoPlay from './VideoPlay'
 import { PlayCircleOutlined } from '@ant-design/icons'

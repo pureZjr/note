@@ -2,7 +2,7 @@ import React from 'react'
 import { Spin } from 'antd'
 import classNames from 'classnames'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 export interface IProps {
     className?: string

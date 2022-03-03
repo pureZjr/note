@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import dayjs from 'dayjs'
 
 import { useRootStore } from '@utils/customHooks'
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { Tabs } from '@store/extraStore'
 import { setAllKeysByCurrKey } from '@utils/common'
 import Icon from '@components/Icon'

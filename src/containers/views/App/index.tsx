@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 
 import PageLoading from '@components/PageLoading'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ '@views/Home'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ '@views/Login'))

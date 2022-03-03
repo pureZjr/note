@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Icon from '@components/Icon'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 export default class NotFound extends React.Component {
     render() {

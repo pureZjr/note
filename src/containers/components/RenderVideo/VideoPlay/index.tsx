@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { downloadRemoteFile } from '@utils/common'
 import message from '@components/AntdMessageExt'
 import Icon from '@components/Icon'
