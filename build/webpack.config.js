@@ -53,7 +53,7 @@ const config = {
 // 开启缓存，加快开发环境构建速度
 if (APP_ENV === 'development') {
     config.cache = {
-        type: 'config',
+        type: 'filesystem',
         cacheLocation: resolveFromRootDir('.cache')
     }
 }

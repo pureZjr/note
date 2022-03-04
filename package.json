@@ -17,7 +17,7 @@
         "wangeditor": "^4.6.2"
     },
     "scripts": {
-        "dev": "NODE_ENV=development webpack serve --mode development --env development --config ./build/webpack.config.js",
+        "dev": "APP_ENV=development NODE_ENV=development webpack serve --mode development --env development --config ./build/webpack.config.js",
         "lint": "eslint src  --ext .ts,.tsx && stylelint --fix \"./src/**/*.scss\"",
         "add": "add-component",
         "build": "cross-env APP_ENV=production NODE_ENV=production webpack --config ./build/webpack.config.js",
