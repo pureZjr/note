@@ -4,7 +4,7 @@ import { HashRouter, Router } from 'react-router-dom'
 import { createHashHistory } from 'history'
 import { syncHistoryWithStore } from 'mobx-react-router'
 import 'mobx-react-lite/batchingForReactDom'
-import '@nm/antd/dist/antd.css'
+import '@nm/antd/dist/antd.less'
 import '@nm/perfect-scrollbar/css/perfect-scrollbar.css'
 // import * as Sentry from '@sentry/react'
 // import { Integrations } from '@sentry/tracing'
@@ -26,6 +26,8 @@ import '@nm/viewerjs/dist/viewer.min.css'
 
 const hashHistory = createHashHistory()
 const history = syncHistoryWithStore(hashHistory, store.routerStore)
+
+window.process.cwd = () => process['cwdVal']
 
 const render = () => {
     ReactDom.render(

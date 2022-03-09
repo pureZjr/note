@@ -42,11 +42,12 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             less: {
-                javascriptEnabled: true
+                javascriptEnabled: true,
+                modifyVars: {}
             }
         }
-        // modules: {
-        //     scopeBehaviour: 'global'
-        // }
+    },
+    define: {
+        process: { cwdVal: `${process.cwd()}` }
     }
 })
