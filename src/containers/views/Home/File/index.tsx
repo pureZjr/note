@@ -180,16 +180,10 @@ const File: React.FC = () => {
                                 style={{
                                     marginRight: 10,
                                     maxHeight: '100%',
-                                    maxWidth: '100%'
+                                    maxWidth: '100%',
+                                    cursor: 'pointer'
                                 }}
-                                src={content}
-                                ref={ref => {
-                                    if (ref) {
-                                        ref.onerror = () => {
-                                            ref.src = BREAK_IMAGE
-                                        }
-                                    }
-                                }}
+                                src={`${content}?imageView2/1/interlace/1`}
                             />
                         </ImgViewTrigger>
                     </ImgView>
