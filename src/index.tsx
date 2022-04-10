@@ -27,8 +27,6 @@ import '@nm/viewerjs/dist/viewer.min.css'
 const hashHistory = createHashHistory()
 const history = syncHistoryWithStore(hashHistory, store.routerStore)
 
-window.process.cwd = () => process['cwdVal']
-
 const render = () => {
     ReactDom.render(
         <HashRouter>

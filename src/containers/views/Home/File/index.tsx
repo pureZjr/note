@@ -16,7 +16,6 @@ import message from '@components/AntdMessageExt'
 import { useRootStore } from '@utils/customHooks'
 import { sizeof, copyToClipboard } from '@utils/common'
 import styles from './index.module.scss'
-import CodeBlock from './CodeBlock'
 import Editor from './Editor'
 import { setTopFile, createShareFileLink, editFile } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
@@ -196,16 +195,7 @@ const File: React.FC = () => {
                     </ImgView>
                 )
             case CreateType.MarkDown:
-                return (
-                    <ReactMarkdown
-                        className={styles.markdown}
-                        source={isUndefined(content) ? '' : content}
-                        renderers={{
-                            code: CodeBlock
-                        }}
-                        escapeHtml={false}
-                    />
-                )
+                return <ReactMarkdown className={styles.markdown}>{isUndefined(content) ? '' : content}</ReactMarkdown>
             case CreateType.Video:
                 return (
                     <RenderVideo
@@ -240,14 +230,9 @@ const File: React.FC = () => {
                             <MarkDownEditor defaultValue={content} onChange={setContent} onSave={save} />
                         </div>
                         <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
-                        <ReactMarkdown
-                            className={mdEditAndRead ? styles.markdown : styles.hideMarkdown}
-                            source={isUndefined(content) ? '' : content}
-                            renderers={{
-                                code: CodeBlock
-                            }}
-                            escapeHtml={false}
-                        />
+                        <ReactMarkdown className={mdEditAndRead ? styles.markdown : styles.hideMarkdown}>
+                            {isUndefined(content) ? '' : content}
+                        </ReactMarkdown>
                     </div>
                 )
         }

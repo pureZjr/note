@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown'
 
 import { useOnMount, useRootStore } from '@utils/customHooks'
 import { getShareFileLink } from '@services/api/file'
-import CodeBlock from '../Home/File/CodeBlock'
 import { LOCALSTORAGE } from '@constant/index'
 import styles from './index.module.scss'
 
@@ -41,18 +40,7 @@ const ShareArticle: React.FC = () => {
                 )}
             </div>
             <div className={styles.content}>
-                {type === 'article' ? (
-                    <div>{content}</div>
-                ) : (
-                    <ReactMarkdown
-                        className={styles.markdown}
-                        source={content}
-                        renderers={{
-                            code: CodeBlock
-                        }}
-                        escapeHtml={false}
-                    />
-                )}
+                {type === 'article' ? <div>{content}</div> : <ReactMarkdown>{content}</ReactMarkdown>}
             </div>
         </div>
     )

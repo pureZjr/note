@@ -1,7 +1,8 @@
 import * as React from 'react'
 import AceEditor from 'react-ace'
-import 'ace-builds/src-noconflict/mode-javascript'
-import 'ace-builds/src-noconflict/theme-twilight'
+
+import 'ace-builds/src-noconflict/mode-markdown'
+import 'ace-builds/src-noconflict/theme-monokai'
 
 import { useOnUnMount } from '@utils/customHooks'
 
@@ -24,14 +25,15 @@ const MarkDownEditor: React.FC<Props> = ({ className, defaultValue, onSave, onCh
             placeholder="开始你的大创作..."
             ref={aceRef}
             className={className}
-            mode="javascript"
-            theme="twilight"
+            mode="markdown"
+            theme="monokai"
             onChange={val => onChange(val)}
             defaultValue={defaultValue}
             name="blah2"
-            height="1000%"
-            width="1000%"
-            setOptions={{ useWorker: false }}
+            height="100%"
+            width="100%"
+            highlightActiveLine
+            setOptions={{ useWorker: false, tabSize: 2, wrap: true }}
             editorProps={{ $blockScrolling: true }}
         />
     )

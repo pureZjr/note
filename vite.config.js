@@ -47,7 +47,5 @@ export default defineConfig({
             }
         }
     },
-    define: {
-        process: { cwdVal: `${process.cwd()}` }
-    }
+    define: {}
 })
