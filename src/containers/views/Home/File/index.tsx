@@ -19,10 +19,10 @@ import styles from './index.module.scss'
 import Editor from './Editor'
 import { setTopFile, createShareFileLink, editFile } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
-import { SHARE_BASE_URL, BREAK_IMAGE } from '@constant/index'
+import { SHARE_BASE_URL } from '@constant/index'
 import CreateType from '@store/extraStore/CreateType'
 import { ImgView, ImgViewTrigger } from '@components/ImgView'
-import RenderVideo from '@components/RenderVideo'
+import VideoPlayer from '@components/VideoPlayer'
 import MarkDownEditor from './MarkDownEditor'
 import PageLoading from '@components/PageLoading'
 
@@ -192,19 +192,24 @@ const File: React.FC = () => {
                 return <ReactMarkdown className={styles.markdown}>{isUndefined(content) ? '' : content}</ReactMarkdown>
             case CreateType.Video:
                 return (
-                    <RenderVideo
-                        videoSrc={content}
-                        width={500}
-                        height={300}
+                    <VideoPlayer
+                        url={content}
+                        onVideoReady={dom => {
+                            setTimeout(() => {
+                                dom.parentElement.querySelector('.vjs-big-play-button').style.opacity = 1
+                            }, 100)
+                        }}
                         style={{
-                            margin: 12
+                            margin: '0 auto',
+                            maxWidth: '99%',
+                            maxHeight: '100%'
                         }}
                     />
                 )
             case CreateType.Article:
                 return (
                     <div
-                        style={{ padding: 12 }}
+                        className={styles.article}
                         dangerouslySetInnerHTML={{
                             __html: content
                         }}

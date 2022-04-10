@@ -1,0 +1,53 @@
+@import '@styles/base.scss';
+
+.container {
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100%;
+    background: #000;
+
+    :global {
+        /* video-js cover css */
+        .video-js-cover.video-js .vjs-tech {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .video-js-cover.video-js .vjs-time-tooltip {
+            min-width: 40px;
+        }
+
+        .video-js-cover.video-js .vjs-big-play-button {
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .video-js-cover.video-js .vjs-slider-vertical .vjs-volume-level:before {
+            background: #fff;
+            border-radius: 50%;
+            content: '';
+            height: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+        }
+
+        .video-js-cover.video-js .vjs-play-progress:before {
+            background: #fff;
+            border-radius: 50%;
+            content: '';
+            height: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+        }
+
+        .video-js-cover.video-js .vjs-mouse-display .vjs-time-tooltip,
+        .video-js-cover.video-js .vjs-volume-tooltip {
+            display: none !important;
+        }
+    }
+}

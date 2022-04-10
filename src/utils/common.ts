@@ -152,7 +152,8 @@ export async function generateKey(file: File) {
     }
     try {
         const md5 = await getFileMd5(file)
-        const ext = path.extname(file.name)
+        const reg = /\.\w+$/
+        const ext = file.name.match(reg)[0]
         return md5 + ext
     } catch (err) {
         console.error(err)

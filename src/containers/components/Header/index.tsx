@@ -117,7 +117,7 @@ const Header: React.FC = () => {
                             marginRight: 4
                         }}
                         size={38}
-                        icon={<img src={userInfo.avatar} width={24} height={24} />}
+                        icon={<img src={`${userInfo.avatar}?imageView2/1/interlace/1`} width={24} height={24} />}
                     />
                     <CaretDownOutlined
                         style={{

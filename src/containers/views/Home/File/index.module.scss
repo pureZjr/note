@@ -173,3 +173,11 @@
 .hideMarkdown {
     display: none;
 }
+
+.article{
+    padding: 12px;
+
+    * {
+        word-break: break-word;
+    }
+}

@@ -128,7 +128,7 @@ export default class RenderImg extends React.Component<IP> {
         return (
             <div style={{ display: 'none' }} ref={ref => (this.viewerRef = ref)}>
                 {this.props.imgUrl.map((url, index) => (
-                    <img src={url} key={index} style={{ display: 'none' }} />
+                    <img src={`${url}?imageView2/1/interlace/1`} key={index} style={{ display: 'none' }} />
                 ))}
             </div>
         )
