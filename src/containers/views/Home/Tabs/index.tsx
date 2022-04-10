@@ -7,9 +7,11 @@ import styles from './index.module.scss'
 import { Tabs as EnumTabs } from '@store/extraStore'
 import Icon from '@components/Icon'
 
-interface Props {}
+interface Props {
+    setScrollToTop: (boo: boolean) => undefined
+}
 
-const Tabs: React.FC<Props> = () => {
+const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
     const {
         extraStore: {
             currTabId,
@@ -73,6 +75,10 @@ const Tabs: React.FC<Props> = () => {
                 break
             case EnumTabs.Recycle:
                 getDelFolderAndFile()
+                setScrollToTop(true)
+                setTimeout(() => {
+                    setScrollToTop(null)
+                }, 100)
                 break
         }
     }

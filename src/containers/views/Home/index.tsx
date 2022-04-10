@@ -22,6 +22,8 @@ const { Sider, Content } = Layout
 const Home: React.FC = () => {
     const { routerStore, userInfoStore, fileStore } = useRootStore()
 
+    const [scrollToTop, setScrollToTop] = React.useState(false)
+
     function checkLocalUserInfo() {
         const userInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
         if (!!userInfo) {
@@ -38,8 +40,11 @@ const Home: React.FC = () => {
             <Layout className={styles.layout}>
                 <Sider width={220} className={styles.sider}>
                     <Btns />
-                    <PerfectScroll style={{ background: '#fff', borderRight: '1px solid rgba(0, 0, 0, 0.1)' }}>
-                        <Tabs />
+                    <PerfectScroll
+                        scrollToTop={scrollToTop}
+                        style={{ background: '#fff', borderRight: '1px solid rgba(0, 0, 0, 0.1)' }}
+                    >
+                        <Tabs setScrollToTop={setScrollToTop} />
                     </PerfectScroll>
                 </Sider>
                 <FileAndFolder />

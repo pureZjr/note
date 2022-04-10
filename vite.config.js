@@ -35,7 +35,7 @@ export default defineConfig({
         minify: 'terser' // boolean | 'terser' | 'esbuild'
     },
     server: {
-        port: 9021,
+        port: 9000,
         host: 'localhost',
         open: '/'
     },

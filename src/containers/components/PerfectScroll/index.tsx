@@ -41,7 +41,7 @@ const PerfectScroll: React.FC<Props> = ({
 }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>()
     const scrollbar = useRef<PerfectScrollbar>(null)
-    const updateTimer = useRef<NodeJS.Timer>(null)
+    const updateTimer = useRef(null)
 
     useOnMount(() => {
         scrollbar.current = new PerfectScrollbar(wrapperRef.current, {

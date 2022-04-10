@@ -41,8 +41,6 @@
         "browserslist": "^4.14.5",
         "caniuse-lite": "^1.0.30001154",
         "classnames": "^2.2.6",
-        "cross-env": "^5.2.1",
-        "css-minimizer-webpack-plugin": "^1.2.0",
         "customaddcomponents": "^1.0.35",
         "dotenv": "^8.1.0",
         "dotenv-expand": "^5.1.0",
