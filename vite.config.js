@@ -8,8 +8,8 @@ export default defineConfig({
         analyze({
             // 用户分析包的大小 和 数量
             summaryOnly: true,
-            limit: 10 //
-        })
+            limit: 10, //
+        }),
     ],
     base: './',
     resolve: {
@@ -27,25 +27,25 @@ export default defineConfig({
             '@typings/': '/typings/',
             '@config/': '/config/',
             '@styles/': '/src/styles/',
-            '@nm/': '/node_modules/'
-        }
+            '@nm/': '/node_modules/',
+        },
     },
     build: {
         outDir: 'build',
-        minify: 'terser' // boolean | 'terser' | 'esbuild'
+        minify: 'terser', // boolean | 'terser' | 'esbuild'
     },
     server: {
         port: 9000,
         host: 'localhost',
-        open: '/'
+        open: '/',
     },
     css: {
         preprocessorOptions: {
             less: {
                 javascriptEnabled: true,
-                modifyVars: {}
-            }
-        }
+                modifyVars: {},
+            },
+        },
     },
-    define: {}
+    define: {},
 })

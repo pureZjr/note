@@ -21,8 +21,7 @@ import { setTopFile, createShareFileLink, editFile } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
 import { SHARE_BASE_URL } from '@constant/index'
 import CreateType from '@store/extraStore/CreateType'
-import { ImgView, ImgViewTrigger } from '@components/ImgView'
-import VideoPlayer from '@components/VideoPlayer'
+import RenderContent from '@shared/RenderContent'
 import MarkDownEditor from './MarkDownEditor'
 import PageLoading from '@components/PageLoading'
 
@@ -162,61 +161,6 @@ const File: React.FC = () => {
             </div>
         )
     }
-    // 渲染显示内容
-    const renderReadingContent = () => {
-        switch (type) {
-            case CreateType.Img:
-                return (
-                    <ImgView
-                        imgUrl={content}
-                        style={{
-                            padding: 12,
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    >
-                        <ImgViewTrigger>
-                            <img
-                                style={{
-                                    marginRight: 10,
-                                    maxHeight: '100%',
-                                    maxWidth: '100%',
-                                    cursor: 'pointer',
-                                }}
-                                src={`${content}?imageView2/1/interlace/1`}
-                            />
-                        </ImgViewTrigger>
-                    </ImgView>
-                )
-            case CreateType.MarkDown:
-                return <ReactMarkdown className={styles.markdown}>{isUndefined(content) ? '' : content}</ReactMarkdown>
-            case CreateType.Video:
-                return (
-                    <VideoPlayer
-                        url={content}
-                        onVideoReady={(dom) => {
-                            setTimeout(() => {
-                                dom.parentElement.querySelector('.vjs-big-play-button').style.opacity = 1
-                            }, 100)
-                        }}
-                        style={{
-                            margin: '0 auto',
-                            maxWidth: '99%',
-                            maxHeight: '100%',
-                        }}
-                    />
-                )
-            case CreateType.Article:
-                return (
-                    <div
-                        className={styles.article}
-                        dangerouslySetInnerHTML={{
-                            __html: content,
-                        }}
-                    />
-                )
-        }
-    }
     // 渲染编辑内容
     const renderEditingContent = () => {
         switch (type) {
@@ -280,7 +224,7 @@ const File: React.FC = () => {
             </div>
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}
-                {editing ? renderEditingContent() : renderReadingContent()}
+                {editing ? renderEditingContent() : <RenderContent type={type} content={content} />}
             </div>
             {loading && <PageLoading />}
         </div>

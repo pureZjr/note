@@ -1,16 +1,16 @@
 import * as React from 'react'
-import ReactMarkdown from 'react-markdown'
 
+import RenderContent from '@shared/RenderContent'
 import { useOnMount, useRootStore } from '@utils/customHooks'
 import { getShareFileLink } from '@services/api/file'
-import CreateType from '@store/extraStore/CreateType'
 import { LOCALSTORAGE } from '@constant/index'
+import CreateType from '@store/extraStore/CreateType'
 import styles from './index.module.scss'
 
 const ShareArticle: React.FC = () => {
     const [title, setTitle] = React.useState('')
     const [content, setContent] = React.useState('')
-    const [type, setType] = React.useState('')
+    const [type, setType] = React.useState<CreateType>(null)
 
     const { routerStore } = useRootStore()
 
@@ -22,17 +22,6 @@ const ShareArticle: React.FC = () => {
             setType(res.type)
         })
     })
-
-    const renderContent = () => {
-        const { Article, MarkDown } = CreateType
-
-        switch (type) {
-            case Article:
-                return <div>{content}</div>
-            case MarkDown:
-                return <ReactMarkdown>{content}</ReactMarkdown>
-        }
-    }
 
     const hasUserInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
 
@@ -51,7 +40,9 @@ const ShareArticle: React.FC = () => {
                     </div>
                 )}
             </div>
-            <div className={styles.content}>{renderContent()}</div>
+            <div className={styles.content}>
+                <RenderContent type={type} content={content} />
+            </div>
         </div>
     )
 }
