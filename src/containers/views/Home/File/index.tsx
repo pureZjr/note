@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { isUndefined } from 'lodash'
-import { Input, Spin, Tooltip, Dropdown, Menu, Modal } from 'antd'
+import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
 import dayjs from 'dayjs'
 
 import message from '@components/AntdMessageExt'
@@ -86,6 +86,8 @@ const File: React.FC = () => {
                 await createShareFileLink({ key, ts: dayjs().valueOf() })
                 const link = `${SHARE_BASE_URL}${key}`
                 const dialog = Modal.info({
+                    maskClosable: true,
+                    className: styles.modalWrap,
                     width: 350,
                     title: '分享链接',
                     mask: false,
@@ -93,7 +95,9 @@ const File: React.FC = () => {
                     content: (
                         <div>
                             <span className={styles.tips}>链接生成成功, 复制链接分享给好友吧</span>
-                            <div
+                            <Button
+                                type="primary"
+                                size="small"
                                 className={styles.copyLinkBtn}
                                 onClick={() => {
                                     copy(link)
@@ -101,7 +105,10 @@ const File: React.FC = () => {
                                 }}
                             >
                                 复制链接
-                            </div>
+                            </Button>
+                            <Button type="primary" size="small" onClick={() => dialog.destroy()}>
+                                取消分享
+                            </Button>
                         </div>
                     ),
                 })

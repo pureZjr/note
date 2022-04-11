@@ -84,6 +84,14 @@
     }
 }
 
+.modalWrap {
+    :global {
+        .ant-modal-confirm-body-wrapper {
+            display: flex;
+        }
+    }
+}
+
 .info {
     :global(label) {
         display: inline-block;
@@ -93,19 +101,13 @@
 }
 
 .tips {
-    margin-bottom: 8px;
     color: $black02;
+    padding-bottom: 12px;
+    display: inline-block;
 }
 
 .copyLinkBtn {
-    width: fit-content;
-    padding: 0 4px;
-    margin-top: 8px;
-    font-size: 12px;
-    color: #fff;
-    cursor: pointer;
-    background: $primary;
-    border-radius: 4px;
+    margin-right: 12px;
 }
 
 .mdEditAndRead {
