@@ -3,7 +3,7 @@ enum CreateType {
     Folder = 'folder',
     Article = 'article',
     Img = 'image',
-    Video = 'video'
+    Video = 'video',
 }
 
 export default CreateType

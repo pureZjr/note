@@ -15,8 +15,8 @@ const RenderFileIcon: React.FC<Props> = ({ type, size = 20 }: Props) => {
         width: size,
         height: size,
         style: {
-            fontSize: size
-        }
+            fontSize: size,
+        },
     }
 
     return (

@@ -26,7 +26,7 @@ export class FolderStore {
         }
         let arr = [...this.expandTreeKeys]
         if (this.expandTreeKeys.includes(keys)) {
-            arr = arr.filter(v => v.indexOf(keys) < 0)
+            arr = arr.filter((v) => v.indexOf(keys) < 0)
         } else {
             arr.push(keys)
         }
@@ -58,7 +58,7 @@ export class FolderStore {
     currFolderInfo: IFolderStore.Folder = {
         id: '',
         key: '',
-        title: '最新文档'
+        title: '最新文档',
     }
     @action
     setCurrFolderInfo = (info: IFolderStore.Folder) => {
@@ -95,7 +95,7 @@ export class FolderStore {
      */
     @action
     delFolder = (id: string) => {
-        const idx = this.folders.findIndex(v => v.id === id)
+        const idx = this.folders.findIndex((v) => v.id === id)
         this.folders.splice(idx, 1)
     }
 
@@ -105,7 +105,7 @@ export class FolderStore {
      * @memberof FolderStore
      */
     setNameByParentKey = (key: string) => {
-        getFolderInfo({ key }).then(res => {
+        getFolderInfo({ key }).then((res) => {
             if (!!res.length) {
                 this.setCurrFolderInfo({ title: res[0].title })
             } else {
@@ -128,7 +128,7 @@ export class FolderStore {
     @action
     setFolderName = (id: string, title: string) => {
         try {
-            const currFolder = this.folders.find(v => v.id === id)
+            const currFolder = this.folders.find((v) => v.id === id)
             currFolder.title = title
         } catch {}
     }

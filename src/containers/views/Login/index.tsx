@@ -17,7 +17,7 @@ const Login: React.FC = () => {
         email: '',
         username: '',
         password: '',
-        insure: ''
+        insure: '',
     })
 
     const { routerStore, userInfoStore } = useRootStore()
@@ -25,25 +25,25 @@ const Login: React.FC = () => {
     const onHandleChangeUsername = (val: string) => {
         setFormData({
             ...formData,
-            username: val
+            username: val,
         })
     }
     const onHandleChangeEmail = (val: string) => {
         setFormData({
             ...formData,
-            email: val
+            email: val,
         })
     }
     const onHandleChangePassword = (val: string) => {
         setFormData({
             ...formData,
-            password: val
+            password: val,
         })
     }
     const onHandleInsurePassword = (val: string) => {
         setFormData({
             ...formData,
-            insure: val
+            insure: val,
         })
     }
     const submit = async () => {
@@ -59,7 +59,7 @@ const Login: React.FC = () => {
                 setLoading(true)
                 const res = await login({
                     email: formData.email,
-                    password: formData.password
+                    password: formData.password,
                 })
                 localStorage.setItem(LOCALSTORAGE.USERINFO, JSON.stringify(res))
                 userInfoStore.setUserInfo(res)
@@ -93,7 +93,7 @@ const Login: React.FC = () => {
             setBgImg(img.src)
         }
     }
-    const onEnter = e => {
+    const onEnter = (e) => {
         if (e.keyCode === 13) {
             submit()
         }
@@ -111,13 +111,13 @@ const Login: React.FC = () => {
             <div
                 className={styles.bgImgs}
                 style={{
-                    backgroundImage: `url(${bgImg})`
+                    backgroundImage: `url(${bgImg})`,
                 }}
             >
                 <img
                     src={'https://src.renjianzahuopu.store/note/bg-small.png'}
                     style={{
-                        opacity: Number(!bgImg)
+                        opacity: Number(!bgImg),
                     }}
                 />
                 <div className={styles.bgImgsMask} />
@@ -132,7 +132,7 @@ const Login: React.FC = () => {
                             <input
                                 autoComplete="off"
                                 value={formData.username}
-                                onChange={e => onHandleChangeUsername(e.target.value)}
+                                onChange={(e) => onHandleChangeUsername(e.target.value)}
                             />
                         </div>
                     )}
@@ -141,7 +141,7 @@ const Login: React.FC = () => {
                         <input
                             autoComplete="off"
                             value={formData.email}
-                            onChange={e => onHandleChangeEmail(e.target.value)}
+                            onChange={(e) => onHandleChangeEmail(e.target.value)}
                         />
                     </div>
                     <div className={styles.item}>
@@ -150,7 +150,7 @@ const Login: React.FC = () => {
                             type="password"
                             value={formData.password}
                             onKeyDown={handleLogin ? onEnter : null}
-                            onChange={e => onHandleChangePassword(e.target.value)}
+                            onChange={(e) => onHandleChangePassword(e.target.value)}
                         />
                     </div>
                     {!handleLogin && (
@@ -160,7 +160,7 @@ const Login: React.FC = () => {
                                 type="password"
                                 value={formData.insure}
                                 onKeyDown={onEnter}
-                                onChange={e => onHandleInsurePassword(e.target.value)}
+                                onChange={(e) => onHandleInsurePassword(e.target.value)}
                             />
                         </div>
                     )}

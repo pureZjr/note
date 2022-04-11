@@ -1,4 +1,4 @@
 const config = {
-    baseUrl: import.meta.env.VITE_BASEURL
+    baseUrl: import.meta.env.VITE_BASEURL,
 }
 export default config

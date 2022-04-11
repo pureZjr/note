@@ -5,7 +5,7 @@ import {
     SaveOutlined,
     ExclamationCircleOutlined,
     ShareAltOutlined,
-    EllipsisOutlined
+    EllipsisOutlined,
 } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { isUndefined } from 'lodash'
@@ -29,7 +29,7 @@ import PageLoading from '@components/PageLoading'
 const File: React.FC = () => {
     const {
         fileStore: { currFileInfo, contentLoading, setCurrFileInfo, updateFile, getFiles },
-        extraStore: { currTabId, getNewestFolderAndFile }
+        extraStore: { currTabId, getNewestFolderAndFile },
     } = useRootStore()
 
     const { id, type, key, isTop, parentFolderTitle, createTime, updateTime, size } = currFileInfo
@@ -46,7 +46,7 @@ const File: React.FC = () => {
         setMdEditAndRead(true)
         setCurrFileInfo({
             title: title.current,
-            content
+            content,
         })
     }
     // 保存
@@ -57,7 +57,7 @@ const File: React.FC = () => {
             content,
             size,
             id,
-            title: title.current
+            title: title.current,
         })
         message.success('保存成功')
     }
@@ -104,7 +104,7 @@ const File: React.FC = () => {
                                 复制链接
                             </div>
                         </div>
-                    )
+                    ),
                 })
             } catch {}
             setLoading(false)
@@ -172,7 +172,7 @@ const File: React.FC = () => {
                         style={{
                             padding: 12,
                             width: '100%',
-                            height: '100%'
+                            height: '100%',
                         }}
                     >
                         <ImgViewTrigger>
@@ -181,7 +181,7 @@ const File: React.FC = () => {
                                     marginRight: 10,
                                     maxHeight: '100%',
                                     maxWidth: '100%',
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
                                 }}
                                 src={`${content}?imageView2/1/interlace/1`}
                             />
@@ -194,7 +194,7 @@ const File: React.FC = () => {
                 return (
                     <VideoPlayer
                         url={content}
-                        onVideoReady={dom => {
+                        onVideoReady={(dom) => {
                             setTimeout(() => {
                                 dom.parentElement.querySelector('.vjs-big-play-button').style.opacity = 1
                             }, 100)
@@ -202,7 +202,7 @@ const File: React.FC = () => {
                         style={{
                             margin: '0 auto',
                             maxWidth: '99%',
-                            maxHeight: '100%'
+                            maxHeight: '100%',
                         }}
                     />
                 )
@@ -211,7 +211,7 @@ const File: React.FC = () => {
                     <div
                         className={styles.article}
                         dangerouslySetInnerHTML={{
-                            __html: content
+                            __html: content,
                         }}
                     />
                 )
@@ -244,7 +244,7 @@ const File: React.FC = () => {
                 content,
                 size,
                 id,
-                title: val
+                title: val,
             })
             setCurrFileInfo({ ...currFileInfo, title: val })
         } catch {}
@@ -259,17 +259,20 @@ const File: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.header}>
                 {editing ? (
-                    <Input defaultValue={currFileInfo.title} onChange={event => (title.current = event.target.value)} />
+                    <Input
+                        defaultValue={currFileInfo.title}
+                        onChange={(event) => (title.current = event.target.value)}
+                    />
                 ) : (
                     <div
                         contentEditable={true}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.keyCode === 13) {
                                 ;(e.target as HTMLDivElement).blur()
                             }
                         }}
                         className={styles.title}
-                        onBlur={e => editTitle(e.target.innerText)}
+                        onBlur={(e) => editTitle(e.target.innerText)}
                         dangerouslySetInnerHTML={{ __html: currFileInfo.title }}
                     />
                 )}

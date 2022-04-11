@@ -27,8 +27,8 @@ const Header: React.FC = () => {
         autoSearch(event.target.value)
     }
 
-    const autoSearch = React.useCallback(val => debounceWrapper(val), [])
-    const debounceWrapper = debounce(val => handleSearch(val), 1000)
+    const autoSearch = React.useCallback((val) => debounceWrapper(val), [])
+    const debounceWrapper = debounce((val) => handleSearch(val), 1000)
 
     const onHandleLogout = async () => {
         setLoading(true)
@@ -43,11 +43,11 @@ const Header: React.FC = () => {
         const { currFolderInfo } = folderStore
         const data = {
             keyword: val,
-            type: currTabId
+            type: currTabId,
         }
         if (currTabId === Tabs.MyFolder) {
             Object.assign(data, {
-                key: currFolderInfo.key
+                key: currFolderInfo.key,
             })
         }
         searchFolderAndFile(data)
@@ -98,7 +98,7 @@ const Header: React.FC = () => {
                             style={{
                                 marginRight: 4,
                                 color: 'rgba(0, 0, 0, 0.45)',
-                                display: Boolean(extraStore.keyword.length) ? 'inline' : 'none'
+                                display: Boolean(extraStore.keyword.length) ? 'inline' : 'none',
                             }}
                             onClick={reset}
                         />
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: 4,
-                            marginRight: 4
+                            marginRight: 4,
                         }}
                         size={38}
                         icon={<img src={`${userInfo.avatar}?imageView2/1/interlace/1`} width={24} height={24} />}
@@ -122,7 +122,7 @@ const Header: React.FC = () => {
                     <CaretDownOutlined
                         style={{
                             cursor: 'pointer',
-                            color: '#fff'
+                            color: '#fff',
                         }}
                     />
                 </div>

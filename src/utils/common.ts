@@ -1,7 +1,6 @@
 import { get } from 'lodash'
 import axios from 'axios'
 import BMF from 'browser-md5-file'
-import path from 'path'
 
 import { getToken } from '@services/api/qiniu'
 import { QN_UPLOAD_URL, QN_BUCKET, QN_SOURCE_URL } from '@constant/index'
@@ -62,7 +61,7 @@ export const sizeof = (str = '', charset) => {
     return total
 }
 
-export const byteConvert = bytes => {
+export const byteConvert = (bytes) => {
     if (isNaN(bytes)) {
         return ''
     }
@@ -93,7 +92,7 @@ export const setAllKeysByCurrKey = (currKey: string) => {
         setExpandTreeKeys(key)
     }
     store.extraStore.getFolderAndFile(currKey)
-    getFolderInfo({ key: currKey }).then(res => {
+    getFolderInfo({ key: currKey }).then((res) => {
         setCurrFolderInfo({ title: get(res, '[0].title', '我的文件夹') })
     })
 }
@@ -102,7 +101,7 @@ export const setAllKeysByCurrKey = (currKey: string) => {
  * 延迟方法
  */
 export const delayFun = (delay = 1000) => {
-    return new Promise(relolve => {
+    return new Promise((relolve) => {
         setTimeout(() => {
             relolve(true)
         }, delay)
@@ -128,7 +127,7 @@ export const downloadRemoteFile = (fileurl: string, filename: string) => {
     return new Promise((resolve, reject) => {
         axios
             .get(fileurl, { responseType: 'blob' })
-            .then(response => {
+            .then((response) => {
                 const a = document.createElement('a')
                 const url = window.URL.createObjectURL(new Blob([response.data]))
                 a.href = url
@@ -137,7 +136,7 @@ export const downloadRemoteFile = (fileurl: string, filename: string) => {
                 window.URL.revokeObjectURL(url)
                 resolve(true)
             })
-            .catch(err => {
+            .catch((err) => {
                 reject(err)
             })
     })
@@ -182,7 +181,7 @@ export function getFileMd5(file: File) {
  */
 async function qnUpload(file: File): Promise<UploadData> {
     const token = await getToken({
-        bucket: QN_BUCKET
+        bucket: QN_BUCKET,
     })
     const data: UploadData = { token }
     data.key = await generateKey(file as File)
@@ -203,7 +202,7 @@ export function uploadFile(file: File): Promise<string> {
             const request = new XMLHttpRequest()
             request.open('POST', QN_UPLOAD_URL)
             request.send(formData)
-            request.onreadystatechange = res => {
+            request.onreadystatechange = (res) => {
                 if (request.readyState === 4) {
                     if (request.status === 200) {
                         let { response } = res.target as any

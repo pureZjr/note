@@ -27,7 +27,7 @@ function notice(
     return AntdMessage[type](newContent, duration, onClose)
 }
 
-message.info = function(
+message.info = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -35,7 +35,7 @@ message.info = function(
     return notice('info', content, duration, onClose)
 }
 
-message.success = function(
+message.success = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -43,7 +43,7 @@ message.success = function(
     return notice('success', content, duration, onClose)
 }
 
-message.error = function(
+message.error = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -51,7 +51,7 @@ message.error = function(
     return notice('error', content, duration, onClose)
 }
 
-message.warn = function(
+message.warn = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -59,7 +59,7 @@ message.warn = function(
     return notice('warn', content, duration, onClose)
 }
 
-message.warning = function(
+message.warning = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -67,7 +67,7 @@ message.warning = function(
     return notice('warning', content, duration, onClose)
 }
 
-message.loading = function(
+message.loading = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose

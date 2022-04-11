@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 
 import { useOnMount, useRootStore } from '@utils/customHooks'
 import { getShareFileLink } from '@services/api/file'
+import CreateType from '@store/extraStore/CreateType'
 import { LOCALSTORAGE } from '@constant/index'
 import styles from './index.module.scss'
 
@@ -14,13 +15,24 @@ const ShareArticle: React.FC = () => {
     const { routerStore } = useRootStore()
 
     useOnMount(() => {
-        const key = location.href.split('/')[location.href.split('/').length - 1]
-        getShareFileLink({ key }).then(res => {
+        const key = location.href.split('/').at(-1)
+        getShareFileLink({ key }).then((res) => {
             setTitle(res.title)
             setContent(res.content)
             setType(res.type)
         })
     })
+
+    const renderContent = () => {
+        const { Article, MarkDown } = CreateType
+
+        switch (type) {
+            case Article:
+                return <div>{content}</div>
+            case MarkDown:
+                return <ReactMarkdown>{content}</ReactMarkdown>
+        }
+    }
 
     const hasUserInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
 
@@ -39,9 +51,7 @@ const ShareArticle: React.FC = () => {
                     </div>
                 )}
             </div>
-            <div className={styles.content}>
-                {type === 'article' ? <div>{content}</div> : <ReactMarkdown>{content}</ReactMarkdown>}
-            </div>
+            <div className={styles.content}>{renderContent()}</div>
         </div>
     )
 }

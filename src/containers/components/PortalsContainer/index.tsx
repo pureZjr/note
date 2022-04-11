@@ -13,7 +13,7 @@ export interface PortalsContainerProps {
 
 class PortalsContainer extends React.Component<PortalsContainerProps> {
     static defaultProps = {
-        containers: window.document.body
+        containers: window.document.body,
     }
     el: HTMLDivElement = null
     constructor(props: PortalsContainerProps) {

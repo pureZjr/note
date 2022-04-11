@@ -3,7 +3,7 @@
     "extends": [
         "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
         "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
-        "prettier/@typescript-eslint",
+        "prettier",
         "plugin:prettier/recommended",
         "plugin:react-hooks/recommended"
     ],
@@ -22,7 +22,7 @@
     },
     "parserOptions": {
         //指定ESLint可以解析JSX语法
-        "ecmaVersion": 2019,
+        "ecmaVersion": 2022,
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
@@ -45,6 +45,7 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-extra-semi": "off",
         "react-hooks/rules-of-hooks": "off", 
-        "react-hooks/exhaustive-deps": "off"
+        "react-hooks/exhaustive-deps": "off",
+        "react/prop-types": "off"
     }
 }

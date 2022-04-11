@@ -47,7 +47,7 @@ export default class RenderImg extends React.Component<IP> {
             zIndex: '100',
             display: 'flex',
             justifyContent: 'center',
-            bottom: '40px'
+            bottom: '40px',
         }
         Object.assign(btnWrapper.style, btnWrapperStyle)
         const btn = document.createElement('div')
@@ -65,7 +65,7 @@ export default class RenderImg extends React.Component<IP> {
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: '14px',
-            color: 'white'
+            color: 'white',
         }
         Object.assign(btn.style, style)
         btnWrapper.appendChild(btn)
@@ -99,9 +99,9 @@ export default class RenderImg extends React.Component<IP> {
                 rotateRight: true,
                 flipHorizontal: true,
                 flipVertical: true,
-                ...customToolbar
+                ...customToolbar,
             },
-            ...rest
+            ...rest,
         }
         this.viewerInstance = new Viewer(this.viewerRef, options)
         this.viewerInstance.view(index)
@@ -126,7 +126,7 @@ export default class RenderImg extends React.Component<IP> {
 
     render() {
         return (
-            <div style={{ display: 'none' }} ref={ref => (this.viewerRef = ref)}>
+            <div style={{ display: 'none' }} ref={(ref) => (this.viewerRef = ref)}>
                 {this.props.imgUrl.map((url, index) => (
                     <img src={`${url}?imageView2/1/interlace/1`} key={index} style={{ display: 'none' }} />
                 ))}

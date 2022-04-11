@@ -19,22 +19,22 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
             getDelFolderAndFile,
             getFolderAndFile,
             getNewestFolderAndFile,
-            setMenuProps
+            setMenuProps,
         },
         folderStore: { setCurrFolderInfo, setFolder },
-        fileStore: { setCurrFileInfo, setFiles }
+        fileStore: { setCurrFileInfo, setFiles },
     } = useRootStore()
 
     const svgProps = {
         width: 16,
-        height: 16
+        height: 16,
     }
 
     const tabs = [
         {
             id: EnumTabs.NewDoc,
             icon: <Icon type="iconnewest-article" {...svgProps} />,
-            title: '最新文档'
+            title: '最新文档',
         },
         {
             id: EnumTabs.MyFolder,
@@ -45,13 +45,13 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
                     <Icon type="iconfolder-close" {...svgProps} />
                 ),
             title: '我的文件夹',
-            children: <FolderTree />
+            children: <FolderTree />,
         },
         {
             id: EnumTabs.Recycle,
             icon: <Icon type="icondustbin" {...svgProps} />,
-            title: '回收站'
-        }
+            title: '回收站',
+        },
     ]
     // 重置数据
     const resetData = () => {
@@ -92,7 +92,7 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
             visible: true,
             folderId: EnumTabs.MyFolder,
             key: EnumTabs.MyFolder,
-            isFolder: true
+            isFolder: true,
         })
         setCurrFolderInfo({ key: EnumTabs.MyFolder })
     }
@@ -103,7 +103,7 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
 
     return (
         <div className={styles.container}>
-            {tabs.map(tab => {
+            {tabs.map((tab) => {
                 const active = tab.id === currTabId
                 return (
                     <div className={styles.tabContainer} key={tab.id}>
@@ -117,7 +117,7 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
                         </div>
                         <div
                             style={{
-                                display: active ? 'block' : 'none'
+                                display: active ? 'block' : 'none',
                             }}
                         >
                             {!!tab.children && tab.children}

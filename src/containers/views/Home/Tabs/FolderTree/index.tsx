@@ -26,7 +26,7 @@ const FolderTree: React.FC = () => {
     }
 
     // 右击
-    const onHandleRightClick = info => {
+    const onHandleRightClick = (info) => {
         const { pageX, pageY } = info.event
         extraStore.setMenuProps({
             x: pageX,
@@ -36,7 +36,7 @@ const FolderTree: React.FC = () => {
             key: info.node.key,
             isFolder: true,
             isTree: true,
-            title: info.node.title
+            title: info.node.title,
         })
         folderStore.setCurrFolderInfo({ key: info.node.key })
     }
@@ -49,7 +49,7 @@ const FolderTree: React.FC = () => {
 
     const svgProps = {
         width: 14,
-        height: 14
+        height: 14,
     }
 
     return (

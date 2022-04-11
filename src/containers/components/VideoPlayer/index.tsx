@@ -17,13 +17,13 @@ const defaultVideoProps = {
         fullscreenToggle: false,
         pictureInPictureToggle: false,
         volumePanel: {
-            inline: false
-        }
+            inline: false,
+        },
     },
-    playbackRates: [0.5, 1, 1.5, 2]
+    playbackRates: [0.5, 1, 1.5, 2],
 }
 
-const VideoPlayer = args => {
+const VideoPlayer = (args) => {
     const { url, videoProps, style, onVideoReady, disableClickPause, disableDbClickFullScreen } = args
     const className = 'video-js-cover vjs-big-play-centered'
     const { Video, player, ready } = useVideoJS(

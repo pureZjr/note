@@ -1,13 +1,13 @@
 @import '@styles/base.scss';
 
 .container {
-    height: 100%;
-    left: 50%;
     position: absolute;
     top: 0;
-    transform: translateX(-50%);
+    left: 50%;
     width: 100%;
+    height: 100%;
     background: #000;
+    transform: translateX(-50%);
 
     :global {
         /* video-js cover css */
@@ -26,23 +26,23 @@
         }
 
         .video-js-cover.video-js .vjs-slider-vertical .vjs-volume-level:before {
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            content: '';
             background: #fff;
             border-radius: 50%;
-            content: '';
-            height: 10px;
-            left: 50%;
             transform: translateX(-50%);
-            width: 10px;
         }
 
         .video-js-cover.video-js .vjs-play-progress:before {
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            content: '';
             background: #fff;
             border-radius: 50%;
-            content: '';
-            height: 10px;
-            top: 50%;
             transform: translateY(-50%);
-            width: 10px;
         }
 
         .video-js-cover.video-js .vjs-mouse-display .vjs-time-tooltip,

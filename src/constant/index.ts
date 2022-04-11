@@ -15,7 +15,7 @@ export const QN_SOURCE_URL = 'https://src.renjianzahuopu.store'
 export const LOCALSTORAGE = {
     USERINFO: 'userinfo',
     FILEANDFOLDERDISPLAY: 'fileandfolderdisplay',
-    FILEANDFOLDERSORT: 'fileandfoldersort'
+    FILEANDFOLDERSORT: 'fileandfoldersort',
 }
 
 // 错误图片

@@ -23,7 +23,7 @@ const Btns: React.FC = () => {
     const {
         extraStore,
         fileStore,
-        folderStore: { currFolderInfo }
+        folderStore: { currFolderInfo },
     } = useRootStore()
 
     const menu = () => {
@@ -79,7 +79,7 @@ const Btns: React.FC = () => {
                 size: currFile.size,
                 type: currFile.type.includes('image') ? 'image' : 'video',
                 content: url,
-                folderId: id
+                folderId: id,
             })
         } catch {
             setUploadLoading(false)
@@ -93,7 +93,7 @@ const Btns: React.FC = () => {
                 type: type,
                 content,
                 size,
-                parentId: folderId
+                parentId: folderId,
             })
             if (folderId === currFolderInfo.id) {
                 fileStore.insertFile(res)

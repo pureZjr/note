@@ -27,7 +27,7 @@ const MarkDownEditor: React.FC<Props> = ({ className, defaultValue, onSave, onCh
             className={className}
             mode="markdown"
             theme="monokai"
-            onChange={val => onChange(val)}
+            onChange={(val) => onChange(val)}
             defaultValue={defaultValue}
             name="blah2"
             height="100%"

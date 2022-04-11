@@ -37,7 +37,7 @@ const PerfectScroll: React.FC<Props> = ({
     shouldUpdate,
     setPerfectScrollWrapperRef,
     suppressScrollX,
-    scrollToTop
+    scrollToTop,
 }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>()
     const scrollbar = useRef<PerfectScrollbar>(null)
@@ -45,7 +45,7 @@ const PerfectScroll: React.FC<Props> = ({
 
     useOnMount(() => {
         scrollbar.current = new PerfectScrollbar(wrapperRef.current, {
-            suppressScrollX
+            suppressScrollX,
         })
         // 监听滚动到底部事件
         if (!bindReachEndUpdateOnce) {

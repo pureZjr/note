@@ -27,10 +27,10 @@ const RightClickMenus: React.FC = () => {
             setCreateFileFolderDialogvisible,
             setMenuProps,
             getFolderAndFile,
-            getNewestFolderAndFile
+            getNewestFolderAndFile,
         },
         folderStore,
-        fileStore
+        fileStore,
     } = useRootStore()
 
     const [_y, _setY] = React.useState(null)
@@ -90,7 +90,7 @@ const RightClickMenus: React.FC = () => {
                     onOk: () => {
                         ;(isFolder ? delFolderComplete : delFileComplete)({
                             id: isFolder ? folderId : articleId,
-                            type
+                            type,
                         }).then(() => {
                             if (isFolder) {
                                 getTreeData()
@@ -102,7 +102,7 @@ const RightClickMenus: React.FC = () => {
                                 fileStore.delFile(articleId)
                             }
                         })
-                    }
+                    },
                 })
                 break
             case '5':
@@ -113,7 +113,7 @@ const RightClickMenus: React.FC = () => {
                     cancelText: '取消',
                     onOk: () => {
                         ;(isFolder ? recoverFolder : recoverFile)({
-                            id: isFolder ? folderId : articleId
+                            id: isFolder ? folderId : articleId,
                         }).then(() => {
                             if (isFolder) {
                                 getTreeData()
@@ -122,13 +122,13 @@ const RightClickMenus: React.FC = () => {
                                 fileStore.delFile(articleId)
                             }
                         })
-                    }
+                    },
                 })
                 break
             case '7':
                 const onOk = async () => {
                     const data = {
-                        title: currTitle
+                        title: currTitle,
                     }
                     if (!currTitle) {
                         return message.error('标题不能为空')
@@ -139,21 +139,21 @@ const RightClickMenus: React.FC = () => {
                     let api
                     if (isFolder) {
                         Object.assign(data, {
-                            id: folderId
+                            id: folderId,
                         })
                         api = renameFolder
                     } else {
                         Object.assign(data, {
                             id: articleId,
-                            type
+                            type,
                         })
                         api = renameFile
                     }
                     try {
                         modal.update({
                             okButtonProps: {
-                                loading: true
-                            }
+                                loading: true,
+                            },
                         })
                         await api(data)
                         if (isFolder) {
@@ -161,7 +161,7 @@ const RightClickMenus: React.FC = () => {
                             folderStore.setFolderName(folderId, currTitle)
                             if (folderStore.currFolderInfo.id === folderId) {
                                 folderStore.setCurrFolderInfo({
-                                    title: currTitle
+                                    title: currTitle,
                                 })
                             }
                         } else {
@@ -178,16 +178,16 @@ const RightClickMenus: React.FC = () => {
                     onOk: onOk,
                     okText: '确认',
                     cancelButtonProps: {
-                        style: { display: 'none' }
+                        style: { display: 'none' },
                     },
                     content: (
                         <div
                             style={{
-                                height: 50
+                                height: 50,
                             }}
                         >
                             <Input
-                                ref={ref => {
+                                ref={(ref) => {
                                     if (!!ref) {
                                         setTimeout(() => {
                                             ref.focus()
@@ -196,19 +196,19 @@ const RightClickMenus: React.FC = () => {
                                 }}
                                 autoFocus
                                 maxLength={20}
-                                onKeyDown={e => {
+                                onKeyDown={(e) => {
                                     if (e.keyCode === 13) {
                                         onOk()
                                     }
                                 }}
-                                onChange={v => (currTitle = v.target.value)}
+                                onChange={(v) => (currTitle = v.target.value)}
                                 defaultValue={title}
                             />
                             <div
                                 style={{
                                     position: 'absolute',
                                     right: 96,
-                                    marginTop: 42
+                                    marginTop: 42,
                                 }}
                             >
                                 <Button
@@ -221,7 +221,7 @@ const RightClickMenus: React.FC = () => {
                                 </Button>
                             </div>
                         </div>
-                    )
+                    ),
                 })
                 break
             case '8':
@@ -240,7 +240,7 @@ const RightClickMenus: React.FC = () => {
         closeMenu()
     }
 
-    const close = e => {
+    const close = (e) => {
         if (!containerRef.current.contains(e.target)) {
             closeMenu()
         }
@@ -248,7 +248,7 @@ const RightClickMenus: React.FC = () => {
 
     React.useEffect(() => {
         try {
-            const menuTotalHeight = (menuRef.current.props.children as any[]).filter(v => !!v).length * menuHeight
+            const menuTotalHeight = (menuRef.current.props.children as any[]).filter((v) => !!v).length * menuHeight
             if (menuTotalHeight + y > document.body.clientHeight) {
                 _setY(y - menuTotalHeight)
             } else {
@@ -274,7 +274,7 @@ const RightClickMenus: React.FC = () => {
             className={styles.container}
             style={{
                 left: x,
-                top: _y
+                top: _y,
             }}
             ref={containerRef}
         >
