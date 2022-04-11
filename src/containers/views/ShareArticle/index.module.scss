@@ -22,8 +22,10 @@
 }
 
 .content {
+    position: relative;
     padding: 0 24px;
     overflow: auto;
+    flex: 1;
 }
 
 .markdown {
