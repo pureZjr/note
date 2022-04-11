@@ -7,10 +7,9 @@ import FileAndFolder from './FileAndFolder'
 import File from './File'
 import Tabs from './Tabs'
 import Btns from './Btns'
-import { useRootStore, useOnMount } from '@utils/customHooks'
+import { useRootStore } from '@utils/customHooks'
 import CreateFolderAndFile from '@components/CreateFolderAndFile'
 import RightClickMenus from '@components/RightClickMenus'
-import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
 import Icon from '@components/Icon'
 import SectionLoading from '@components/SectionLoading'
@@ -20,20 +19,10 @@ import styles from './index.module.scss'
 const { Sider, Content } = Layout
 
 const Home: React.FC = () => {
-    const { routerStore, userInfoStore, fileStore } = useRootStore()
+    const { fileStore } = useRootStore()
 
     const [scrollToTop, setScrollToTop] = React.useState(false)
 
-    function checkLocalUserInfo() {
-        const userInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
-        if (!!userInfo) {
-            userInfoStore.setUserInfo(JSON.parse(userInfo))
-        } else {
-            routerStore.history.replace('/login')
-        }
-    }
-
-    useOnMount(checkLocalUserInfo)
     return (
         <Layout className={styles.container}>
             <Header />

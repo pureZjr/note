@@ -8,7 +8,7 @@ import { Tabs as EnumTabs } from '@store/extraStore'
 import Icon from '@components/Icon'
 
 interface Props {
-    setScrollToTop: (boo: boolean) => undefined
+    setScrollToTop: (boo: boolean) => void
 }
 
 const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {

@@ -21,17 +21,6 @@
     font-weight: 500;
 }
 
-.btn {
-    padding: 2px 4px;
-    cursor: pointer;
-    border: 1px solid $black01;
-    border-radius: 4px;
-
-    &:hover {
-        color: $primary;
-    }
-}
-
 .content {
     padding: 0 24px;
     overflow: auto;

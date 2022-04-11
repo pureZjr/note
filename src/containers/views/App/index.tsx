@@ -2,15 +2,29 @@ import React, { lazy, Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 
+import { useRootStore, useOnMount } from '@utils/customHooks'
+import { LOCALSTORAGE } from '@constant/index'
 import PageLoading from '@components/PageLoading'
 import styles from './index.module.scss'
 
-const Home = lazy(() => import(/* webpackChunkName: "Home" */ '@views/Home'))
-const Login = lazy(() => import(/* webpackChunkName: "Login" */ '@views/Login'))
-const NotFound = lazy(() => import(/* webpackChunkName: "NotFound" */ '@views/NotFound'))
-const ShareArticle = lazy(() => import(/* webpackChunkName: "ShareArticle" */ '@views/ShareArticle'))
+const Home = lazy(() => import('@views/Home'))
+const Login = lazy(() => import('@views/Login'))
+const NotFound = lazy(() => import('@views/NotFound'))
+const ShareArticle = lazy(() => import('@views/ShareArticle'))
 
 function App() {
+    const { routerStore, userInfoStore } = useRootStore()
+    function checkLocalUserInfo() {
+        const userInfo = localStorage.getItem(LOCALSTORAGE.USERINFO)
+        if (!!userInfo) {
+            userInfoStore.setUserInfo(JSON.parse(userInfo))
+        } else if (!location.href.includes('share-article')) {
+            routerStore.history.replace('/login')
+        }
+    }
+
+    useOnMount(checkLocalUserInfo)
+
     return (
         <div className={styles.container}>
             <Suspense

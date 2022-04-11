@@ -15,7 +15,7 @@ export interface IP {
 export default class RenderImg extends React.Component<IP> {
     viewerRef: HTMLDivElement = null
     viewerInstance: Viewer = null
-    updateTimer: NodeJS.Timer = null
+    updateTimer = null
 
     // 图片下载
     imgDownLoad = () => {
