@@ -2,7 +2,7 @@ import * as React from 'react'
 import VideoPlayer from '@components/VideoPlayer'
 import CreateType from '@store/extraStore/CreateType'
 import { ImgView, ImgViewTrigger } from '@components/ImgView'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from '@components/ReactMarkdown'
 
 import styles from './index.module.scss'
 
@@ -39,7 +39,7 @@ const RenderContent: React.FC<Props> = ({ type, content }: Props) => {
                     </ImgView>
                 )
             case CreateType.MarkDown:
-                return <ReactMarkdown className={styles.markdown}>{content ?? ''}</ReactMarkdown>
+                return <ReactMarkdown className={styles.markdown} content={content ?? ''}></ReactMarkdown>
             case CreateType.Video:
                 return (
                     <VideoPlayer
@@ -68,7 +68,7 @@ const RenderContent: React.FC<Props> = ({ type, content }: Props) => {
         }
     }
 
-    return <div className={styles.container}>{renderReadingContent()}</div>
+    return <div>{renderReadingContent()}</div>
 }
 
 export default RenderContent

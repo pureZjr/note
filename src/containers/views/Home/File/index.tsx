@@ -7,8 +7,7 @@ import {
     ShareAltOutlined,
     EllipsisOutlined,
 } from '@ant-design/icons'
-import ReactMarkdown from 'react-markdown'
-import { isUndefined } from 'lodash'
+import ReactMarkdown from '@components/ReactMarkdown'
 import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
 import dayjs from 'dayjs'
 
@@ -180,9 +179,10 @@ const File: React.FC = () => {
                             <MarkDownEditor defaultValue={content} onChange={setContent} onSave={save} />
                         </div>
                         <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
-                        <ReactMarkdown className={mdEditAndRead ? styles.markdown : styles.hideMarkdown}>
-                            {isUndefined(content) ? '' : content}
-                        </ReactMarkdown>
+                        <ReactMarkdown
+                            className={mdEditAndRead ? styles.markdown : styles.hideMarkdown}
+                            content={content ?? ''}
+                        ></ReactMarkdown>
                     </div>
                 )
         }
