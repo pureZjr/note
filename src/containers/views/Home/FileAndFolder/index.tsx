@@ -30,6 +30,8 @@ const FileAndFolder: React.FC = () => {
         },
     } = useRootStore()
 
+    const [scrollToTop, setScrollToTop] = React.useState(false)
+
     const empty = React.useMemo(() => {
         return !folders.length && !files.length
     }, [folders, files])
@@ -98,6 +100,16 @@ const FileAndFolder: React.FC = () => {
         setCurrFileInfo(res)
     }
 
+    React.useEffect(() => {
+        if (loading) {
+            setScrollToTop(true)
+        } else {
+            setTimeout(() => {
+                setScrollToTop(null)
+            }, 100)
+        }
+    }, [loading])
+
     // 列表排序项
     const menu = (
         <Menu onClick={(e) => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
@@ -123,7 +135,7 @@ const FileAndFolder: React.FC = () => {
                 </Dropdown>
             </div>
             <div className={styles.content}>
-                <PerfectScroll>
+                <PerfectScroll scrollToTop={scrollToTop}>
                     {loading ? (
                         <SectionLoading />
                     ) : (

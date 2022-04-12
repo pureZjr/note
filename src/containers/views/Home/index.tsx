@@ -19,9 +19,21 @@ import styles from './index.module.scss'
 const { Sider, Content } = Layout
 
 const Home: React.FC = () => {
-    const { fileStore } = useRootStore()
+    const {
+        fileStore,
+        extraStore: { updateScrollBar },
+    } = useRootStore()
 
     const [scrollToTop, setScrollToTop] = React.useState(false)
+    const scrollRef = React.useRef(null)
+
+    React.useEffect(() => {
+        const dom = document.querySelector('.ant-tree-node-selected')
+        if (dom && updateScrollBar) {
+            const scrollTop = dom.getBoundingClientRect().top - (56 + 48) + scrollRef.current.scrollbarYTop
+            console.log(scrollTop, (scrollRef.current.element.scrollTop = scrollTop))
+        }
+    }, [updateScrollBar])
 
     return (
         <Layout className={styles.container}>
@@ -30,6 +42,7 @@ const Home: React.FC = () => {
                 <Sider width={220} className={styles.sider}>
                     <Btns />
                     <PerfectScroll
+                        setScrollbarRef={(ref) => (scrollRef.current = ref)}
                         scrollToTop={scrollToTop}
                         style={{ background: '#fff', borderRight: '1px solid rgba(0, 0, 0, 0.1)' }}
                     >

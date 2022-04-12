@@ -20,6 +20,7 @@ const FolderList: React.FC = () => {
             setCurrTabId,
             getFolderAndFile,
             setMenuProps,
+            setUpdateScrollBar,
         },
     } = useRootStore()
 
@@ -34,6 +35,10 @@ const FolderList: React.FC = () => {
         setCurrFileInfo(null)
         setCurrFolderInfo({ title, id, key })
         getFolderAndFile(key)
+        setUpdateScrollBar(true)
+        setTimeout(() => {
+            setUpdateScrollBar(false)
+        }, 200)
         if (isSearching) {
             setAllKeysByCurrKey(key)
         } else {

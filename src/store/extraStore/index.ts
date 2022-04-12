@@ -218,6 +218,18 @@ export class ExtraStore {
     setFileAndFolderSort = (sort) => {
         this.fileAndFolderSort = sort
     }
+
+    /**
+     * 更新第一栏滚动条
+     *
+     * @memberof ExtraStore
+     */
+    @observable
+    updateScrollBar: boolean = false
+    @action
+    setUpdateScrollBar = (boo: boolean) => {
+        this.updateScrollBar = boo
+    }
 }
 
 export default new ExtraStore()

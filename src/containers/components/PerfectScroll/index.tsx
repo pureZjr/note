@@ -19,6 +19,7 @@ interface Props {
     setPerfectScrollWrapperRef?: (ref: HTMLDivElement) => void
     suppressScrollX?: boolean
     scrollToTop?: boolean
+    setScrollbarRef?: (ref: PerfectScrollbar) => void
 }
 
 /**
@@ -38,6 +39,7 @@ const PerfectScroll: React.FC<Props> = ({
     setPerfectScrollWrapperRef,
     suppressScrollX,
     scrollToTop,
+    setScrollbarRef,
 }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>()
     const scrollbar = useRef<PerfectScrollbar>(null)
@@ -47,6 +49,9 @@ const PerfectScroll: React.FC<Props> = ({
         scrollbar.current = new PerfectScrollbar(wrapperRef.current, {
             suppressScrollX,
         })
+        if (setScrollbarRef) {
+            setScrollbarRef(scrollbar.current)
+        }
         // 监听滚动到底部事件
         if (!bindReachEndUpdateOnce) {
             wrapperRef.current.addEventListener('ps-y-reach-start', onReachStart)
