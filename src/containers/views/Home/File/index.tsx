@@ -158,7 +158,7 @@ const File: React.FC = () => {
                 <Tooltip title="分享">
                     <ShareAltOutlined onClick={getShareLink} className={styles.icon} />
                 </Tooltip>
-                <Dropdown overlay={menu()}>
+                <Dropdown overlayClassName={styles.dropdownWrap} overlay={menu()} trigger={['click']}>
                     <EllipsisOutlined className={styles.icon} />
                 </Dropdown>
                 <Tooltip title={info()} placement="bottomRight" trigger="click">
