@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import { login, register } from '@services/api/account'
 import { useRootStore, useOnMount } from '@utils/customHooks'
-import { LOCALSTORAGE } from '@constant/index'
+import { LOCALSTORAGE, QN_SOURCE_URL } from '@constant/index'
 import message from '@components/AntdMessageExt'
 import styles from './index.module.scss'
 
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
     }
     const loadBg = () => {
         const img = new Image()
-        img.src = 'https://src.renjianzahuopu.store/note/bg.png'
+        img.src = `${QN_SOURCE_URL}/note/bg.png`
         img.onload = () => {
             setBgImg(img.src)
         }
@@ -115,7 +115,7 @@ const Login: React.FC = () => {
                 }}
             >
                 <img
-                    src={'https://src.renjianzahuopu.store/note/bg-small.png'}
+                    src={`${QN_SOURCE_URL}/note/bg-small.png`}
                     style={{
                         opacity: Number(!bgImg),
                     }}
@@ -181,7 +181,7 @@ const Login: React.FC = () => {
                             <div>登录</div>
                         </div>
                     </div>
-                    <img src={'https://src.renjianzahuopu.store/note/code-maker.gif'} width="900" height="550" />
+                    <img src={`${QN_SOURCE_URL}/note/code-maker.gif`} width="900" height="550" />
                     <div className={styles.mask} />
                 </div>
             </div>

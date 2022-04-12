@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 
 import { useRootStore, useOnMount } from '@utils/customHooks'
-import { LOCALSTORAGE } from '@constant/index'
+import { LOCALSTORAGE, QN_SOURCE_URL } from '@constant/index'
 import PageLoading from '@components/PageLoading'
 import styles from './index.module.scss'
 
@@ -27,9 +27,7 @@ function App() {
 
     return (
         <div className={styles.container}>
-            <Suspense
-                fallback={<PageLoading Icon={<img src={'https://src.renjianzahuopu.store/note/loading-pen.gif'} />} />}
-            >
+            <Suspense fallback={<PageLoading Icon={<img src={`${QN_SOURCE_URL}/note/loading-pen.gif`} />} />}>
                 <Switch>
                     <Route path="/login" exact={true}>
                         <Login />
