@@ -180,7 +180,7 @@ const File: React.FC = () => {
                         </div>
                         <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
                         <ReactMarkdown
-                            className={mdEditAndRead ? styles.markdown : styles.hideMarkdown}
+                            className={mdEditAndRead ? null : styles.hideMarkdown}
                             content={content ?? ''}
                         ></ReactMarkdown>
                     </div>

@@ -39,7 +39,7 @@ const RenderContent: React.FC<Props> = ({ type, content }: Props) => {
                     </ImgView>
                 )
             case CreateType.MarkDown:
-                return <ReactMarkdown className={styles.markdown} content={content ?? ''}></ReactMarkdown>
+                return <ReactMarkdown content={content ?? ''}></ReactMarkdown>
             case CreateType.Video:
                 return (
                     <VideoPlayer

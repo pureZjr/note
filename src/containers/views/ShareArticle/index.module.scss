@@ -27,23 +27,3 @@
     overflow: auto;
     flex: 1;
 }
-
-.markdown {
-    :global {
-        h1 {
-            font-size: 2em;
-        }
-
-        th,
-        td {
-            padding: 6px 13px;
-            border: 1px solid #dfe2e5;
-        }
-        th {
-            display: table-cell;
-            font-weight: bold;
-            text-align: -internal-center;
-            vertical-align: inherit;
-        }
-    }
-}
