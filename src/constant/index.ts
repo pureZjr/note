@@ -1,9 +1,7 @@
-const NODE_ENV = process.env.NODE_ENV
 export const SHARE_BASE_URL =
-    NODE_ENV === 'development'
+    import.meta.env.MODE === 'development'
         ? `http://localhost:9000/#/share-article/`
         : `https://note.renjianzahuopu.store/#/share-article/`
-
 // 上传资源大小
 export const IMAGE_SIZE_LIMIT = 20 * 1024 * 1024
 export const FILE_SIZE_LIMIT = 50 * 1024 * 1024
