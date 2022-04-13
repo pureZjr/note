@@ -33,6 +33,7 @@ if (APP_ENV === 'production') {
         new MiniCssExtractPlugin({
             filename: assetsPath('css/[name].[contenthash].css'),
             chunkFilename: assetsPath('css/[name].[id].[contenthash].css'),
+            ignoreOrder: true,
         })
         // 不用source-map了，影响打包
         // new SentryPlugin({
