@@ -44,7 +44,7 @@ const Header: React.FC<Props> = ({ hideSearch, showLogin }: Props) => {
             setUserInfo({})
             return
         }
-        routerStore.history.push('/login')
+        window.location.href = '/#/login'
     }
 
     const handleSearch = (val: string) => {
