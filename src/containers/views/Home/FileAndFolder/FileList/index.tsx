@@ -31,6 +31,8 @@ const FileList: React.FC = () => {
         title,
         isTop,
         key,
+        createTime,
+        updateTime,
     }: IFileStore.File) => {
         setCurrFileInfo(null)
         if (Tabs.MyFolder === currTabId) {
@@ -43,7 +45,18 @@ const FileList: React.FC = () => {
         try {
             setContentLoading(true)
             const res = await getFileContent({ id, type })
-            setCurrFileInfo({ content: res, id, title, type, isTop, parentKey, parentFolderTitle, key })
+            setCurrFileInfo({
+                content: res,
+                id,
+                title,
+                type,
+                isTop,
+                parentKey,
+                parentFolderTitle,
+                key,
+                createTime,
+                updateTime,
+            })
         } catch {}
         setContentLoading(false)
     }
