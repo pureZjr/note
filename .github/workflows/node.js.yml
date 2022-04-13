@@ -18,7 +18,7 @@ jobs:
     build: # 任务的job_id，具体名称自定义，这里build代表打包
         runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
         steps:
-            - uses: actions/checkout@vite
+            - uses: actions/checkout@master
 
             - uses: actions/setup-node@v1
               with:
