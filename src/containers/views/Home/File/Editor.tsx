@@ -16,7 +16,7 @@ const Editor: React.FC<Props> = ({ className, defaultValue, onSave, onChange }: 
     const ref = React.useRef(null)
     const editorRef = React.useRef(null)
 
-    const create = editor => {
+    const create = (editor) => {
         editor.create()
     }
 
@@ -24,8 +24,8 @@ const Editor: React.FC<Props> = ({ className, defaultValue, onSave, onChange }: 
         editor.txt.html(txt)
     }
 
-    const bindOnTxtChange = editor => {
-        editor.config.onchange = html => {
+    const bindOnTxtChange = (editor) => {
+        editor.config.onchange = (html) => {
             onChange(html)
         }
     }

@@ -17,7 +17,7 @@ export enum Tabs {
     /**
      * 回收站
      */
-    Recycle = '3'
+    Recycle = '3',
 }
 
 /**
@@ -60,7 +60,7 @@ export class ExtraStore {
     getDelFolderAndFile = async (sort = 'updateTime') => {
         this.setLoading(true)
         Promise.all([getDelFolder(sort), getDelFile(sort)])
-            .then(res => {
+            .then((res) => {
                 store.folderStore.setFolder(res[0])
                 store.fileStore.setFiles(res[1])
             })
@@ -77,7 +77,7 @@ export class ExtraStore {
     getNewestFolderAndFile = async (sort = 'updateTime') => {
         this.setLoading(true)
         getNewestFile({ sort })
-            .then(res => {
+            .then((res) => {
                 store.fileStore.setFiles(res)
             })
             .finally(() => {
@@ -94,7 +94,7 @@ export class ExtraStore {
         this.setLoading(true)
         const searchInMyFolder = () =>
             Promise.all([searchFolder(args), searchFile(args)])
-                .then(res => {
+                .then((res) => {
                     store.folderStore.setFolder(res[0])
                     store.fileStore.setFiles(res[1])
                 })
@@ -162,7 +162,7 @@ export class ExtraStore {
         visible: false,
         folderId: '',
         articleId: '',
-        key: ''
+        key: '',
     }
     @action
     setMenuProps = (props: IExtraStore.IMenuProps) => {
@@ -203,7 +203,7 @@ export class ExtraStore {
     @observable
     fileAndFolderDisplay: string = localStorage.getItem(LOCALSTORAGE.FILEANDFOLDERDISPLAY) || 'abstract'
     @action
-    setFileAndFolderDisplay = type => {
+    setFileAndFolderDisplay = (type) => {
         this.fileAndFolderDisplay = type
     }
 
@@ -215,8 +215,20 @@ export class ExtraStore {
     @observable
     fileAndFolderSort: string = localStorage.getItem(LOCALSTORAGE.FILEANDFOLDERSORT) || 'updateTime'
     @action
-    setFileAndFolderSort = sort => {
+    setFileAndFolderSort = (sort) => {
         this.fileAndFolderSort = sort
+    }
+
+    /**
+     * 更新第一栏滚动条
+     *
+     * @memberof ExtraStore
+     */
+    @observable
+    updateScrollBar: boolean = false
+    @action
+    setUpdateScrollBar = (boo: boolean) => {
+        this.updateScrollBar = boo
     }
 }
 

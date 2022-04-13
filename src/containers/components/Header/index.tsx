@@ -13,28 +13,36 @@ import { LOCALSTORAGE } from '@constant/index'
 import Icon from '@components/Icon'
 import PageLoading from '@components/PageLoading'
 
-const { Search } = Input
+interface Props {
+    hideSearch?: boolean
+    showLogin?: boolean
+}
 
-const Header: React.FC = () => {
+const { Search } = Input
+const Header: React.FC<Props> = ({ hideSearch, showLogin }: Props) => {
     const [loading, setLoading] = React.useState(false)
 
     const { routerStore, extraStore, folderStore, userInfoStore } = useRootStore()
 
-    const { userInfoVisible, setUserInfoVisible, userInfo } = userInfoStore
+    const { userInfoVisible, setUserInfoVisible, userInfo, setUserInfo } = userInfoStore
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         extraStore.setKeyword(event.target.value)
         autoSearch(event.target.value)
     }
 
-    const autoSearch = React.useCallback(val => debounceWrapper(val), [])
-    const debounceWrapper = debounce(val => handleSearch(val), 1000)
+    const autoSearch = React.useCallback((val) => debounceWrapper(val), [])
+    const debounceWrapper = debounce((val) => handleSearch(val), 1000)
 
     const onHandleLogout = async () => {
         setLoading(true)
         await logout()
         setLoading(false)
         localStorage.removeItem(LOCALSTORAGE.USERINFO)
+        if (location.href.includes('share-article')) {
+            setUserInfo({})
+            return
+        }
         routerStore.history.push('/login')
     }
 
@@ -43,11 +51,11 @@ const Header: React.FC = () => {
         const { currFolderInfo } = folderStore
         const data = {
             keyword: val,
-            type: currTabId
+            type: currTabId,
         }
         if (currTabId === Tabs.MyFolder) {
             Object.assign(data, {
-                key: currFolderInfo.key
+                key: currFolderInfo.key,
             })
         }
         searchFolderAndFile(data)
@@ -80,6 +88,8 @@ const Header: React.FC = () => {
         </Menu>
     )
 
+    const hasLogin = !!userInfo.avatar
+
     return (
         <div className={styles.container}>
             <div className={styles.title}>
@@ -87,23 +97,35 @@ const Header: React.FC = () => {
                 码农笔记
             </div>
             <div className={styles.rightContainer}>
-                <Search
-                    className={styles.search}
-                    placeholder="输入关键字搜索"
-                    onChange={onHandleChange}
-                    value={extraStore.keyword}
-                    onSearch={handleSearch}
-                    suffix={
-                        <CloseCircleOutlined
-                            style={{
-                                marginRight: 4,
-                                color: 'rgba(0, 0, 0, 0.45)',
-                                display: Boolean(extraStore.keyword.length) ? 'inline' : 'none'
-                            }}
-                            onClick={reset}
-                        />
-                    }
-                />
+                {showLogin && !hasLogin && (
+                    <div
+                        onClick={() => {
+                            routerStore.history.push('/login')
+                        }}
+                        className={styles.btn}
+                    >
+                        注册 / 登录
+                    </div>
+                )}
+                {!hideSearch && (
+                    <Search
+                        className={styles.search}
+                        placeholder="输入关键字搜索"
+                        onChange={onHandleChange}
+                        value={extraStore.keyword}
+                        onSearch={handleSearch}
+                        suffix={
+                            <CloseCircleOutlined
+                                style={{
+                                    marginRight: 4,
+                                    color: 'rgba(0, 0, 0, 0.45)',
+                                    display: Boolean(extraStore.keyword.length) ? 'inline' : 'none',
+                                }}
+                                onClick={reset}
+                            />
+                        }
+                    />
+                )}
             </div>
             <Dropdown overlay={menu}>
                 <div className={styles.avatarContainer}>
@@ -114,15 +136,15 @@ const Header: React.FC = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: 4,
-                            marginRight: 4
+                            marginRight: 4,
                         }}
                         size={38}
-                        icon={<img src={userInfo.avatar} width={24} height={24} />}
+                        icon={<img src={`${userInfo.avatar}?imageView2/1/interlace/1`} width={24} height={24} />}
                     />
                     <CaretDownOutlined
                         style={{
                             cursor: 'pointer',
-                            color: '#fff'
+                            color: '#fff',
                         }}
                     />
                 </div>

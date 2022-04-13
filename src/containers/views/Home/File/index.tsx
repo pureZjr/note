@@ -5,32 +5,29 @@ import {
     SaveOutlined,
     ExclamationCircleOutlined,
     ShareAltOutlined,
-    EllipsisOutlined
+    EllipsisOutlined,
 } from '@ant-design/icons'
-import ReactMarkdown from 'react-markdown'
-import { isUndefined } from 'lodash'
-import { Input, Spin, Tooltip, Dropdown, Menu, Modal } from 'antd'
+import ReactMarkdown from '@components/ReactMarkdown'
+import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
 import dayjs from 'dayjs'
 
 import message from '@components/AntdMessageExt'
 import { useRootStore } from '@utils/customHooks'
 import { sizeof, copyToClipboard } from '@utils/common'
 import styles from './index.scss'
-import CodeBlock from './CodeBlock'
 import Editor from './Editor'
 import { setTopFile, createShareFileLink, editFile } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
-import { SHARE_BASE_URL, BREAK_IMAGE } from '@constant/index'
+import { SHARE_BASE_URL } from '@constant/index'
 import CreateType from '@store/extraStore/CreateType'
-import { ImgView, ImgViewTrigger } from '@components/ImgView'
-import RenderVideo from '@components/RenderVideo'
+import RenderContent from '@shared/RenderContent'
 import MarkDownEditor from './MarkDownEditor'
 import PageLoading from '@components/PageLoading'
 
 const File: React.FC = () => {
     const {
         fileStore: { currFileInfo, contentLoading, setCurrFileInfo, updateFile, getFiles },
-        extraStore: { currTabId, getNewestFolderAndFile }
+        extraStore: { currTabId, getNewestFolderAndFile },
     } = useRootStore()
 
     const { id, type, key, isTop, parentFolderTitle, createTime, updateTime, size } = currFileInfo
@@ -47,7 +44,7 @@ const File: React.FC = () => {
         setMdEditAndRead(true)
         setCurrFileInfo({
             title: title.current,
-            content
+            content,
         })
     }
     // 保存
@@ -58,7 +55,7 @@ const File: React.FC = () => {
             content,
             size,
             id,
-            title: title.current
+            title: title.current,
         })
         message.success('保存成功')
     }
@@ -88,6 +85,8 @@ const File: React.FC = () => {
                 await createShareFileLink({ key, ts: dayjs().valueOf() })
                 const link = `${SHARE_BASE_URL}${key}`
                 const dialog = Modal.info({
+                    maskClosable: true,
+                    className: styles.modalWrap,
                     width: 350,
                     title: '分享链接',
                     mask: false,
@@ -95,7 +94,9 @@ const File: React.FC = () => {
                     content: (
                         <div>
                             <span className={styles.tips}>链接生成成功, 复制链接分享给好友吧</span>
-                            <div
+                            <Button
+                                type="primary"
+                                size="small"
                                 className={styles.copyLinkBtn}
                                 onClick={() => {
                                     copy(link)
@@ -103,9 +104,12 @@ const File: React.FC = () => {
                                 }}
                             >
                                 复制链接
-                            </div>
+                            </Button>
+                            <Button type="primary" size="small" onClick={() => dialog.destroy()}>
+                                取消分享
+                            </Button>
                         </div>
-                    )
+                    ),
                 })
             } catch {}
             setLoading(false)
@@ -154,7 +158,7 @@ const File: React.FC = () => {
                 <Tooltip title="分享">
                     <ShareAltOutlined onClick={getShareLink} className={styles.icon} />
                 </Tooltip>
-                <Dropdown overlay={menu()}>
+                <Dropdown overlayClassName={styles.dropdownWrap} overlay={menu()}>
                     <EllipsisOutlined className={styles.icon} />
                 </Dropdown>
                 <Tooltip title={info()} placement="bottomRight" trigger="click">
@@ -163,71 +167,7 @@ const File: React.FC = () => {
             </div>
         )
     }
-    // 渲染显示内容
-    const renderReadingContent = () => {
-        switch (type) {
-            case CreateType.Img:
-                return (
-                    <ImgView
-                        imgUrl={content}
-                        style={{
-                            padding: 12,
-                            width: '100%',
-                            height: '100%'
-                        }}
-                    >
-                        <ImgViewTrigger>
-                            <img
-                                style={{
-                                    marginRight: 10,
-                                    maxHeight: '100%',
-                                    maxWidth: '100%'
-                                }}
-                                src={content}
-                                ref={ref => {
-                                    if (ref) {
-                                        ref.onerror = () => {
-                                            ref.src = BREAK_IMAGE
-                                        }
-                                    }
-                                }}
-                            />
-                        </ImgViewTrigger>
-                    </ImgView>
-                )
-            case CreateType.MarkDown:
-                return (
-                    <ReactMarkdown
-                        className={styles.markdown}
-                        source={isUndefined(content) ? '' : content}
-                        renderers={{
-                            code: CodeBlock
-                        }}
-                        escapeHtml={false}
-                    />
-                )
-            case CreateType.Video:
-                return (
-                    <RenderVideo
-                        videoSrc={content}
-                        width={500}
-                        height={300}
-                        style={{
-                            margin: 12
-                        }}
-                    />
-                )
-            case CreateType.Article:
-                return (
-                    <div
-                        style={{ padding: 12 }}
-                        dangerouslySetInnerHTML={{
-                            __html: content
-                        }}
-                    />
-                )
-        }
-    }
+
     // 渲染编辑内容
     const renderEditingContent = () => {
         switch (type) {
@@ -241,13 +181,9 @@ const File: React.FC = () => {
                         </div>
                         <div className={styles.divider} onClick={() => setMdEditAndRead(!mdEditAndRead)} />
                         <ReactMarkdown
-                            className={mdEditAndRead ? styles.markdown : styles.hideMarkdown}
-                            source={isUndefined(content) ? '' : content}
-                            renderers={{
-                                code: CodeBlock
-                            }}
-                            escapeHtml={false}
-                        />
+                            className={mdEditAndRead ? null : styles.hideMarkdown}
+                            content={content ?? ''}
+                        ></ReactMarkdown>
                     </div>
                 )
         }
@@ -260,7 +196,7 @@ const File: React.FC = () => {
                 content,
                 size,
                 id,
-                title: val
+                title: val,
             })
             setCurrFileInfo({ ...currFileInfo, title: val })
         } catch {}
@@ -275,17 +211,20 @@ const File: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.header}>
                 {editing ? (
-                    <Input defaultValue={currFileInfo.title} onChange={event => (title.current = event.target.value)} />
+                    <Input
+                        defaultValue={currFileInfo.title}
+                        onChange={(event) => (title.current = event.target.value)}
+                    />
                 ) : (
                     <div
                         contentEditable={true}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.keyCode === 13) {
                                 ;(e.target as HTMLDivElement).blur()
                             }
                         }}
                         className={styles.title}
-                        onBlur={e => editTitle(e.target.innerText)}
+                        onBlur={(e) => editTitle(e.target.innerText)}
                         dangerouslySetInnerHTML={{ __html: currFileInfo.title }}
                     />
                 )}
@@ -293,7 +232,7 @@ const File: React.FC = () => {
             </div>
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}
-                {editing ? renderEditingContent() : renderReadingContent()}
+                {editing ? renderEditingContent() : <RenderContent type={type} content={content} />}
             </div>
             {loading && <PageLoading />}
         </div>

@@ -8,31 +8,6 @@
     background: #fff;
 }
 
-.markdown {
-    flex: 1;
-    padding: 12px;
-    overflow: auto;
-    word-break: break-all;
-
-    :global {
-        h1 {
-            font-size: 2em;
-        }
-
-        th,
-        td {
-            padding: 6px 13px;
-            border: 1px solid #dfe2e5;
-        }
-        th {
-            display: table-cell;
-            font-weight: bold;
-            text-align: -internal-center;
-            vertical-align: inherit;
-        }
-    }
-}
-
 .header {
     display: flex;
     align-items: center;
@@ -109,6 +84,14 @@
     }
 }
 
+.modalWrap {
+    :global {
+        .ant-modal-confirm-body-wrapper {
+            display: flex;
+        }
+    }
+}
+
 .info {
     :global(label) {
         display: inline-block;
@@ -118,19 +101,13 @@
 }
 
 .tips {
-    margin-bottom: 8px;
     color: $black02;
+    padding-bottom: 12px;
+    display: inline-block;
 }
 
 .copyLinkBtn {
-    width: fit-content;
-    padding: 0 4px;
-    margin-top: 8px;
-    font-size: 12px;
-    color: #fff;
-    cursor: pointer;
-    background: $primary;
-    border-radius: 4px;
+    margin-right: 12px;
 }
 
 .mdEditAndRead {
@@ -172,4 +149,8 @@
 
 .hideMarkdown {
     display: none;
+}
+
+.dropdownWrap {
+    z-index: 10;
 }

@@ -2,13 +2,6 @@
 // Please do not change this file!
 interface CssExports {
   'container': string;
-  'content': string;
-  'downLoadIcon': string;
-  'iconClose': string;
-  'overlay': string;
-  'title': string;
-  'video': string;
-  'videoBox': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

@@ -48,3 +48,14 @@
     align-items: center;
     margin-right: 32px;
 }
+
+.btn {
+    padding: 2px 4px;
+    cursor: pointer;
+    border: 1px solid $black01;
+    border-radius: 4px;
+
+    &:hover {
+        color: $primary;
+    }
+}

@@ -7,9 +7,11 @@ import styles from './index.scss'
 import { Tabs as EnumTabs } from '@store/extraStore'
 import Icon from '@components/Icon'
 
-interface Props {}
+interface Props {
+    setScrollToTop: (boo: boolean) => void
+}
 
-const Tabs: React.FC<Props> = () => {
+const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
     const {
         extraStore: {
             currTabId,
@@ -17,22 +19,22 @@ const Tabs: React.FC<Props> = () => {
             getDelFolderAndFile,
             getFolderAndFile,
             getNewestFolderAndFile,
-            setMenuProps
+            setMenuProps,
         },
         folderStore: { setCurrFolderInfo, setFolder },
-        fileStore: { setCurrFileInfo, setFiles }
+        fileStore: { setCurrFileInfo, setFiles },
     } = useRootStore()
 
     const svgProps = {
         width: 16,
-        height: 16
+        height: 16,
     }
 
     const tabs = [
         {
             id: EnumTabs.NewDoc,
             icon: <Icon type="iconnewest-article" {...svgProps} />,
-            title: '最新文档'
+            title: '最新文档',
         },
         {
             id: EnumTabs.MyFolder,
@@ -43,13 +45,13 @@ const Tabs: React.FC<Props> = () => {
                     <Icon type="iconfolder-close" {...svgProps} />
                 ),
             title: '我的文件夹',
-            children: <FolderTree />
+            children: <FolderTree />,
         },
         {
             id: EnumTabs.Recycle,
             icon: <Icon type="icondustbin" {...svgProps} />,
-            title: '回收站'
-        }
+            title: '回收站',
+        },
     ]
     // 重置数据
     const resetData = () => {
@@ -73,6 +75,10 @@ const Tabs: React.FC<Props> = () => {
                 break
             case EnumTabs.Recycle:
                 getDelFolderAndFile()
+                setScrollToTop(true)
+                setTimeout(() => {
+                    setScrollToTop(null)
+                }, 100)
                 break
         }
     }
@@ -86,7 +92,7 @@ const Tabs: React.FC<Props> = () => {
             visible: true,
             folderId: EnumTabs.MyFolder,
             key: EnumTabs.MyFolder,
-            isFolder: true
+            isFolder: true,
         })
         setCurrFolderInfo({ key: EnumTabs.MyFolder })
     }
@@ -97,7 +103,7 @@ const Tabs: React.FC<Props> = () => {
 
     return (
         <div className={styles.container}>
-            {tabs.map(tab => {
+            {tabs.map((tab) => {
                 const active = tab.id === currTabId
                 return (
                     <div className={styles.tabContainer} key={tab.id}>
@@ -111,7 +117,7 @@ const Tabs: React.FC<Props> = () => {
                         </div>
                         <div
                             style={{
-                                display: active ? 'block' : 'none'
+                                display: active ? 'block' : 'none',
                             }}
                         >
                             {!!tab.children && tab.children}

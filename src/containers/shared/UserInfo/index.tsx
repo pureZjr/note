@@ -43,17 +43,17 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
         try {
             setUploading(true)
             const token = await getToken({
-                bucket: QN_BUCKET
+                bucket: QN_BUCKET,
             })
             setQnToken(token)
         } catch {}
         setUploading(false)
     }
 
-    const onHandleChange = prop => {
+    const onHandleChange = (prop) => {
         setInfo({
             ...info,
-            ...prop
+            ...prop,
         })
     }
 
@@ -68,7 +68,7 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
             okText="确认"
             cancelText="取消"
             okButtonProps={{
-                loading
+                loading,
             }}
             visible={true}
             onOk={onSubmit}
@@ -83,15 +83,15 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
                             accept="image/*"
                             action={QN_UPLOAD_URL}
                             data={{
-                                token: qnToken
+                                token: qnToken,
                             }}
                             beforeUpload={() => beforeUpload()}
                             showUploadList={false}
-                            onChange={fileInfo => {
+                            onChange={(fileInfo) => {
                                 if (fileInfo.file.status === 'done') {
                                     setInfo({
                                         ...info,
-                                        avatar: `${QN_SOURCE_URL}/${fileInfo.file.response.hash}`
+                                        avatar: `${QN_SOURCE_URL}/${fileInfo.file.response.hash}`,
                                     })
                                 }
                             }}
@@ -110,7 +110,7 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
                         size="small"
                         type="email"
                         value={info.email}
-                        onChange={e => onHandleChange({ email: e.target.value })}
+                        onChange={(e) => onHandleChange({ email: e.target.value })}
                     />
                 </div>
             </div>
@@ -120,14 +120,14 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
                     <Input
                         size="small"
                         value={info.username}
-                        onChange={e => onHandleChange({ username: e.target.value })}
+                        onChange={(e) => onHandleChange({ username: e.target.value })}
                     />
                 </div>
             </div>
             <div className={styles.item}>
                 <label>性别</label>
                 <div className={styles.rightContainer}>
-                    <Radio.Group value={info.sex} onChange={e => onHandleChange({ sex: e.target.value })}>
+                    <Radio.Group value={info.sex} onChange={(e) => onHandleChange({ sex: e.target.value })}>
                         <Radio value={1}>男</Radio>
                         <Radio value={2}>女</Radio>
                     </Radio.Group>
@@ -135,11 +135,11 @@ const UserInfo: React.FC<Props> = ({ close }: Props) => {
             </div>
             <div className={styles.item}>
                 <label>地区</label>
-                <Input size="small" value={info.area} onChange={e => onHandleChange({ area: e.target.value })} />
+                <Input size="small" value={info.area} onChange={(e) => onHandleChange({ area: e.target.value })} />
             </div>
             <div className={styles.item}>
                 <label>签名</label>
-                <TextArea value={info.sign} onChange={e => onHandleChange({ sign: e.target.value })} />
+                <TextArea value={info.sign} onChange={(e) => onHandleChange({ sign: e.target.value })} />
             </div>
         </Modal>
     )

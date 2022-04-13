@@ -31,5 +31,5 @@ export function RootProvider({ children }: { children?: React.ReactNode }) {
  * @returns
  */
 export function RootConsumer({ children }: ChildrenProps<IAllStore>) {
-    return <RootContext.Consumer>{value => <Observer>{() => children(value)}</Observer>}</RootContext.Consumer>
+    return <RootContext.Consumer>{(value) => <Observer>{() => children(value)}</Observer>}</RootContext.Consumer>
 }

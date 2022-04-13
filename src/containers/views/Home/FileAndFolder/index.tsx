@@ -26,8 +26,8 @@ const FileAndFolder: React.FC = () => {
             getFolderAndFile,
             setFileAndFolderDisplay,
             setFileAndFolderSort,
-            getDelFolderAndFile
-        }
+            getDelFolderAndFile,
+        },
     } = useRootStore()
 
     const empty = React.useMemo(() => {
@@ -91,7 +91,7 @@ const FileAndFolder: React.FC = () => {
             title: '无标题笔记',
             type: 'article',
             content: '',
-            parentId: fid
+            parentId: fid,
         })
         insertFile(res)
         setCurrFileInfo(null)
@@ -100,7 +100,7 @@ const FileAndFolder: React.FC = () => {
 
     // 列表排序项
     const menu = (
-        <Menu onClick={e => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
+        <Menu onClick={(e) => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
             <Menu.Item key="abstract">摘要</Menu.Item>
             <Menu.Item key="list">列表</Menu.Item>
             <Menu.Divider />

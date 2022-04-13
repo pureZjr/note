@@ -33,7 +33,7 @@ export default class Http {
                 if (!!userInfo) {
                     const { token } = JSON.parse(userInfo)
                     Object.assign(headers, {
-                        token: token
+                        token: token,
                     })
                 }
 
@@ -41,7 +41,7 @@ export default class Http {
                     headers,
                     url,
                     method,
-                    data: reqData
+                    data: reqData,
                 })
                 switch (res.status) {
                     case 200:

@@ -16,9 +16,9 @@ const FileList: React.FC = () => {
         fileStore: { files, currFileInfo, setCurrFileInfo, setContentLoading },
         folderStore: { setCurrFolderInfo, setExpandTreeKeys },
         userInfoStore: {
-            userInfo: { lastLoginTime }
+            userInfo: { lastLoginTime },
         },
-        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
+        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps },
     } = useRootStore()
 
     // 点击文章，更新阅读时间
@@ -30,14 +30,14 @@ const FileList: React.FC = () => {
         parentFolderTitle,
         title,
         isTop,
-        key
+        key,
     }: IFileStore.File) => {
         setCurrFileInfo(null)
         if (Tabs.MyFolder === currTabId) {
             setCurrFolderInfo({
                 title: parentFolderTitle,
                 id: parentId,
-                key: parentKey
+                key: parentKey,
             })
         }
         try {
@@ -54,7 +54,7 @@ const FileList: React.FC = () => {
         setAllKeysByCurrKey(key)
         setCurrFolderInfo({
             id,
-            key
+            key,
         })
     }
     // 鼠标右键
@@ -73,7 +73,7 @@ const FileList: React.FC = () => {
             key: parentKey,
             type,
             title,
-            isTop
+            isTop,
         })
         setCurrFolderInfo({ key: parentKey })
     }
@@ -86,7 +86,7 @@ const FileList: React.FC = () => {
                         __html: title.replace(
                             new RegExp(`${keyword}`),
                             `<span style="background:yellow;">${keyword}</span>`
-                        )
+                        ),
                     }}
                 />
             )
@@ -100,8 +100,8 @@ const FileList: React.FC = () => {
         height: 12,
         style: {
             marginRight: 14,
-            marginLeft: 4
-        }
+            marginLeft: 4,
+        },
     }
 
     React.useEffect(() => {
@@ -113,17 +113,17 @@ const FileList: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            {files.map(article => {
+            {files.map((article) => {
                 const active = article.id === get(currFileInfo, 'id', '')
                 return (
                     <div
                         className={`${styles.item} ${active ? styles.active : ''}`}
                         style={{
-                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46
+                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46,
                         }}
                         key={article.id}
                         onClick={() => onHandleClickItem(article)}
-                        onContextMenu={e => onHandleContextMenu(e, article)}
+                        onContextMenu={(e) => onHandleContextMenu(e, article)}
                     >
                         <div className={styles.top}>
                             <RenderFileIcon type={article.type} />

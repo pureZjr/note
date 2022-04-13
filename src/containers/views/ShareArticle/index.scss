@@ -21,38 +21,9 @@
     font-weight: 500;
 }
 
-.btn {
-    padding: 2px 4px;
-    cursor: pointer;
-    border: 1px solid $black01;
-    border-radius: 4px;
-
-    &:hover {
-        color: $primary;
-    }
-}
-
 .content {
+    position: relative;
     padding: 0 24px;
     overflow: auto;
-}
-
-.markdown {
-    :global {
-        h1 {
-            font-size: 2em;
-        }
-
-        th,
-        td {
-            padding: 6px 13px;
-            border: 1px solid #dfe2e5;
-        }
-        th {
-            display: table-cell;
-            font-weight: bold;
-            text-align: -internal-center;
-            vertical-align: inherit;
-        }
-    }
+    flex: 1;
 }

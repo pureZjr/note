@@ -6,6 +6,7 @@ interface CssExports {
   'content': string;
   'copyLinkBtn': string;
   'divider': string;
+  'dropdownWrap': string;
   'editMdContainer': string;
   'header': string;
   'hideMarkdown': string;
@@ -13,8 +14,8 @@ interface CssExports {
   'icon': string;
   'info': string;
   'loading': string;
-  'markdown': string;
   'mdEditAndRead': string;
+  'modalWrap': string;
   'tips': string;
   'title': string;
   'wangeEditor': string;

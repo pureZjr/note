@@ -3,7 +3,7 @@ import Http from '@utils/http'
 const { post, get } = new Http()
 
 // 创建文件
-export const create = data => {
+export const create = (data) => {
     return post('file-create', data)
 }
 
@@ -13,81 +13,81 @@ export const del = () => {
 }
 
 // 彻底删除文件
-export const delComplete = data => {
+export const delComplete = (data) => {
     return post('file-del-complete', data)
 }
 
 // 恢复笔记
-export const recoverFile = data => {
+export const recoverFile = (data) => {
     return post('file-recover', data)
 }
 
 // 重命名
-export const renameFile = data => {
+export const renameFile = (data) => {
     return post('file-rename', data)
 }
 
 // 置顶操作
-export const setTopFile = data => {
+export const setTopFile = (data) => {
     return post('file-setTop', data)
 }
 
 // 生成分享文件
-export const createShareFileLink = data => {
+export const createShareFileLink = (data) => {
     return post('set-file-share', data)
 }
 
 // 获取分享文件
-export const getShareFileLink = data => {
+export const getShareFileLink = (data) => {
     return get('get-file-share', data)
 }
 
 // 新增笔记
-export const createFile = data => {
+export const createFile = (data) => {
     return post('file-add', data)
 }
 
 // 获取文件夹下笔记
-export const getFileInFolder = data => {
+export const getFileInFolder = (data) => {
     return get('fileInFolder-get', data)
 }
 
 // 编辑笔记
-export const editFile = data => {
+export const editFile = (data) => {
     return post('file-edit', data)
 }
 
 // 获取笔记
-export const getFile = data => {
+export const getFile = (data) => {
     return get('file-get', data)
 }
 
 // 删除文件
-export const delFile = data => {
+export const delFile = (data) => {
     return post('file-del', data)
 }
 
 // 彻底删除文件
-export const delFileComplete = data => {
+export const delFileComplete = (data) => {
     return post('file-del-complete', data)
 }
 
 // 获取回收站的文件
-export const getDelFile = data => {
+export const getDelFile = (data) => {
     return get('del-file-get', data)
 }
 
 // 获取最新文件
-export const getNewestFile = data => {
+export const getNewestFile = (data) => {
     return get('file-newest', data)
 }
 
 // 搜索文件
-export const searchFile = data => {
+export const searchFile = (data) => {
     return get('search-file', data)
 }
 
 // 获取文件内容
-export const getFileContent = data => {
+export const getFileContent = (data) => {
     return get('file-content-get', data)
 }

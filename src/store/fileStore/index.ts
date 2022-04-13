@@ -18,7 +18,7 @@ export class FileStore {
      */
     @action
     setFileTop = (id: string, isTop: 0 | 1) => {
-        const currFile = this.files.find(v => v.id === id)
+        const currFile = this.files.find((v) => v.id === id)
         currFile.isTop = isTop
     }
 
@@ -29,7 +29,7 @@ export class FileStore {
      */
     @action
     setFileName = (id: string, title: string) => {
-        const currFile = this.files.find(v => v.id === id)
+        const currFile = this.files.find((v) => v.id === id)
         currFile.title = title
     }
 
@@ -53,7 +53,7 @@ export class FileStore {
     @action
     delFile = (id: string) => {
         const arr = JSON.parse(JSON.stringify(this.files))
-        const idx = this.files.findIndex(v => v.id === id)
+        const idx = this.files.findIndex((v) => v.id === id)
         arr.splice(idx, 1)
         this.setFiles(arr)
     }
@@ -101,10 +101,10 @@ export class FileStore {
     @action
     updateFile = (args: IFileStore.File) => {
         const arr = [...this.files]
-        const index = arr.findIndex(a => a.id === args.id)
+        const index = arr.findIndex((a) => a.id === args.id)
         arr[index] = {
             ...arr[index],
-            ...args
+            ...args,
         }
         this.setFiles(arr)
     }
@@ -118,7 +118,7 @@ export class FileStore {
     currFileInfo: IFileStore.File = {
         id: '',
         content: '',
-        title: ''
+        title: '',
     }
     @action
     setCurrFileInfo = (info: IFileStore.File) => {

@@ -13,25 +13,26 @@ const definePlugin = new webpack.DefinePlugin(env.stringified)
 
 const plugins = [
     new HtmlWebpackPlugin({
-        template: 'build/tpl/index.html'
+        template: 'build/tpl/index.html',
     }),
     definePlugin,
     new ForkTsCheckerWebpackPlugin({
-        tsconfig: resolveFromRootDir('tsconfig.json'),
-        eslint: true,
+        typescript: {
+            configFile: resolveFromRootDir('tsconfig.json'),
+        },
         // 设置为false编译中途直接报告问题
-        async: APP_ENV === 'development'
+        async: APP_ENV === 'development',
     }),
     new webpack.ProvidePlugin({
-        process: 'process/browser'
-    })
+        process: 'process/browser',
+    }),
 ]
 
 if (APP_ENV === 'production') {
     plugins.push(
         new MiniCssExtractPlugin({
             filename: assetsPath('css/[name].[contenthash].css'),
-            chunkFilename: assetsPath('css/[name].[id].[contenthash].css')
+            chunkFilename: assetsPath('css/[name].[id].[contenthash].css'),
         })
         // 不用source-map了，影响打包
         // new SentryPlugin({

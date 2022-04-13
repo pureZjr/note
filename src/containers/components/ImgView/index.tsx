@@ -8,12 +8,12 @@ import ImgLoading from './ImgLoading'
 import { BREAK_IMAGE } from '@constant/index'
 
 const ImgViewTriggerName = 'imgViewTrigger'
-const isImgViewTrigger = el => {
+const isImgViewTrigger = (el) => {
     return el.type && el.type.componentName === ImgViewTriggerName
 }
 
 function deepMap(children, callback) {
-    return Children.map(children, child => {
+    return Children.map(children, (child) => {
         if (child === null) {
             return null
         }
@@ -76,7 +76,7 @@ export class ImgView extends React.Component<IP, IS> {
         const src = typeof imgUrl === 'string' ? [imgUrl] : imgUrl
         this.setState({ loading: true })
         this.loadImageAsync(src[index])
-            .then(e => {
+            .then((e) => {
                 this.setState({ isLoaded: true })
                 const { target, path } = e
                 if ((target && (target as any).naturalWidth) || (path && path[0] && (path[0] as any).naturalWidth)) {
@@ -111,8 +111,8 @@ export class ImgView extends React.Component<IP, IS> {
         return new Promise((resolve, reject) => {
             const img = new Image()
             img.src = url
-            img.onload = e => resolve(e)
-            img.onerror = e => reject(e)
+            img.onload = (e) => resolve(e)
+            img.onerror = (e) => reject(e)
         })
     }
 
@@ -149,7 +149,7 @@ export class ImgView extends React.Component<IP, IS> {
                         />
                     )
                 )}
-                {deepMap(children, child => {
+                {deepMap(children, (child) => {
                     const props = {
                         onClick: () => {
                             const { index, children: nativeChild } = child.props
@@ -157,7 +157,7 @@ export class ImgView extends React.Component<IP, IS> {
                                 nativeChild.props.onClick()
                             }
                             this.handleShow(index)
-                        }
+                        },
                     }
                     return cloneElement(child.props.children, props)
                 })}
