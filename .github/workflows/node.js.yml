@@ -2,10 +2,10 @@ name: note build
 # 触发workflow的条件
 on:
     push:
-        # 只有master分支发生push事件时，才会触发workflow
-        branches: [master]
+        # 只有vite分支发生push事件时，才会触发workflow
+        branches: [vite]
     pull_request:
-        branches: [master]
+        branches: [vite]
 
 env:
     SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
@@ -18,7 +18,7 @@ jobs:
     build: # 任务的job_id，具体名称自定义，这里build代表打包
         runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
         steps:
-            - uses: actions/checkout@master
+            - uses: actions/checkout@vite
 
             - uses: actions/setup-node@v1
               with:
@@ -53,7 +53,7 @@ jobs:
               env:
                   SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
                   ARGS: '-avz --delete'
-                  SOURCE: 'dist/'
+                  SOURCE: 'build/'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: /home/note # 服务器目标路径
+                  TARGET: /home/noteVite # 服务器目标路径
