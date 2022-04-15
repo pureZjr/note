@@ -167,36 +167,38 @@ const ShareArticle: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.comments}>
-                        <div className={styles.top}>
-                            <div className={styles.commentLabel}>评论</div>
-                            <Input.TextArea
-                                className={styles.textarea}
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                onFocus={(e) => {
-                                    e.target.style.height = '80px'
-                                    ;(e.target.nextSibling as HTMLDivElement).style.display = 'flex'
-                                }}
-                                onBlur={(e) => {
-                                    const target = e.currentTarget
-                                    setTimeout(() => {
-                                        target.style.height = '40px'
-                                        ;(target.nextSibling as HTMLDivElement).style.display = 'none'
-                                    }, 100)
-                                }}
-                            />
-                            <div className={styles.btns}>
-                                <Button onClick={cancel}>取消</Button>
-                                <Button
-                                    style={{ marginLeft: 7 }}
-                                    type="primary"
-                                    onClick={submit}
-                                    disabled={!comment.length}
-                                >
-                                    评论
-                                </Button>
+                        {isLogin && (
+                            <div className={styles.top}>
+                                <div className={styles.commentLabel}>评论</div>
+                                <Input.TextArea
+                                    className={styles.textarea}
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    onFocus={(e) => {
+                                        e.target.style.height = '80px'
+                                        ;(e.target.nextSibling as HTMLDivElement).style.display = 'flex'
+                                    }}
+                                    onBlur={(e) => {
+                                        const target = e.currentTarget
+                                        setTimeout(() => {
+                                            target.style.height = '40px'
+                                            ;(target.nextSibling as HTMLDivElement).style.display = 'none'
+                                        }, 100)
+                                    }}
+                                />
+                                <div className={styles.btns}>
+                                    <Button onClick={cancel}>取消</Button>
+                                    <Button
+                                        style={{ marginLeft: 7 }}
+                                        type="primary"
+                                        onClick={submit}
+                                        disabled={!comment.length}
+                                    >
+                                        评论
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                         <PerfectScroll style={{ overflow: 'hidden', flex: 1 }} scrollToTop={scrollCommentToTop}>
                             <div className={styles.commentList}>
                                 {responses.map((r) => {
