@@ -127,28 +127,30 @@ const Header: React.FC<Props> = ({ hideSearch, showLogin }: Props) => {
                     />
                 )}
             </div>
-            <Dropdown overlay={menu}>
-                <div className={styles.avatarContainer}>
-                    <Avatar
-                        shape="square"
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 4,
-                            marginRight: 4,
-                        }}
-                        size={38}
-                        icon={<img src={`${userInfo.avatar}?imageView2/1/interlace/1`} width={24} height={24} />}
-                    />
-                    <CaretDownOutlined
-                        style={{
-                            cursor: 'pointer',
-                            color: '#fff',
-                        }}
-                    />
-                </div>
-            </Dropdown>
+            {hasLogin && (
+                <Dropdown overlay={menu}>
+                    <div className={styles.avatarContainer}>
+                        <Avatar
+                            shape="square"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: 4,
+                                marginRight: 4,
+                            }}
+                            size={38}
+                            icon={<img src={`${userInfo.avatar}?imageView2/1/interlace/1`} width={24} height={24} />}
+                        />
+                        <CaretDownOutlined
+                            style={{
+                                cursor: 'pointer',
+                                color: '#fff',
+                            }}
+                        />
+                    </div>
+                </Dropdown>
+            )}
             {userInfoVisible && <UserInfo close={() => setUserInfoVisible(false)} />}
             {loading && <PageLoading hasMask />}
         </div>

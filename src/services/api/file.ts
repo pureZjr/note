@@ -91,3 +91,18 @@ export const searchFile = (data) => {
 export const getFileContent = (data) => {
     return get('file-content-get', data)
 }
+
+// 点赞分享文章
+export const likeShareFile = (data) => {
+    return post('like-share-file', data)
+}
+
+// 最近看过的分享文章
+export const recentReadShareFile = (data) => {
+    return post('recent-read-share-file', data)
+}
+
+// 评论分享文章
+export const commentShareFile = (data) => {
+    return post('comment-share-file', data)
+}
