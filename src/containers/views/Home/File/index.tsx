@@ -26,6 +26,7 @@ import PageLoading from '@components/PageLoading'
 
 const File: React.FC = () => {
     const {
+        userInfoStore: { userInfo },
         fileStore: { currFileInfo, contentLoading, setCurrFileInfo, updateFile, getFiles },
         extraStore: { currTabId, getNewestFolderAndFile },
     } = useRootStore()
@@ -82,7 +83,8 @@ const File: React.FC = () => {
         const getShareLink = async () => {
             try {
                 setLoading(true)
-                await createShareFileLink({ key, ts: dayjs().valueOf() })
+                const { username, email, avatar } = userInfo
+                await createShareFileLink({ key, ts: dayjs().valueOf(), creator: { username, email, avatar } })
                 const link = `${SHARE_BASE_URL}${key}`
                 const dialog = Modal.info({
                     maskClosable: true,

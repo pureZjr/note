@@ -9,9 +9,10 @@ import styles from './index.module.scss'
 interface Props {
     type: CreateType
     content: string
+    style?: React.CSSProperties
 }
 
-const RenderContent: React.FC<Props> = ({ type, content }: Props) => {
+const RenderContent: React.FC<Props> = ({ type, content, style = {} }: Props) => {
     // 渲染显示内容
     const renderReadingContent = () => {
         switch (type) {
@@ -68,7 +69,11 @@ const RenderContent: React.FC<Props> = ({ type, content }: Props) => {
         }
     }
 
-    return <div>{renderReadingContent()}</div>
+    return (
+        <div style={style} className={styles.container}>
+            {renderReadingContent()}
+        </div>
+    )
 }
 
 export default RenderContent
