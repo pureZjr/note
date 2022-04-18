@@ -37,6 +37,11 @@ export const createShareFileLink = (data) => {
     return post('set-file-share', data)
 }
 
+// 取消分享文件
+export const cancelShareFile = (data) => {
+    return post('set-file-share', data)
+}
+
 // 获取分享文件
 export const getShareFileLink = (data) => {
     return get('get-file-share', data)
@@ -105,4 +110,14 @@ export const recentReadShareFile = (data) => {
 // 评论分享文章
 export const commentShareFile = (data) => {
     return post('comment-share-file', data)
+}
+
+// 获取与我分享的文件
+export const getShareToMeFile = (data) => {
+    return get('share-to-me-file-get', data)
+}
+
+// 获取我分享的
+export const getMyShareFile = (data) => {
+    return get('my-share-file-get', data)
 }

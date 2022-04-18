@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Avatar, Input, Menu, Dropdown } from 'antd'
 import { CloseCircleOutlined, CaretDownOutlined } from '@ant-design/icons'
 import { observer } from 'mobx-react'
-import { debounce } from 'lodash'
 
 import { logout } from '@services/api/account'
 import { useRootStore } from '@utils/customHooks'
@@ -29,11 +28,7 @@ const Header: React.FC<Props> = ({ hideSearch, showLogin }: Props) => {
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         extraStore.setKeyword(event.target.value)
-        autoSearch(event.target.value)
     }
-
-    const autoSearch = React.useCallback((val) => debounceWrapper(val), [])
-    const debounceWrapper = debounce((val) => handleSearch(val), 1000)
 
     const onHandleLogout = async () => {
         setLoading(true)

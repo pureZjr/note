@@ -5,9 +5,9 @@ import { observer } from 'mobx-react'
 import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
 import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
-import { delFile, delFileComplete, recoverFile, renameFile, setTopFile } from '@services/api/file'
+import { delFile, delFileComplete, recoverFile, renameFile, setTopFile, cancelShareFile } from '@services/api/file'
 import styles from './index.module.scss'
-import { Tabs } from '@store/extraStore'
+import extraStore, { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
 
 const menuHeight = 40
@@ -236,6 +236,22 @@ const RightClickMenus: React.FC = () => {
                     message.success('操作成功')
                 } catch {}
                 break
+            case '9':
+                try {
+                    await cancelShareFile({
+                        id: articleId,
+                        isCancel: true,
+                    })
+                    if (currTabId == Tabs.MyShare) {
+                        fileStore.setCurrFileInfo(null)
+                        extraStore.getMyShareFile()
+                    }
+                    message.success('操作成功')
+                } catch (err) {
+                    message.success('操作失败')
+                    console.error(err)
+                }
+                break
         }
         closeMenu()
     }
@@ -266,6 +282,7 @@ const RightClickMenus: React.FC = () => {
         setMenuProps(null)
     })
     const isRecycle = currTabId === Tabs.Recycle
+    const isMyShare = currTabId === Tabs.MyShare
     const isRootFolder = currTabId === Tabs.MyFolder || folderId === Tabs.MyFolder
     const isArticle = !!articleId
 
@@ -289,9 +306,14 @@ const RightClickMenus: React.FC = () => {
                     )}
                     {isRecycle && <Menu.Item key="5">恢复</Menu.Item>}
                     {isRecycle && <Menu.Item key="4">彻底删除</Menu.Item>}
-                    {isArticle && !isRecycle && <Menu.Item key="8">{isTop ? '取消置顶' : '置顶'}</Menu.Item>}
+                    {isArticle && !isRecycle && !isMyShare && (
+                        <Menu.Item key="8">{isTop ? '取消置顶' : '置顶'}</Menu.Item>
+                    )}
                     {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="7">重命名</Menu.Item>}
-                    {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="3">删除</Menu.Item>}
+                    {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && !isMyShare && (
+                        <Menu.Item key="3">删除</Menu.Item>
+                    )}
+                    {isMyShare && <Menu.Item key="9">取消分享</Menu.Item>}
                 </Menu>
             )}
         </div>

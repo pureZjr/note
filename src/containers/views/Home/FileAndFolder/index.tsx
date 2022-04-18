@@ -115,10 +115,10 @@ const FileAndFolder: React.FC = () => {
         <Menu onClick={(e) => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
             <Menu.Item key="abstract">摘要</Menu.Item>
             <Menu.Item key="list">列表</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="createTime">创建时间</Menu.Item>
-            <Menu.Item key="updateTime">修改时间</Menu.Item>
-            <Menu.Item key="size">文件大小</Menu.Item>
+            {Tabs.ShareToMe !== currTabId && <Menu.Divider />}
+            {Tabs.ShareToMe !== currTabId && <Menu.Item key="createTime">创建时间</Menu.Item>}
+            {Tabs.ShareToMe !== currTabId && <Menu.Item key="updateTime">修改时间</Menu.Item>}
+            {Tabs.ShareToMe !== currTabId && <Menu.Item key="size">文件大小</Menu.Item>}
         </Menu>
     )
 
@@ -143,9 +143,11 @@ const FileAndFolder: React.FC = () => {
                             {empty ? (
                                 <div className={styles.empty}>
                                     <label>没有找到文件</label>
-                                    <Button size="small" type="primary" onClick={createArticle}>
-                                        新建笔记
-                                    </Button>
+                                    {[Tabs.MyFolder, Tabs.NewDoc].includes(currTabId) && (
+                                        <Button size="small" type="primary" onClick={createArticle}>
+                                            新建笔记
+                                        </Button>
+                                    )}
                                 </div>
                             ) : (
                                 <React.Fragment>

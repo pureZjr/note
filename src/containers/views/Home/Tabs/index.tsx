@@ -20,6 +20,8 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
             getFolderAndFile,
             getNewestFolderAndFile,
             setMenuProps,
+            getShareToMeFolderAndFile,
+            getMyShareFile,
         },
         folderStore: { setCurrFolderInfo, setFolder },
         fileStore: { setCurrFileInfo, setFiles },
@@ -48,6 +50,16 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
             children: <FolderTree />,
         },
         {
+            id: EnumTabs.MyShare,
+            icon: <Icon type="iconfenxiang" {...svgProps} />,
+            title: '我的分享',
+        },
+        {
+            id: EnumTabs.ShareToMe,
+            icon: <Icon type="icona-024-share" {...svgProps} />,
+            title: '与我分享',
+        },
+        {
             id: EnumTabs.Recycle,
             icon: <Icon type="icondustbin" {...svgProps} />,
             title: '回收站',
@@ -64,7 +76,16 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
     const onHandleTabClick = async (id: EnumTabs) => {
         resetData()
         setCurrTabId(id)
-        const title = id === EnumTabs.NewDoc ? '最新文档' : id === EnumTabs.MyFolder ? '我的文件夹' : '回收站'
+        const title =
+            id === EnumTabs.NewDoc
+                ? '最新文档'
+                : id === EnumTabs.MyFolder
+                ? '我的文件夹'
+                : id === EnumTabs.ShareToMe
+                ? '与我分享'
+                : id === EnumTabs.MyShare
+                ? '我的分享'
+                : '回收站'
         setCurrFolderInfo({ title })
         switch (id) {
             case EnumTabs.NewDoc:
@@ -72,6 +93,20 @@ const Tabs: React.FC<Props> = ({ setScrollToTop }: Props) => {
                 break
             case EnumTabs.MyFolder:
                 await getFolderAndFile(EnumTabs.MyFolder)
+                break
+            case EnumTabs.ShareToMe:
+                await getShareToMeFolderAndFile()
+                setScrollToTop(true)
+                setTimeout(() => {
+                    setScrollToTop(null)
+                }, 100)
+                break
+            case EnumTabs.MyShare:
+                await getMyShareFile()
+                setScrollToTop(true)
+                setTimeout(() => {
+                    setScrollToTop(null)
+                }, 100)
                 break
             case EnumTabs.Recycle:
                 getDelFolderAndFile()

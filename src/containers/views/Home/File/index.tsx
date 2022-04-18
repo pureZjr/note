@@ -6,6 +6,7 @@ import {
     ExclamationCircleOutlined,
     ShareAltOutlined,
     EllipsisOutlined,
+    LinkOutlined,
 } from '@ant-design/icons'
 import ReactMarkdown from '@components/ReactMarkdown'
 import { Input, Spin, Tooltip, Dropdown, Menu, Modal, Button } from 'antd'
@@ -16,7 +17,7 @@ import { useRootStore } from '@utils/customHooks'
 import { sizeof, copyToClipboard } from '@utils/common'
 import styles from './index.module.scss'
 import Editor from './Editor'
-import { setTopFile, createShareFileLink, editFile } from '@services/api/file'
+import { setTopFile, createShareFileLink, editFile, cancelShareFile } from '@services/api/file'
 import { Tabs } from '@store/extraStore'
 import { SHARE_BASE_URL } from '@constant/index'
 import CreateType from '@store/extraStore/CreateType'
@@ -28,15 +29,14 @@ const File: React.FC = () => {
     const {
         userInfoStore: { userInfo },
         fileStore: { currFileInfo, contentLoading, setCurrFileInfo, updateFile, getFiles },
-        extraStore: { currTabId, getNewestFolderAndFile },
+        extraStore: { currTabId, getNewestFolderAndFile, getMyShareFile },
     } = useRootStore()
 
-    const { id, type, key, isTop, parentFolderTitle, createTime, updateTime, size } = currFileInfo
+    const { id, type, key, isTop, parentFolderTitle, parentId, parentKey, createTime, updateTime } = currFileInfo
     const [editing, setEditing] = React.useState(false)
     const [content, setContent] = React.useState('')
     const [mdEditAndRead, setMdEditAndRead] = React.useState(true)
     const [loading, setLoading] = React.useState(false)
-
     const title = React.useRef('')
 
     // 编辑
@@ -84,8 +84,21 @@ const File: React.FC = () => {
             try {
                 setLoading(true)
                 const { username, email, avatar } = userInfo
-                await createShareFileLink({ key, ts: dayjs().valueOf(), creator: { username, email, avatar } })
-                const link = `${SHARE_BASE_URL}${key}`
+                const size = sizeof(content, 'utf-8')
+                await createShareFileLink({
+                    id,
+                    key,
+                    parentFolderTitle,
+                    parentId,
+                    parentKey,
+                    type,
+                    updateTime,
+                    size,
+                    title: title.current,
+                    ts: dayjs().valueOf(),
+                    creator: { username, email, avatar },
+                })
+                const link = `${SHARE_BASE_URL}${id}`
                 const dialog = Modal.info({
                     maskClosable: true,
                     className: styles.modalWrap,
@@ -107,7 +120,14 @@ const File: React.FC = () => {
                             >
                                 复制链接
                             </Button>
-                            <Button type="primary" size="small" onClick={() => dialog.destroy()}>
+                            <Button
+                                type="primary"
+                                size="small"
+                                onClick={() => {
+                                    cancelShare()
+                                    dialog.destroy()
+                                }}
+                            >
                                 取消分享
                             </Button>
                         </div>
@@ -157,15 +177,28 @@ const File: React.FC = () => {
                         )}
                     </span>
                 )}
-                <Tooltip title="分享">
-                    <ShareAltOutlined onClick={getShareLink} className={styles.icon} />
-                </Tooltip>
-                <Dropdown overlayClassName={styles.dropdownWrap} overlay={menu()} trigger={['click']}>
-                    <EllipsisOutlined className={styles.icon} />
-                </Dropdown>
-                <Tooltip title={info()} placement="bottomRight" trigger="click">
-                    <ExclamationCircleOutlined className={styles.icon} />
-                </Tooltip>
+                {Tabs.MyShare === currTabId ? (
+                    <React.Fragment>
+                        <Tooltip title="复制分享链接">
+                            <LinkOutlined onClick={() => copy(`${SHARE_BASE_URL}${id}`)} className={styles.icon} />
+                        </Tooltip>
+                        <Button type="danger" size="small" onClick={cancelShare} style={{ marginLeft: 12 }}>
+                            取消分享
+                        </Button>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <Tooltip title="分享">
+                            <ShareAltOutlined onClick={getShareLink} className={styles.icon} />
+                        </Tooltip>
+                        <Dropdown overlayClassName={styles.dropdownWrap} overlay={menu()} trigger={['click']}>
+                            <EllipsisOutlined className={styles.icon} />
+                        </Dropdown>
+                        <Tooltip title={info()} placement="bottomRight" trigger="click">
+                            <ExclamationCircleOutlined className={styles.icon} />
+                        </Tooltip>
+                    </React.Fragment>
+                )}
             </div>
         )
     }
@@ -193,6 +226,7 @@ const File: React.FC = () => {
     const editTitle = (val: string) => {
         try {
             editFile({ content, id, title: val, type })
+            const size = sizeof(content, 'utf-8')
             updateFile({
                 content,
                 size,
@@ -202,6 +236,23 @@ const File: React.FC = () => {
             setCurrFileInfo({ ...currFileInfo, title: val })
         } catch {}
     }
+    // 取消分享
+    const cancelShare = async () => {
+        try {
+            await cancelShareFile({
+                id,
+                isCancel: true,
+            })
+            if (currTabId == Tabs.MyShare) {
+                setCurrFileInfo(null)
+                getMyShareFile()
+            }
+            message.success('操作成功')
+        } catch (err) {
+            message.success('操作失败')
+            console.error(err)
+        }
+    }
 
     React.useEffect(() => {
         setContent(currFileInfo.content || '')
@@ -210,27 +261,29 @@ const File: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                {editing ? (
-                    <Input
-                        defaultValue={currFileInfo.title}
-                        onChange={(event) => (title.current = event.target.value)}
-                    />
-                ) : (
-                    <div
-                        contentEditable={true}
-                        onKeyDown={(e) => {
-                            if (e.keyCode === 13) {
-                                ;(e.target as HTMLDivElement).blur()
-                            }
-                        }}
-                        className={styles.title}
-                        onBlur={(e) => editTitle(e.target.innerText)}
-                        dangerouslySetInnerHTML={{ __html: currFileInfo.title }}
-                    />
-                )}
-                {!!currFileInfo.id && renderBtns()}
-            </div>
+            {![Tabs.ShareToMe, Tabs.Recycle].includes(currTabId) && (
+                <div className={styles.header}>
+                    {editing ? (
+                        <Input
+                            defaultValue={currFileInfo.title}
+                            onChange={(event) => (title.current = event.target.value)}
+                        />
+                    ) : (
+                        <div
+                            contentEditable={true}
+                            onKeyDown={(e) => {
+                                if (e.keyCode === 13) {
+                                    ;(e.target as HTMLDivElement).blur()
+                                }
+                            }}
+                            className={styles.title}
+                            onBlur={(e) => editTitle(e.target.innerText)}
+                            dangerouslySetInnerHTML={{ __html: currFileInfo.title }}
+                        />
+                    )}
+                    {!!currFileInfo.id && renderBtns()}
+                </div>
+            )}
             <div className={styles.content}>
                 {contentLoading && <Spin className={styles.loading} />}
                 {editing ? renderEditingContent() : <RenderContent type={type} content={content} />}
