@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cloneDeep } from 'lodash'
-import { message as AntdMessage } from 'antd'
+import { message } from 'antd'
 import { CloseOutlined } from '@ant-design/icons'
 import { ConfigOnClose, MessageApi } from 'antd/lib/message'
 
@@ -9,7 +9,7 @@ import styles from './index.scss'
 export type NoticeType = 'info' | 'success' | 'error' | 'warn' | 'warning' | 'loading'
 
 // 扩展message
-const message: MessageApi = cloneDeep(AntdMessage)
+const AntdMessage: MessageApi = cloneDeep(message)
 
 function notice(
     type: NoticeType,
@@ -20,14 +20,14 @@ function notice(
     const newContent: React.ReactNode = (
         <span>
             {content}
-            <CloseOutlined className={styles.iconClose} onClick={message.destroy} />
+            <CloseOutlined className={styles.iconClose} onClick={AntdMessage.destroy} />
         </span>
     )
-    AntdMessage.destroy()
-    return AntdMessage[type](newContent, duration, onClose)
+    message.destroy()
+    return message[type](newContent, duration, onClose)
 }
 
-message.info = function (
+AntdMessage.info = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -35,7 +35,7 @@ message.info = function (
     return notice('info', content, duration, onClose)
 }
 
-message.success = function (
+AntdMessage.success = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -43,7 +43,7 @@ message.success = function (
     return notice('success', content, duration, onClose)
 }
 
-message.error = function (
+AntdMessage.error = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -51,7 +51,7 @@ message.error = function (
     return notice('error', content, duration, onClose)
 }
 
-message.warn = function (
+AntdMessage.warn = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -59,7 +59,7 @@ message.warn = function (
     return notice('warn', content, duration, onClose)
 }
 
-message.warning = function (
+AntdMessage.warning = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -67,7 +67,7 @@ message.warning = function (
     return notice('warning', content, duration, onClose)
 }
 
-message.loading = function (
+AntdMessage.loading = function (
     content: React.ReactNode,
     duration?: number | (() => void) | undefined,
     onClose?: ConfigOnClose
@@ -75,4 +75,4 @@ message.loading = function (
     return notice('loading', content, duration, onClose)
 }
 
-export default message
+export default AntdMessage
