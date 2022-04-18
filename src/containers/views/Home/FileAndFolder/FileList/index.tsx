@@ -15,9 +15,6 @@ const FileList: React.FC = () => {
     const {
         fileStore: { files, currFileInfo, setCurrFileInfo, setContentLoading },
         folderStore: { setCurrFolderInfo, setExpandTreeKeys },
-        userInfoStore: {
-            userInfo: { lastLoginTime },
-        },
         extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps },
     } = useRootStore()
 
@@ -104,13 +101,6 @@ const FileList: React.FC = () => {
         },
     }
 
-    React.useEffect(() => {
-        // 没有上次登录时间，说明是首次登录，首次登录默认打开欢迎文章
-        if (!lastLoginTime) {
-            onHandleClickItem(files[0])
-        }
-    }, [lastLoginTime])
-
     return (
         <div className={styles.container}>
             {files.map((article) => {
@@ -123,7 +113,7 @@ const FileList: React.FC = () => {
                         }}
                         key={article.id}
                         onClick={() => onHandleClickItem(article)}
-                        onContextMenu={(e) => onHandleContextMenu(e, article)}
+                        onContextMenu={Tabs.ShareToMe !== currTabId ? (e) => onHandleContextMenu(e, article) : null}
                     >
                         <div className={styles.top}>
                             <RenderFileIcon type={article.type} />
@@ -139,7 +129,7 @@ const FileList: React.FC = () => {
                         </div>
                         {fileAndFolderDisplay === 'abstract' && (
                             <div className={styles.bottom}>
-                                {Tabs.MyFolder !== currTabId && active ? (
+                                {![Tabs.MyFolder, Tabs.Recycle, Tabs.ShareToMe].includes(currTabId) && active ? (
                                     <div
                                         className={styles.parentFolderTitle}
                                         onClick={() => gotoMyFolder(article.parentKey, article.id)}

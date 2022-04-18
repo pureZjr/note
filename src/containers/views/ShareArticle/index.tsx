@@ -38,15 +38,16 @@ const ShareArticle: React.FC = () => {
 
     const {
         userInfoStore: { userInfo },
+        routerStore,
     } = useRootStore()
 
-    const key = location.href.split('/').at(-1)
+    const id = location.href.split('/').at(-1)
 
-    const setRecentReadShareFile = (key) => {
+    const setRecentReadShareFile = () => {
         if (userInfo.email) {
             try {
                 recentReadShareFile({
-                    key,
+                    id,
                     email: userInfo.email,
                 })
             } catch (err) {
@@ -63,7 +64,7 @@ const ShareArticle: React.FC = () => {
         try {
             const { username, email, avatar } = userInfo
             await commentShareFile({
-                key,
+                id,
                 commenter: {
                     username,
                     email,
@@ -86,7 +87,7 @@ const ShareArticle: React.FC = () => {
     const like = async () => {
         try {
             await likeShareFile({
-                key,
+                id,
                 email: userInfo.email,
                 cancel: liked,
             })
@@ -98,7 +99,7 @@ const ShareArticle: React.FC = () => {
     }
 
     const fetch = () => {
-        getShareFileLink({ key }).then((res) => {
+        getShareFileLink({ id }).then((res) => {
             setTitle(res.title)
             setContent(res.content)
             setType(res.type)
@@ -118,7 +119,7 @@ const ShareArticle: React.FC = () => {
 
     useOnMount(async () => {
         fetch()
-        setRecentReadShareFile(key)
+        setRecentReadShareFile()
     })
 
     const isLogin = !!userInfo.token
@@ -166,7 +167,7 @@ const ShareArticle: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.comments}>
-                        {isLogin && (
+                        {isLogin ? (
                             <div className={styles.top}>
                                 <div className={styles.commentLabel}>评论</div>
                                 <Input.TextArea
@@ -197,6 +198,16 @@ const ShareArticle: React.FC = () => {
                                     </Button>
                                 </div>
                             </div>
+                        ) : (
+                            <Button
+                                type="primary"
+                                style={{ width: 104 }}
+                                onClick={() => {
+                                    routerStore.history.push('/login')
+                                }}
+                            >
+                                登录后评论
+                            </Button>
                         )}
                         <PerfectScroll style={{ overflow: 'hidden', flex: 1 }} scrollToTop={scrollCommentToTop}>
                             <div className={styles.commentList}>
