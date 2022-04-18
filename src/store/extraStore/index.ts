@@ -116,12 +116,16 @@ export class ExtraStore {
                 searchInMyFolder()
             } else if (args.type === Tabs.ShareToMe) {
                 this.getShareToMeFolderAndFile()
+            } else if (args.type === Tabs.MyShare) {
+                this.getMyShareFile()
             } else {
                 this.getDelFolderAndFile()
             }
         } else {
             if (args.type === Tabs.ShareToMe) {
                 this.searchShareToMeFile(args.keyword)
+            } else if (args.type === Tabs.MyShare) {
+                this.searchMyShareFile(args.keyword)
             } else {
                 searchInMyFolder()
             }
@@ -283,6 +287,19 @@ export class ExtraStore {
      * @memberof ExtraStore
      */
     searchShareToMeFile = (kw: string) => {
+        this.setLoading(true)
+        const files = store.fileStore.files.filter((file) => file.title.includes(kw))
+        store.fileStore.setFiles(files)
+        store.fileStore.setCurrFileInfo(null)
+        this.setLoading(false)
+    }
+
+    /**
+     * 搜索我分享的文件
+     *
+     * @memberof ExtraStore
+     */
+    searchMyShareFile = (kw: string) => {
         this.setLoading(true)
         const files = store.fileStore.files.filter((file) => file.title.includes(kw))
         store.fileStore.setFiles(files)
