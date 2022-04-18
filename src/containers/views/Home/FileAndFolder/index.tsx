@@ -111,14 +111,15 @@ const FileAndFolder: React.FC = () => {
     }, [loading])
 
     // 列表排序项
+    const hideSort = ![Tabs.ShareToMe, Tabs.MyShare, Tabs.Recycle].includes(currTabId)
     const menu = (
         <Menu onClick={(e) => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
             <Menu.Item key="abstract">摘要</Menu.Item>
             <Menu.Item key="list">列表</Menu.Item>
-            {Tabs.ShareToMe !== currTabId && <Menu.Divider />}
-            {Tabs.ShareToMe !== currTabId && <Menu.Item key="createTime">创建时间</Menu.Item>}
-            {Tabs.ShareToMe !== currTabId && <Menu.Item key="updateTime">修改时间</Menu.Item>}
-            {Tabs.ShareToMe !== currTabId && <Menu.Item key="size">文件大小</Menu.Item>}
+            {hideSort && <Menu.Divider />}
+            {hideSort && <Menu.Item key="createTime">创建时间</Menu.Item>}
+            {hideSort && <Menu.Item key="updateTime">修改时间</Menu.Item>}
+            {hideSort && <Menu.Item key="size">文件大小</Menu.Item>}
         </Menu>
     )
 
