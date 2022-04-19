@@ -99,7 +99,7 @@ const ShareArticle: React.FC = () => {
     }
 
     const fetch = () => {
-        getShareFileLink({ id }).then((res) => {
+        getShareFileLink({ id }, true).then((res) => {
             setTitle(res.title)
             setContent(res.content)
             setType(res.type)
