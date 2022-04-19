@@ -17,6 +17,7 @@ interface CssExports {
   'header': string;
   'like': string;
   'name': string;
+  'noShare': string;
   'read': string;
   'right': string;
   'textarea': string;
