@@ -233,6 +233,12 @@ const RightClickMenus: React.FC = () => {
                     } else {
                         await fileStore.getFiles(folderKey)
                     }
+                    if (fileStore.currFileInfo) {
+                        fileStore.setCurrFileInfo({
+                            ...fileStore.currFileInfo,
+                            isTop: Number(!fileStore.currFileInfo.isTop) as 0 | 1,
+                        })
+                    }
                     message.success('操作成功')
                 } catch {}
                 break
