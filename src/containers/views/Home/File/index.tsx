@@ -32,7 +32,8 @@ const File: React.FC = () => {
         extraStore: { currTabId, getNewestFolderAndFile, getMyShareFile },
     } = useRootStore()
 
-    const { id, type, key, isTop, parentFolderTitle, parentId, parentKey, createTime, updateTime } = currFileInfo
+    const { id, type, key, parentFolderTitle, parentId, parentKey, createTime, updateTime } = currFileInfo
+    const [isTop, setIsTop] = React.useState(currFileInfo.isTop)
     const [editing, setEditing] = React.useState(false)
     const [content, setContent] = React.useState('')
     const [mdEditAndRead, setMdEditAndRead] = React.useState(true)
@@ -65,7 +66,7 @@ const File: React.FC = () => {
     const renderBtns = () => {
         const setTop = async () => {
             try {
-                const { id, isTop, parentKey } = currFileInfo
+                const { id, parentKey } = currFileInfo
                 const data = { id, is_top: Boolean(isTop) ? 0 : 1 }
                 await setTopFile(data)
                 if (Tabs.NewDoc === currTabId) {
@@ -74,6 +75,9 @@ const File: React.FC = () => {
                     await getFiles(parentKey)
                 }
                 message.success('操作成功')
+                setTimeout(() => {
+                    setIsTop(Number(!isTop) as 0 | 1)
+                }, 300)
             } catch {}
         }
         const copy = async (link: string) => {
