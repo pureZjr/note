@@ -266,6 +266,10 @@ const File: React.FC = () => {
         title.current = currFileInfo.title
     }, [currFileInfo])
 
+    React.useEffect(() => {
+        setIsTop(currFileInfo.isTop)
+    }, [currFileInfo.isTop])
+
     return (
         <div className={styles.container}>
             {![Tabs.ShareToMe, Tabs.Recycle].includes(currTabId) && (
