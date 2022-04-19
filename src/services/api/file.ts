@@ -43,8 +43,8 @@ export const cancelShareFile = (data) => {
 }
 
 // 获取分享文件
-export const getShareFileLink = (data) => {
-    return get('get-file-share', data)
+export const getShareFileLink = (data, noErrTips?) => {
+    return get('get-file-share', data, noErrTips)
 }
 
 // 新增笔记
