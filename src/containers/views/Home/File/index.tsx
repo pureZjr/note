@@ -264,11 +264,8 @@ const File: React.FC = () => {
     React.useEffect(() => {
         setContent(currFileInfo.content || '')
         title.current = currFileInfo.title
-    }, [currFileInfo])
-
-    React.useEffect(() => {
         setIsTop(currFileInfo.isTop)
-    }, [currFileInfo.isTop])
+    }, [currFileInfo])
 
     return (
         <div className={styles.container}>

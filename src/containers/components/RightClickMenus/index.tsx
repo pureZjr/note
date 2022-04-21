@@ -236,7 +236,7 @@ const RightClickMenus: React.FC = () => {
                     if (fileStore.currFileInfo) {
                         fileStore.setCurrFileInfo({
                             ...fileStore.currFileInfo,
-                            isTop: Number(!fileStore.currFileInfo.isTop) as 0 | 1,
+                            isTop: data.is_top as 0 | 1,
                         })
                     }
                     message.success('操作成功')
