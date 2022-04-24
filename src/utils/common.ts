@@ -179,7 +179,7 @@ export function getFileMd5(file: File) {
 /**
  * 获取七牛上传的前置数据
  */
-async function qnUpload(file: File): Promise<UploadData> {
+export async function qnUpload(file: File): Promise<UploadData> {
     const token = await getToken({
         bucket: QN_BUCKET,
     })

@@ -1,6 +1,8 @@
 import * as React from 'react'
 import WangeEditor from 'wangeditor'
 import classname from 'classnames'
+import { getToken } from '@services/api/qiniu'
+import { QN_BUCKET } from '@constant/index'
 
 import { useOnMount, useOnUnMount } from '@utils/customHooks'
 import styles from './index.module.scss'
@@ -33,9 +35,30 @@ const Editor: React.FC<Props> = ({ className, defaultValue, onSave, onChange }: 
     const init = () => {
         const editor = new WangeEditor(ref.current)
         editorRef.current = editor
+        console.log(editor)
+
         bindOnTxtChange(editor)
         create(editor)
         setTxt(defaultValue, editor)
+        initUploadImg()
+    }
+
+    const initUploadImg = async () => {
+        const token = await getToken({
+            bucket: QN_BUCKET,
+        })
+        editorRef.current.config.uploadImgServer = 'https://upload-z2.qiniup.com'
+        editorRef.current.config.uploadImgParams = {
+            token,
+            key: 123123213,
+        }
+        console.log(editorRef.current)
+        editorRef.current.config.uploadImgHooks = {
+            before: async (args) => {
+                console.log(args)
+            },
+            success: () => {},
+        }
     }
 
     useOnMount(() => init())
