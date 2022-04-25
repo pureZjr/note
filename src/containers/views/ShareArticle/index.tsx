@@ -41,7 +41,7 @@ const ShareArticle: React.FC = () => {
         routerStore,
     } = useRootStore()
 
-    const id = location.href.split('/').at(-1)
+    const id = location.href.split('/').reverse()[0]
 
     const setRecentReadShareFile = () => {
         if (userInfo.email) {
