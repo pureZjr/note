@@ -1,8 +1,8 @@
 import * as React from 'react'
 import WangeEditor from 'wangeditor'
 import classname from 'classnames'
-import { getToken } from '@services/api/qiniu'
-import { QN_BUCKET } from '@constant/index'
+import { uploadFile } from '@utils/common'
+import { useRootStore } from '@utils/customHooks'
 
 import { useOnMount, useOnUnMount } from '@utils/customHooks'
 import styles from './index.module.scss'
@@ -17,6 +17,7 @@ interface Props {
 const Editor: React.FC<Props> = ({ className, defaultValue, onSave, onChange }: Props) => {
     const ref = React.useRef(null)
     const editorRef = React.useRef(null)
+    const { fileStore } = useRootStore()
 
     const create = (editor) => {
         editor.create()
@@ -44,20 +45,11 @@ const Editor: React.FC<Props> = ({ className, defaultValue, onSave, onChange }: 
     }
 
     const initUploadImg = async () => {
-        const token = await getToken({
-            bucket: QN_BUCKET,
-        })
-        editorRef.current.config.uploadImgServer = 'https://upload-z2.qiniup.com'
-        editorRef.current.config.uploadImgParams = {
-            token,
-            key: 123123213,
-        }
-        console.log(editorRef.current)
-        editorRef.current.config.uploadImgHooks = {
-            before: async (args) => {
-                console.log(args)
-            },
-            success: () => {},
+        editorRef.current.config.customUploadImg = async ([file], insertImgFn) => {
+            try {
+                const res = await uploadFile(file, fileStore.currFileInfo.id)
+                insertImgFn(res)
+            } catch {}
         }
     }
 
