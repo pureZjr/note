@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Input, Avatar, Button } from 'antd'
 import dayjs from 'dayjs'
 import { LikeOutlined, EyeOutlined, ShareAltOutlined } from '@ant-design/icons'
+import { Helmet } from 'react-helmet'
 
 import Header from '@components/Header'
 import RenderContent from '@shared/RenderContent'
@@ -127,6 +128,10 @@ const ShareArticle: React.FC = () => {
     return (
         <div className={styles.container}>
             <Header hideSearch showLogin></Header>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <meta name="description" content={`${title}__${content.substring(0, 100)}`} />
+            </Helmet>
             {!!creator ? (
                 <React.Fragment>
                     <div className={styles.header}>
