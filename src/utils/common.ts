@@ -1,9 +1,10 @@
 import { get } from 'lodash'
 import axios from 'axios'
 import BMF from 'browser-md5-file'
+import message from '@components/AntdMessageExt'
 
 import { getToken } from '@services/api/qiniu'
-import { QN_UPLOAD_URL, QN_BUCKET, QN_SOURCE_URL } from '@constant/index'
+import { QN_UPLOAD_URL, QN_BUCKET, QN_SOURCE_URL, IMAGE_SIZE_LIMIT } from '@constant/index'
 import * as store from '@store/index'
 import { getFolderInfo } from '@services/api/folder'
 
@@ -188,34 +189,46 @@ async function qnUpload(file: File): Promise<UploadData> {
     return data
 }
 
+function checkImgSize(file: File, limit = IMAGE_SIZE_LIMIT): Promise<any> {
+    if (file.size > limit) {
+        const msg = `大小不能超过${(limit / 1024 / 1024).toFixed(1)}M`
+        message.error(msg)
+        return Promise.reject(msg)
+    }
+    return Promise.resolve(true)
+}
+
 /**
  * 手动上传
  */
-export function uploadFile(file: File): Promise<string> {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const uploadData = await qnUpload(file)
-            const formData = new FormData()
-            formData.append('key', uploadData.key)
-            formData.append('token', uploadData.token)
-            formData.append('file', file as Blob)
-            const request = new XMLHttpRequest()
-            request.open('POST', QN_UPLOAD_URL)
-            request.send(formData)
-            request.onreadystatechange = (res) => {
-                if (request.readyState === 4) {
-                    if (request.status === 200) {
-                        let { response } = res.target as any
-                        response = JSON.parse(response)
-                        const url = `${QN_SOURCE_URL}/${response.key}`
-                        resolve(url)
-                    } else {
-                        reject('上传失败')
+export async function uploadFile(file: File, prefixKey = ''): Promise<string> {
+    const checkSize = await checkImgSize(file)
+    if (checkSize === true) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const uploadData = await qnUpload(file)
+                const formData = new FormData()
+                formData.append('key', `${prefixKey ? prefixKey + '_' : ''}${uploadData.key}`)
+                formData.append('token', uploadData.token)
+                formData.append('file', file as Blob)
+                const request = new XMLHttpRequest()
+                request.open('POST', QN_UPLOAD_URL)
+                request.send(formData)
+                request.onreadystatechange = (res) => {
+                    if (request.readyState === 4) {
+                        if (request.status === 200) {
+                            let { response } = res.target as any
+                            response = JSON.parse(response)
+                            const url = `${QN_SOURCE_URL}/${response.key}`
+                            resolve(url)
+                        } else {
+                            reject('上传失败')
+                        }
                     }
                 }
+            } catch (err) {
+                reject(err)
             }
-        } catch (err) {
-            reject(err)
-        }
-    })
+        })
+    }
 }
