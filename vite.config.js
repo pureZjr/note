@@ -12,7 +12,8 @@ export default defineConfig((args) => {
                 limit: 10, //
             }),
         ],
-        base: args.mode === 'production' ? 'https://cdn-src.renjianzahuopu.store/release-vite/product/' : './',
+        // base: args.mode === 'production' ? 'https://cdn-src.renjianzahuopu.store/release-vite/product/' : './',
+        base: './',
         resolve: {
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
             alias: {
