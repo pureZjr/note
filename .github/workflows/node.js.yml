@@ -48,12 +48,15 @@ jobs:
               run: yarn build
 
             # 上传资源到七牛
-            - name: CDN
+            - name: use-qshell
               uses: foxundermoon/setup-qshell@v5
               with:
                   version: '2.6.2'
-            - name: test qshell
-              run: qshell version
+            - name: qshell user
+              run: qshell account ${{ env.QN_ACCESSKEY }} ${{ env.QN_SECRETKEY }} pure
+
+            - name: upload src
+              run: yarn cdn
 
             # 上传打包资源
             - name: Deploy
