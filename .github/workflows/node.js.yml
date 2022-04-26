@@ -47,13 +47,17 @@ jobs:
             - name: Build
               run: yarn build
 
+            # 上传资源到七牛
+            - name: CDN
+              run: yarn cdn
+
             # 上传打包资源
             - name: Deploy
               uses: easingthemes/ssh-deploy@v2.0.7
               env:
                   SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
                   ARGS: '-avz --delete'
-                  SOURCE: 'build/'
+                  SOURCE: 'build/production/index.html'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
                   TARGET: /home/noteVite # 服务器目标路径

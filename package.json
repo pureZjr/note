@@ -28,7 +28,8 @@
         "serve": "vite preview",
         "lint": "eslint src --fix --ext .ts,.tsx && stylelint --fix \"./src/**/*.scss\"",
         "add": "add-component",
-        "lint-staged": "lint-staged"
+        "lint-staged": "lint-staged",
+        "cdn": "node cdn.js"
     },
     "devDependencies": {
         "@commitlint/cli": "^12.0.1",
