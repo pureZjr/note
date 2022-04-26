@@ -49,7 +49,10 @@ jobs:
 
             # 上传资源到七牛
             - name: CDN
-              run: yarn cdn
+              uses: foxundermoon/setup-qshell@v5
+              with:
+                  version: '2.6.2'
+              run: qshell version
 
             # 上传打包资源
             - name: Deploy
