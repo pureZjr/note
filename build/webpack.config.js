@@ -25,6 +25,7 @@ const config = {
         port: 9001,
     },
     output: {
+        publicPath: APP_ENV === 'production' ? 'https://cdn-src.renjianzahuopu.store/release-webpack/product/' : '/',
         path: assetsRoot,
         filename: APP_ENV === 'production' ? assetsPath('js/[name].[chunkhash:19].js') : '[name].js',
     },
