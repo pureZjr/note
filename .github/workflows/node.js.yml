@@ -70,4 +70,4 @@ jobs:
                   SOURCE: 'dist/production/index.html'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: /home/note # 服务器目标路径
+                  TARGET: /home/note/production # 服务器目标路径
