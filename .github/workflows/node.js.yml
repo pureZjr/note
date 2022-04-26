@@ -52,6 +52,7 @@ jobs:
               uses: foxundermoon/setup-qshell@v5
               with:
                   version: '2.6.2'
+            - name: test qshell
               run: qshell version
 
             # 上传打包资源
@@ -60,7 +61,7 @@ jobs:
               env:
                   SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
                   ARGS: '-avz --delete'
-                  SOURCE: 'build/production/index.html'
+                  SOURCE: 'build/'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
                   TARGET: /home/noteVite # 服务器目标路径
