@@ -53,7 +53,7 @@ jobs:
               with:
                   version: '2.6.2'
             - name: qshell user
-              run: qshell account ${{ env.QN_ACCESSKEY }} ${{ env.QN_SECRETKEY }} pure
+              run: qshell account ${{ secrets.QN_ACCESSKEY }} ${{ secrets.QN_SECRETKEY }} pure
 
             - name: upload src
               run: yarn cdn
