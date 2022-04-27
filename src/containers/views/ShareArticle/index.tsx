@@ -47,10 +47,13 @@ const ShareArticle: React.FC = () => {
     const setRecentReadShareFile = () => {
         if (userInfo.email) {
             try {
-                recentReadShareFile({
-                    id,
-                    email: userInfo.email,
-                })
+                recentReadShareFile(
+                    {
+                        id,
+                        email: userInfo.email,
+                    },
+                    true
+                )
             } catch (err) {
                 console.error(err)
             }
@@ -86,16 +89,18 @@ const ShareArticle: React.FC = () => {
     }
 
     const like = async () => {
-        try {
-            await likeShareFile({
-                id,
-                email: userInfo.email,
-                cancel: liked,
-            })
-            setLiked(!liked)
-            fetch()
-        } catch (err) {
-            console.error(err)
+        if (isLogin) {
+            try {
+                await likeShareFile({
+                    id,
+                    email: userInfo.email,
+                    cancel: liked,
+                })
+                setLiked(!liked)
+                fetch()
+            } catch (err) {
+                console.error(err)
+            }
         }
     }
 
@@ -124,7 +129,6 @@ const ShareArticle: React.FC = () => {
     })
 
     const isLogin = !!userInfo.token
-
     return (
         <div className={styles.container}>
             <Header hideSearch showLogin></Header>
@@ -159,10 +163,25 @@ const ShareArticle: React.FC = () => {
                                     <div
                                         className={styles.like}
                                         onClick={like}
-                                        style={{ color: liked ? '#3e77ff' : '#898989' }}
+                                        style={{
+                                            color: liked ? '#3e77ff' : '#898989',
+                                            cursor: isLogin ? 'pointer' : 'not-allowed',
+                                        }}
                                     >
-                                        <LikeOutlined width={14} height={14} />
-                                        <span>{likes.length}</span>
+                                        <LikeOutlined
+                                            width={14}
+                                            height={14}
+                                            style={{
+                                                cursor: isLogin ? 'pointer' : 'not-allowed',
+                                            }}
+                                        />
+                                        <span
+                                            style={{
+                                                cursor: isLogin ? 'pointer' : 'not-allowed',
+                                            }}
+                                        >
+                                            {likes.length}
+                                        </span>
                                     </div>
                                 </div>
                                 <div className={styles.createTime}>

@@ -103,8 +103,8 @@ export const likeShareFile = (data) => {
 }
 
 // 最近看过的分享文章
-export const recentReadShareFile = (data) => {
-    return post('recent-read-share-file', data)
+export const recentReadShareFile = (data, noErrTips = false) => {
+    return post('recent-read-share-file', data, noErrTips)
 }
 
 // 评论分享文章
