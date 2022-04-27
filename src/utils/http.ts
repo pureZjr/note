@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { isNil } from 'lodash'
-import { routerStore } from '@store/index'
+import { routerStore, userInfoStore } from '@store/index'
 
 import config from '@config/index'
 import message from '@components/AntdMessageExt'
@@ -15,8 +15,8 @@ export default class Http {
     get = (url: string, data: Record<string, any>, noErrTips?: boolean): Promise<any> => {
         return this.HandleHttp('GET', url, data, noErrTips)
     }
-    post = (url: string, data: Record<string, unknown>): Promise<any> => {
-        return this.HandleHttp('POST', url, data)
+    post = (url: string, data: Record<string, unknown>, noErrTips?: boolean): Promise<any> => {
+        return this.HandleHttp('POST', url, data, noErrTips)
     }
 
     HandleHttp = async (method: HttpMethods, u: string, data: Record<string, any>, noErrTips?: boolean) => {
@@ -60,7 +60,10 @@ export default class Http {
                         }
                         if (res.data.logout) {
                             localStorage.removeItem(LOCALSTORAGE.USERINFO)
-                            return routerStore.history.push('/login')
+                            userInfoStore.setUserInfo({})
+                            if (!noErrTips) {
+                                return routerStore.history.push('/login')
+                            }
                         }
                         break
                     default:
