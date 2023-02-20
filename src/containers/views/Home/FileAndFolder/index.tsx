@@ -32,7 +32,7 @@ const FileAndFolder: React.FC = () => {
 
     const empty = React.useMemo(() => {
         return !folders.length && !files.length
-    }, [folders, files])
+    }, [folders, files, currTabId])
 
     /**
      * 通过currSelectedFolderKey判断是否有返回上一级
@@ -131,9 +131,11 @@ const FileAndFolder: React.FC = () => {
                             {empty ? (
                                 <div className={styles.empty}>
                                     <label>没有找到文件</label>
-                                    <Button size="small" type="primary" onClick={createArticle}>
-                                        新建笔记
-                                    </Button>
+                                    {currTabId !== Tabs.Recycle && (
+                                        <Button size="small" type="primary" onClick={createArticle}>
+                                            新建笔记
+                                        </Button>
+                                    )}
                                 </div>
                             ) : (
                                 <React.Fragment>

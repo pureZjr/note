@@ -10,7 +10,7 @@ export const FILE_SIZE_LIMIT = 50 * 1024 * 1024
 // 七牛相关
 export const QN_UPLOAD_URL = 'https://upload-z2.qiniup.com'
 export const QN_BUCKET = 'renjianzahuopu-src'
-export const QN_SOURCE_URL = 'https://src.renjianzahuopu.store'
+export const QN_SOURCE_URL = 'http://src.renjianzahuopu.store'
 
 export const LOCALSTORAGE = {
     USERINFO: 'userinfo',

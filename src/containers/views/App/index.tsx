@@ -14,7 +14,7 @@ function App() {
     return (
         <div className={styles.container}>
             <Suspense
-                fallback={<PageLoading Icon={<img src={'https://src.renjianzahuopu.store/note/loading-pen.gif'} />} />}
+                fallback={<PageLoading Icon={<img src={'http://src.renjianzahuopu.store/note/loading-pen.gif'} />} />}
             >
                 <Switch>
                     <Route path="/login" exact={true}>
