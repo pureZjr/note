@@ -3,7 +3,7 @@ import Http from '@utils/http'
 const { post } = new Http()
 
 // 登录
-export const login = data => {
+export const login = (data) => {
     return post('account-login', data)
 }
 
@@ -13,11 +13,11 @@ export const logout = () => {
 }
 
 // 注册
-export const register = data => {
+export const register = (data) => {
     return post('account-register', data)
 }
 
 // 编辑
-export const edit = data => {
+export const edit = (data) => {
     return post('account-edit', data)
 }

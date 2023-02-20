@@ -1,7 +1,7 @@
 const NODE_ENV = process.env.NODE_ENV
 export const SHARE_BASE_URL =
     NODE_ENV === 'development'
-        ? `http://localhost:9000/#/share-article/`
+        ? `http://localhost:9001/#/share-article/`
         : `https://note.renjianzahuopu.store/#/share-article/`
 
 // 上传资源大小
@@ -15,7 +15,7 @@ export const QN_SOURCE_URL = 'http://src.renjianzahuopu.store'
 export const LOCALSTORAGE = {
     USERINFO: 'userinfo',
     FILEANDFOLDERDISPLAY: 'fileandfolderdisplay',
-    FILEANDFOLDERSORT: 'fileandfoldersort'
+    FILEANDFOLDERSORT: 'fileandfoldersort',
 }
 
 // 错误图片

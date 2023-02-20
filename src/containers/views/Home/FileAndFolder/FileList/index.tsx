@@ -15,10 +15,7 @@ const FileList: React.FC = () => {
     const {
         fileStore: { files, currFileInfo, setCurrFileInfo, setContentLoading },
         folderStore: { setCurrFolderInfo, setExpandTreeKeys },
-        userInfoStore: {
-            userInfo: { lastLoginTime }
-        },
-        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
+        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps },
     } = useRootStore()
 
     // 点击文章，更新阅读时间
@@ -30,14 +27,14 @@ const FileList: React.FC = () => {
         parentFolderTitle,
         title,
         isTop,
-        key
+        key,
     }: IFileStore.File) => {
         setCurrFileInfo(null)
         if (Tabs.MyFolder === currTabId) {
             setCurrFolderInfo({
                 title: parentFolderTitle,
                 id: parentId,
-                key: parentKey
+                key: parentKey,
             })
         }
         try {
@@ -54,7 +51,7 @@ const FileList: React.FC = () => {
         setAllKeysByCurrKey(key)
         setCurrFolderInfo({
             id,
-            key
+            key,
         })
     }
     // 鼠标右键
@@ -73,7 +70,7 @@ const FileList: React.FC = () => {
             key: parentKey,
             type,
             title,
-            isTop
+            isTop,
         })
         setCurrFolderInfo({ key: parentKey })
     }
@@ -86,7 +83,7 @@ const FileList: React.FC = () => {
                         __html: title.replace(
                             new RegExp(`${keyword}`),
                             `<span style="background:yellow;">${keyword}</span>`
-                        )
+                        ),
                     }}
                 />
             )
@@ -100,30 +97,23 @@ const FileList: React.FC = () => {
         height: 12,
         style: {
             marginRight: 14,
-            marginLeft: 4
-        }
+            marginLeft: 4,
+        },
     }
-
-    React.useEffect(() => {
-        // 没有上次登录时间，说明是首次登录，首次登录默认打开欢迎文章
-        if (!lastLoginTime) {
-            onHandleClickItem(files[0])
-        }
-    }, [lastLoginTime])
 
     return (
         <div className={styles.container}>
-            {files.map(article => {
+            {files.map((article) => {
                 const active = article.id === get(currFileInfo, 'id', '')
                 return (
                     <div
                         className={`${styles.item} ${active ? styles.active : ''}`}
                         style={{
-                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46
+                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46,
                         }}
                         key={article.id}
                         onClick={() => onHandleClickItem(article)}
-                        onContextMenu={e => onHandleContextMenu(e, article)}
+                        onContextMenu={Tabs.ShareToMe !== currTabId ? (e) => onHandleContextMenu(e, article) : null}
                     >
                         <div className={styles.top}>
                             <RenderFileIcon type={article.type} />
@@ -139,7 +129,7 @@ const FileList: React.FC = () => {
                         </div>
                         {fileAndFolderDisplay === 'abstract' && (
                             <div className={styles.bottom}>
-                                {Tabs.MyFolder !== currTabId && active ? (
+                                {![Tabs.MyFolder, Tabs.Recycle, Tabs.ShareToMe].includes(currTabId) && active ? (
                                     <div
                                         className={styles.parentFolderTitle}
                                         onClick={() => gotoMyFolder(article.parentKey, article.id)}

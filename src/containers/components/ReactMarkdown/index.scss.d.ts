@@ -2,10 +2,6 @@
 // Please do not change this file!
 interface CssExports {
   'container': string;
-  'loading': string;
-  'mask': string;
-  'playAngel': string;
-  'playIcon': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

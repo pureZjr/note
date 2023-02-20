@@ -27,7 +27,7 @@ const SelectFolder: React.FC<Props> = ({ file, defaultPath, defaultParentId, onS
         file.type.indexOf('image') !== -1 ? CreateType.Img : file.type.indexOf('video') !== -1 ? CreateType.Video : null
 
     const {
-        folderStore: { treeData, getTreeData }
+        folderStore: { treeData, getTreeData },
     } = useRootStore()
 
     const onSelect = (_, info) => {
@@ -56,8 +56,8 @@ const SelectFolder: React.FC<Props> = ({ file, defaultPath, defaultParentId, onS
         height: 14,
         style: {
             fontSize: 14,
-            marginTop: 4
-        }
+            marginTop: 4,
+        },
     }
 
     return (

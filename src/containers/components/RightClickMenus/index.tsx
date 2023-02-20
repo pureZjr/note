@@ -5,9 +5,9 @@ import { observer } from 'mobx-react'
 import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
 import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
-import { delFile, delFileComplete, recoverFile, renameFile, setTopFile } from '@services/api/file'
+import { delFile, delFileComplete, recoverFile, renameFile, setTopFile, cancelShareFile } from '@services/api/file'
 import styles from './index.scss'
-import { Tabs } from '@store/extraStore'
+import extraStore, { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
 
 const menuHeight = 40
@@ -27,10 +27,10 @@ const RightClickMenus: React.FC = () => {
             setCreateFileFolderDialogvisible,
             setMenuProps,
             getFolderAndFile,
-            getNewestFolderAndFile
+            getNewestFolderAndFile,
         },
         folderStore,
-        fileStore
+        fileStore,
     } = useRootStore()
 
     const [_y, _setY] = React.useState(null)
@@ -90,7 +90,7 @@ const RightClickMenus: React.FC = () => {
                     onOk: () => {
                         ;(isFolder ? delFolderComplete : delFileComplete)({
                             id: isFolder ? folderId : articleId,
-                            type
+                            type,
                         }).then(() => {
                             if (isFolder) {
                                 getTreeData()
@@ -102,7 +102,7 @@ const RightClickMenus: React.FC = () => {
                                 fileStore.delFile(articleId)
                             }
                         })
-                    }
+                    },
                 })
                 break
             case '5':
@@ -113,7 +113,7 @@ const RightClickMenus: React.FC = () => {
                     cancelText: '取消',
                     onOk: () => {
                         ;(isFolder ? recoverFolder : recoverFile)({
-                            id: isFolder ? folderId : articleId
+                            id: isFolder ? folderId : articleId,
                         }).then(() => {
                             if (isFolder) {
                                 getTreeData()
@@ -122,13 +122,13 @@ const RightClickMenus: React.FC = () => {
                                 fileStore.delFile(articleId)
                             }
                         })
-                    }
+                    },
                 })
                 break
             case '7':
                 const onOk = async () => {
                     const data = {
-                        title: currTitle
+                        title: currTitle,
                     }
                     if (!currTitle) {
                         return message.error('标题不能为空')
@@ -139,21 +139,21 @@ const RightClickMenus: React.FC = () => {
                     let api
                     if (isFolder) {
                         Object.assign(data, {
-                            id: folderId
+                            id: folderId,
                         })
                         api = renameFolder
                     } else {
                         Object.assign(data, {
                             id: articleId,
-                            type
+                            type,
                         })
                         api = renameFile
                     }
                     try {
                         modal.update({
                             okButtonProps: {
-                                loading: true
-                            }
+                                loading: true,
+                            },
                         })
                         await api(data)
                         if (isFolder) {
@@ -161,7 +161,7 @@ const RightClickMenus: React.FC = () => {
                             folderStore.setFolderName(folderId, currTitle)
                             if (folderStore.currFolderInfo.id === folderId) {
                                 folderStore.setCurrFolderInfo({
-                                    title: currTitle
+                                    title: currTitle,
                                 })
                             }
                         } else {
@@ -178,16 +178,16 @@ const RightClickMenus: React.FC = () => {
                     onOk: onOk,
                     okText: '确认',
                     cancelButtonProps: {
-                        style: { display: 'none' }
+                        style: { display: 'none' },
                     },
                     content: (
                         <div
                             style={{
-                                height: 50
+                                height: 50,
                             }}
                         >
                             <Input
-                                ref={ref => {
+                                ref={(ref) => {
                                     if (!!ref) {
                                         setTimeout(() => {
                                             ref.focus()
@@ -196,19 +196,19 @@ const RightClickMenus: React.FC = () => {
                                 }}
                                 autoFocus
                                 maxLength={20}
-                                onKeyDown={e => {
+                                onKeyDown={(e) => {
                                     if (e.keyCode === 13) {
                                         onOk()
                                     }
                                 }}
-                                onChange={v => (currTitle = v.target.value)}
+                                onChange={(v) => (currTitle = v.target.value)}
                                 defaultValue={title}
                             />
                             <div
                                 style={{
                                     position: 'absolute',
                                     right: 96,
-                                    marginTop: 42
+                                    marginTop: 42,
                                 }}
                             >
                                 <Button
@@ -221,7 +221,7 @@ const RightClickMenus: React.FC = () => {
                                 </Button>
                             </div>
                         </div>
-                    )
+                    ),
                 })
                 break
             case '8':
@@ -233,14 +233,36 @@ const RightClickMenus: React.FC = () => {
                     } else {
                         await fileStore.getFiles(folderKey)
                     }
+                    if (fileStore.currFileInfo) {
+                        fileStore.setCurrFileInfo({
+                            ...fileStore.currFileInfo,
+                            isTop: data.is_top as 0 | 1,
+                        })
+                    }
                     message.success('操作成功')
                 } catch {}
+                break
+            case '9':
+                try {
+                    await cancelShareFile({
+                        id: articleId,
+                        isCancel: true,
+                    })
+                    if (currTabId == Tabs.MyShare) {
+                        fileStore.setCurrFileInfo(null)
+                        extraStore.getMyShareFile()
+                    }
+                    message.success('操作成功')
+                } catch (err) {
+                    message.success('操作失败')
+                    console.error(err)
+                }
                 break
         }
         closeMenu()
     }
 
-    const close = e => {
+    const close = (e) => {
         if (!containerRef.current.contains(e.target)) {
             closeMenu()
         }
@@ -248,7 +270,7 @@ const RightClickMenus: React.FC = () => {
 
     React.useEffect(() => {
         try {
-            const menuTotalHeight = (menuRef.current.props.children as any[]).filter(v => !!v).length * menuHeight
+            const menuTotalHeight = (menuRef.current.props.children as any[]).filter((v) => !!v).length * menuHeight
             if (menuTotalHeight + y > document.body.clientHeight) {
                 _setY(y - menuTotalHeight)
             } else {
@@ -266,6 +288,7 @@ const RightClickMenus: React.FC = () => {
         setMenuProps(null)
     })
     const isRecycle = currTabId === Tabs.Recycle
+    const isMyShare = currTabId === Tabs.MyShare
     const isRootFolder = currTabId === Tabs.MyFolder || folderId === Tabs.MyFolder
     const isArticle = !!articleId
 
@@ -274,7 +297,7 @@ const RightClickMenus: React.FC = () => {
             className={styles.container}
             style={{
                 left: x,
-                top: _y
+                top: _y,
             }}
             ref={containerRef}
         >
@@ -289,9 +312,14 @@ const RightClickMenus: React.FC = () => {
                     )}
                     {isRecycle && <Menu.Item key="5">恢复</Menu.Item>}
                     {isRecycle && <Menu.Item key="4">彻底删除</Menu.Item>}
-                    {isArticle && !isRecycle && <Menu.Item key="8">{isTop ? '取消置顶' : '置顶'}</Menu.Item>}
+                    {isArticle && !isRecycle && !isMyShare && (
+                        <Menu.Item key="8">{isTop ? '取消置顶' : '置顶'}</Menu.Item>
+                    )}
                     {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="7">重命名</Menu.Item>}
-                    {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && <Menu.Item key="3">删除</Menu.Item>}
+                    {(folderId !== Tabs.MyFolder || isArticle) && !isRecycle && !isMyShare && (
+                        <Menu.Item key="3">删除</Menu.Item>
+                    )}
+                    {isMyShare && <Menu.Item key="9">取消分享</Menu.Item>}
                 </Menu>
             )}
         </div>

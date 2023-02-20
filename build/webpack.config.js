@@ -17,44 +17,45 @@ const config = {
     mode: APP_ENV,
     entry: {
         app: { import: resolveFromRootDir('src/index.tsx'), dependOn: 'shared' },
-        shared: 'lodash'
+        shared: 'lodash',
     },
     devServer: {
         hot: true,
         liveReload: false,
-        port: 9000
+        port: 9001,
     },
     output: {
+        publicPath: APP_ENV === 'production' ? 'https://cdn-src.renjianzahuopu.store/release-webpack/product/' : '/',
         path: assetsRoot,
-        filename: APP_ENV === 'production' ? assetsPath('js/[name].[chunkhash:19].js') : '[name].js'
+        filename: APP_ENV === 'production' ? assetsPath('js/[name].[chunkhash:19].js') : '[name].js',
     },
     module: {
-        rules: [...jsRules, ...styleRules, ...fileRules]
+        rules: [...jsRules, ...styleRules, ...fileRules],
     },
     plugins: [
-        ...plugins
+        ...plugins,
         // , new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: FILE_EXTENSIONS,
         plugins: [
             new TsconfigPathsWebpackPlugin({
-                configFile: resolveFromRootDir('tsconfig.json')
-            })
+                configFile: resolveFromRootDir('tsconfig.json'),
+            }),
         ],
-        fallback: { path: require.resolve('path-browserify') }
+        fallback: { path: require.resolve('path-browserify') },
     },
     // 开启缓存，加快开发环境构建速度
     optimization,
     devtool: APP_ENV === 'development' ? 'eval-source-map' : false,
-    stats: 'minimal'
+    stats: 'minimal',
 }
 
 // 开启缓存，加快开发环境构建速度
 if (APP_ENV === 'development') {
     config.cache = {
-        type: 'config',
-        cacheLocation: resolveFromRootDir('.cache')
+        type: 'filesystem',
+        cacheLocation: resolveFromRootDir('.cache'),
     }
 }
 

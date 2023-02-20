@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { isNil } from 'lodash'
-import { routerStore } from '@store/index'
+import { routerStore, userInfoStore } from '@store/index'
 
 import config from '@config/index'
 import message from '@components/AntdMessageExt'
@@ -12,14 +12,14 @@ type HttpMethods = 'GET' | 'POST'
 const baseUrl = config.baseUrl
 
 export default class Http {
-    get = (url: string, data: Record<string, any>): Promise<any> => {
-        return this.HandleHttp('GET', url, data)
+    get = (url: string, data: Record<string, any>, noErrTips?: boolean): Promise<any> => {
+        return this.HandleHttp('GET', url, data, noErrTips)
     }
-    post = (url: string, data: Record<string, unknown>): Promise<any> => {
-        return this.HandleHttp('POST', url, data)
+    post = (url: string, data: Record<string, unknown>, noErrTips?: boolean): Promise<any> => {
+        return this.HandleHttp('POST', url, data, noErrTips)
     }
 
-    HandleHttp = async (method: HttpMethods, u: string, data: Record<string, any>) => {
+    HandleHttp = async (method: HttpMethods, u: string, data: Record<string, any>, noErrTips?: boolean) => {
         return new Promise(async (resolve, reject) => {
             let url = baseUrl + u
             const reqData = { ...data }
@@ -33,7 +33,7 @@ export default class Http {
                 if (!!userInfo) {
                     const { token } = JSON.parse(userInfo)
                     Object.assign(headers, {
-                        token: token
+                        token: token,
                     })
                 }
 
@@ -41,27 +41,36 @@ export default class Http {
                     headers,
                     url,
                     method,
-                    data: reqData
+                    data: reqData,
                 })
                 switch (res.status) {
                     case 200:
                         if (res.data.status === 'ok' && !res.data.logout) {
                             resolve(isNil(res.data.data) ? res.data.text : res.data.data)
                         } else if (res.data.status === 'error') {
-                            message.error(res.data.text)
+                            if (!noErrTips) {
+                                message.error(res.data.text)
+                            }
                             reject()
                         } else {
                             reject()
-                            message.error(res.data.text)
+                            if (!noErrTips) {
+                                message.error(res.data.text)
+                            }
                         }
                         if (res.data.logout) {
                             localStorage.removeItem(LOCALSTORAGE.USERINFO)
-                            return routerStore.history.push('/login')
+                            userInfoStore.setUserInfo({})
+                            if (!noErrTips) {
+                                return routerStore.history.push('/login')
+                            }
                         }
                         break
                     default:
                         reject()
-                        message.error(res.data.text)
+                        if (!noErrTips) {
+                            message.error(res.data.text)
+                        }
                 }
             } catch (err) {
                 message.error('网络错误')

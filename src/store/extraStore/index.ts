@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 
 import { getDelFolder, searchFolder } from '@services/api/folder'
-import { getDelFile, getNewestFile, searchFile } from '@services/api/file'
+import { getDelFile, getNewestFile, searchFile, getShareToMeFile, getMyShareFile } from '@services/api/file'
 import { LOCALSTORAGE } from '@constant/index'
 import * as store from '../index'
 
@@ -17,7 +17,15 @@ export enum Tabs {
     /**
      * 回收站
      */
-    Recycle = '3'
+    Recycle = '3',
+    /**
+     * 与我分享
+     */
+    ShareToMe = '4',
+    /**
+     * 我的分享
+     */
+    MyShare = '5',
 }
 
 /**
@@ -60,7 +68,7 @@ export class ExtraStore {
     getDelFolderAndFile = async (sort = 'updateTime') => {
         this.setLoading(true)
         Promise.all([getDelFolder(sort), getDelFile(sort)])
-            .then(res => {
+            .then((res) => {
                 store.folderStore.setFolder(res[0])
                 store.fileStore.setFiles(res[1])
             })
@@ -77,7 +85,7 @@ export class ExtraStore {
     getNewestFolderAndFile = async (sort = 'updateTime') => {
         this.setLoading(true)
         getNewestFile({ sort })
-            .then(res => {
+            .then((res) => {
                 store.fileStore.setFiles(res)
             })
             .finally(() => {
@@ -94,7 +102,7 @@ export class ExtraStore {
         this.setLoading(true)
         const searchInMyFolder = () =>
             Promise.all([searchFolder(args), searchFile(args)])
-                .then(res => {
+                .then((res) => {
                     store.folderStore.setFolder(res[0])
                     store.fileStore.setFiles(res[1])
                 })
@@ -106,11 +114,21 @@ export class ExtraStore {
                 this.getNewestFolderAndFile()
             } else if (args.type === Tabs.MyFolder) {
                 searchInMyFolder()
+            } else if (args.type === Tabs.ShareToMe) {
+                this.getShareToMeFolderAndFile()
+            } else if (args.type === Tabs.MyShare) {
+                this.getMyShareFile()
             } else {
                 this.getDelFolderAndFile()
             }
         } else {
-            searchInMyFolder()
+            if (args.type === Tabs.ShareToMe) {
+                this.searchShareToMeFile(args.keyword)
+            } else if (args.type === Tabs.MyShare) {
+                this.searchMyShareFile(args.keyword)
+            } else {
+                searchInMyFolder()
+            }
         }
     }
 
@@ -162,7 +180,7 @@ export class ExtraStore {
         visible: false,
         folderId: '',
         articleId: '',
-        key: ''
+        key: '',
     }
     @action
     setMenuProps = (props: IExtraStore.IMenuProps) => {
@@ -203,7 +221,7 @@ export class ExtraStore {
     @observable
     fileAndFolderDisplay: string = localStorage.getItem(LOCALSTORAGE.FILEANDFOLDERDISPLAY) || 'abstract'
     @action
-    setFileAndFolderDisplay = type => {
+    setFileAndFolderDisplay = (type) => {
         this.fileAndFolderDisplay = type
     }
 
@@ -215,8 +233,78 @@ export class ExtraStore {
     @observable
     fileAndFolderSort: string = localStorage.getItem(LOCALSTORAGE.FILEANDFOLDERSORT) || 'updateTime'
     @action
-    setFileAndFolderSort = sort => {
+    setFileAndFolderSort = (sort) => {
         this.fileAndFolderSort = sort
+    }
+
+    /**
+     * 更新第一栏滚动条
+     *
+     * @memberof ExtraStore
+     */
+    @observable
+    updateScrollBar: boolean = false
+    @action
+    setUpdateScrollBar = (boo: boolean) => {
+        this.updateScrollBar = boo
+    }
+
+    /**
+     * 获取与我分享的文件和文件夹
+     *
+     * @memberof ExtraStore
+     */
+    getShareToMeFolderAndFile = async (sort = 'updateTime') => {
+        this.setLoading(true)
+        Promise.all([getShareToMeFile({ email: store?.userInfoStore?.userInfo?.email, sort })])
+            .then((res) => {
+                store.fileStore.setFiles(res[0])
+            })
+            .finally(() => {
+                this.setLoading(false)
+            })
+    }
+
+    /**
+     * 获取我分享的的文件
+     *
+     * @memberof ExtraStore
+     */
+    getMyShareFile = async (sort = 'updateTime') => {
+        this.setLoading(true)
+        getMyShareFile({ email: store?.userInfoStore?.userInfo?.email, sort })
+            .then((res) => {
+                store.fileStore.setFiles(res)
+            })
+            .finally(() => {
+                this.setLoading(false)
+            })
+    }
+
+    /**
+     * 搜索分享给我的文件
+     *
+     * @memberof ExtraStore
+     */
+    searchShareToMeFile = (kw: string) => {
+        this.setLoading(true)
+        const files = store.fileStore.files.filter((file) => file.title.includes(kw))
+        store.fileStore.setFiles(files)
+        store.fileStore.setCurrFileInfo(null)
+        this.setLoading(false)
+    }
+
+    /**
+     * 搜索我分享的文件
+     *
+     * @memberof ExtraStore
+     */
+    searchMyShareFile = (kw: string) => {
+        this.setLoading(true)
+        const files = store.fileStore.files.filter((file) => file.title.includes(kw))
+        store.fileStore.setFiles(files)
+        store.fileStore.setCurrFileInfo(null)
+        this.setLoading(false)
     }
 }
 

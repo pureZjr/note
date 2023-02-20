@@ -12,6 +12,8 @@ env:
     SERVER_HOST: ${{ secrets.SERVER_HOST }} # 服务器IP地址
     USER_NAME: ${{ secrets.USER_NAME }} # 服务器用户名
     cache-name: note
+    QN_ACCESSKEY: ${{ secrets.QN_ACCESSKEY }}
+    QN_SECRETKEY: ${{ secrets.QN_SECRETKEY }}
 
 # jobs表示执行的一项或多项任务
 jobs:
@@ -47,13 +49,25 @@ jobs:
             - name: Build
               run: yarn build
 
+            # 上传资源到七牛
+            - name: Use qshell
+              uses: foxundermoon/setup-qshell@v5
+              with:
+                  version: '2.6.2'
+
+            - name: Qshell account
+              run: qshell account ${{ env.QN_ACCESSKEY }} ${{ env.QN_SECRETKEY }} pure
+
+            - name: Upload source
+              run: yarn cdn
+
             # 上传打包资源
             - name: Deploy
               uses: easingthemes/ssh-deploy@v2.0.7
               env:
                   SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
                   ARGS: '-avz --delete'
-                  SOURCE: 'dist/'
+                  SOURCE: 'dist/production/index.html'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: /home/note # 服务器目标路径
+                  TARGET: /home/note/production # 服务器目标路径

@@ -24,14 +24,8 @@ const CreateFolderAndFile: React.FC = () => {
         if (!name) {
             return message.error('名称不能为空')
         }
-        const {
-            expandTreeKeys,
-            currFolderInfo,
-            setExpandTreeKeys,
-            getTreeData,
-            setCurrFolderInfo,
-            setFolder
-        } = folderStore
+        const { expandTreeKeys, currFolderInfo, setExpandTreeKeys, getTreeData, setCurrFolderInfo, setFolder } =
+            folderStore
         const { setCurrFileInfo, insertFile, setFiles } = fileStore
 
         const { currTabId } = extraStore
@@ -53,7 +47,7 @@ const CreateFolderAndFile: React.FC = () => {
                     title: name,
                     type: extraStore.createFileFolderType,
                     content: '',
-                    parentId: fid
+                    parentId: fid,
                 })
                 insertFile(res)
                 setCurrFileInfo(null)
@@ -78,7 +72,7 @@ const CreateFolderAndFile: React.FC = () => {
             title={modalTitle}
             visible={extraStore.createFileFolderDialogvisible}
             okButtonProps={{
-                loading
+                loading,
             }}
             okText={'确定'}
             cancelText={'取消'}

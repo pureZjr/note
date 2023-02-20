@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import classnames from 'classnames'
-import { AutoSizer } from 'react-virtualized'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import PerfectScrollbar from 'perfect-scrollbar'
 
 import styles from './index.scss'
@@ -19,6 +19,7 @@ interface Props {
     setPerfectScrollWrapperRef?: (ref: HTMLDivElement) => void
     suppressScrollX?: boolean
     scrollToTop?: boolean
+    setScrollbarRef?: (ref: PerfectScrollbar) => void
 }
 
 /**
@@ -37,7 +38,8 @@ const PerfectScroll: React.FC<Props> = ({
     shouldUpdate,
     setPerfectScrollWrapperRef,
     suppressScrollX,
-    scrollToTop
+    scrollToTop,
+    setScrollbarRef,
 }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>()
     const scrollbar = useRef<PerfectScrollbar>(null)
@@ -45,8 +47,11 @@ const PerfectScroll: React.FC<Props> = ({
 
     useOnMount(() => {
         scrollbar.current = new PerfectScrollbar(wrapperRef.current, {
-            suppressScrollX
+            suppressScrollX,
         })
+        if (setScrollbarRef) {
+            setScrollbarRef(scrollbar.current)
+        }
         // 监听滚动到底部事件
         if (!bindReachEndUpdateOnce) {
             wrapperRef.current.addEventListener('ps-y-reach-start', onReachStart)
