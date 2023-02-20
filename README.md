@@ -1,6 +1,19 @@
 ### 码农笔记本网页版
  仿照有道云笔记。（没有兼容移动端，因为移动端打算用vue另外写）
  
+### 效果预览
+![image](http://src.renjianzahuopu.store/note/note1.png)
+![image](http://src.renjianzahuopu.store/note/note2.png)
+[gif](http://src.renjianzahuopu.store/note/note-gif.gif)
+ 
+### node 版本
+> v14.17.4
+
+### 安装依赖
+`yarn`
+ 
+### 运行
+`yarn dev`
  
 ### 版本
 > master分支：webpack开发和部署
