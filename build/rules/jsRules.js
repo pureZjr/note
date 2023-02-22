@@ -5,12 +5,13 @@ module.exports = [
         test: /\.ts(x?)$/,
         use: [
             {
-                loader: 'thread-loader'
+                loader: 'thread-loader',
             },
             {
                 loader: 'ts-loader',
                 options: {
                     // disable type checker - we will use it in fork plugin
+                    // 关闭类型检查，通过 ForkTsCheckerWebpackPlugin 做
                     transpileOnly: true,
                     // 使用happypack 或者 thread-loader 并行构建时候，设置true
                     happyPackMode: true,
@@ -19,21 +20,21 @@ module.exports = [
                             tsImportPluginFactory({
                                 libraryName: 'antd',
                                 libraryDirectory: 'lib',
-                                style: true
-                            })
-                        ]
+                                style: true,
+                            }),
+                        ],
                     }),
                     compilerOptions: {
-                        module: 'es2015'
-                    }
-                }
-            }
-        ]
+                        module: 'es2015',
+                    },
+                },
+            },
+        ],
     },
     {
         test: /\.m?js/,
         resolve: {
-            fullySpecified: false
-        }
-    }
+            fullySpecified: false,
+        },
+    },
 ]

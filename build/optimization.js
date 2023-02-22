@@ -1,6 +1,8 @@
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
+const { resolveFromRootDir } = require('./utils')
+
 module.exports = {
     innerGraph: false,
     minimize: true,
@@ -12,12 +14,13 @@ module.exports = {
             terserOptions: {
                 // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
             },
-            extractComments: false
+            extractComments: false,
+            exclude: '/node_modules/',
         }),
         new CssMinimizerPlugin({
             parallel: true,
-            cache: true
-        })
+            cache: true,
+        }),
     ],
     splitChunks: {
         chunks: 'all',
@@ -34,37 +37,37 @@ module.exports = {
                 priority: 10,
                 // 最小大小
                 minSize: 0,
-                test: /[\\/]node_modules[\\/]/
+                test: /[\\/]node_modules[\\/]/,
             },
             reactBase: {
                 name: 'reactBase',
                 test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
                 priority: 11,
                 minChunks: 1,
-                minSize: 0
+                minSize: 0,
             },
             mobxBase: {
                 name: 'mobxBase',
                 test: /[\\/]node_modules[\\/](mobx|mobx-react|mobx-react-router)[\\/]/,
                 priority: 12,
                 minChunks: 1,
-                minSize: 0
+                minSize: 0,
             },
             other: {
                 name: 'react-ace',
                 test: /[\\/]node_modules[\\/](react-ace)[\\/]/,
                 priority: 13,
                 minChunks: 1,
-                minSize: 0
+                minSize: 0,
             },
             wangeditor: {
                 name: 'wangeditor',
                 test: /[\\/]node_modules[\\/](wangeditor)[\\/]/,
                 priority: 14,
                 minChunks: 1,
-                minSize: 0
-            }
-        }
+                minSize: 0,
+            },
+        },
     },
-    runtimeChunk: true
+    runtimeChunk: true,
 }

@@ -16,6 +16,7 @@ const plugins = [
         template: 'build/tpl/index.html',
     }),
     definePlugin,
+    // 类型检查
     new ForkTsCheckerWebpackPlugin({
         typescript: {
             configFile: resolveFromRootDir('tsconfig.json'),

@@ -8,8 +8,8 @@ const commonLoader =
         ? {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                  publicPath: '../../'
-              }
+                  publicPath: '../../',
+              },
           }
         : 'style-loader'
 
@@ -22,10 +22,10 @@ module.exports = [
             {
                 loader: 'css-loader',
                 options: {
-                    esModule: false
-                }
-            }
-        ]
+                    esModule: false,
+                },
+            },
+        ],
     },
     {
         test: /\.scss$/,
@@ -33,7 +33,7 @@ module.exports = [
         use: [
             commonLoader,
             {
-                loader: 'css-modules-typescript-loader'
+                loader: 'css-modules-typescript-loader',
             },
             {
                 loader: 'css-loader',
@@ -41,9 +41,9 @@ module.exports = [
                     esModule: false,
                     modules: {
                         mode: 'local',
-                        localIdentName: '[local]--[hash:base64:8]'
-                    }
-                }
+                        localIdentName: '[local]--[hash:base64:8]',
+                    },
+                },
             },
             {
                 loader: 'sass-loader',
@@ -51,11 +51,11 @@ module.exports = [
                     sassOptions: {
                         // 缩进宽度
                         indentWidth: 4,
-                        includePaths: [resolveFromRootDir('src/styles')]
-                    }
-                }
-            }
-        ]
+                        includePaths: [resolveFromRootDir('src/styles')],
+                    },
+                },
+            },
+        ],
     },
     {
         test: /\.less$/,
@@ -65,8 +65,8 @@ module.exports = [
             {
                 loader: 'css-loader',
                 options: {
-                    esModule: false
-                }
+                    esModule: false,
+                },
             },
             {
                 loader: 'less-loader',
@@ -74,10 +74,10 @@ module.exports = [
                     lessOptions: {
                         // 禁用内联js代码，禁止在样式表用js代码
                         javascriptEnabled: true,
-                        modifyVars: theme
-                    }
-                }
-            }
-        ]
-    }
+                        modifyVars: theme,
+                    },
+                },
+            },
+        ],
+    },
 ]

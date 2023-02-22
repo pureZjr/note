@@ -32,10 +32,10 @@ const config = {
     module: {
         rules: [...jsRules, ...styleRules, ...fileRules],
     },
-    plugins: [
-        ...plugins,
-        // , new BundleAnalyzerPlugin()
-    ],
+    watchOptions: {
+        ignored: /node_modules/,
+    },
+    plugins: [...plugins, new BundleAnalyzerPlugin()],
     resolve: {
         extensions: FILE_EXTENSIONS,
         plugins: [
@@ -47,7 +47,7 @@ const config = {
     },
     // 开启缓存，加快开发环境构建速度
     optimization,
-    devtool: APP_ENV === 'development' ? 'eval-source-map' : false,
+    devtool: APP_ENV === 'development' ? 'eval-cheap-module-source-map' : false,
     stats: 'minimal',
 }
 
@@ -59,7 +59,7 @@ if (APP_ENV === 'development') {
     }
 }
 
-// const smp = new SpeedMeasurePlugin()
-// webpackConfig = smp.wrap(config)
+const smp = new SpeedMeasurePlugin()
+webpackConfig = smp.wrap(config)
 
-module.exports = config
+module.exports = webpackConfig
