@@ -4,7 +4,7 @@ import { message } from 'antd'
 import { CloseOutlined } from '@ant-design/icons'
 import { ConfigOnClose, MessageApi } from 'antd/lib/message'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 export type NoticeType = 'info' | 'success' | 'error' | 'warn' | 'warning' | 'loading'
 

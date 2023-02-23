@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { useRootStore, useOnMount } from '@utils/customHooks'
 import { LOCALSTORAGE, QN_SOURCE_URL } from '@constant/index'
 import PageLoading from '@components/PageLoading'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ '@views/Home'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ '@views/Login'))

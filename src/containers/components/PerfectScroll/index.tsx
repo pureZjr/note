@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import PerfectScrollbar from 'perfect-scrollbar'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { useOnMount, useOnUnMount } from '@utils/customHooks'
 
 interface Props {

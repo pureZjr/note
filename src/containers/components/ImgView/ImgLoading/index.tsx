@@ -2,7 +2,7 @@ import React from 'react'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 import PortalsContainer from '@components/PortalsContainer'
 
 export interface ImgLoadingProps {

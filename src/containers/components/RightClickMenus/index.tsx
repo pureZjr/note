@@ -6,7 +6,7 @@ import { useOnMount, useOnUnMount, useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
 import { delFolder, delFolderComplete, recoverFolder, renameFolder } from '@services/api/folder'
 import { delFile, delFileComplete, recoverFile, renameFile, setTopFile, cancelShareFile } from '@services/api/file'
-import styles from './index.scss'
+import styles from './index.module.scss'
 import extraStore, { Tabs } from '@store/extraStore'
 import message from '@components/AntdMessageExt'
 

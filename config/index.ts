@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: process.env.REACT_APP_BaseUrl,
+    baseUrl: import.meta.env.VITE_BASEURL,
 }
 
 export default config

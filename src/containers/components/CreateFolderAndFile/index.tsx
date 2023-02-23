@@ -7,7 +7,7 @@ import { createFile } from '@services/api/file'
 import { createFolder } from '@services/api/folder'
 import { useRootStore } from '@utils/customHooks'
 import CreateType from '@store/extraStore/CreateType'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const CreateFolderAndFile: React.FC = () => {
     const [name, setName] = React.useState('')

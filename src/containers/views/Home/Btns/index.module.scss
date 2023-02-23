@@ -1,0 +1,28 @@
+@import '@styles/base.scss';
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 16px;
+    border-right: 1px solid $black01;
+    border-bottom: 1px solid $black01;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 14px;
+    color: $primary !important;
+}
+
+.label {
+    margin-left: 6px;
+    font-size: 15px;
+    color: $primary;
+}

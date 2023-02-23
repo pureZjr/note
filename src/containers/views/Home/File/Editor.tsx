@@ -5,7 +5,7 @@ import { uploadFile } from '@utils/common'
 import { useRootStore } from '@utils/customHooks'
 
 import { useOnMount, useOnUnMount } from '@utils/customHooks'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 interface Props {
     className?: string

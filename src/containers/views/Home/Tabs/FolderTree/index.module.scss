@@ -1,0 +1,34 @@
+@import '@styles/base.scss';
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    background: #fff;
+
+    :global {
+        .ant-tree {
+            width: 100%;
+            min-width: fit-content;
+
+            .ant-tree-treenode {
+                align-items: center;
+                min-height: 50px;
+
+                .ant-tree-node-content-wrapper {
+                    display: flex;
+                    align-items: center;
+                    height: 50px;
+
+                    .ant-tree-treenode span {
+                        display: block;
+                        flex: 1;
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
+}

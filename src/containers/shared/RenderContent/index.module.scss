@@ -1,0 +1,13 @@
+@import '@styles/base.scss';
+
+.container {
+    background: #fff;
+}
+
+.article {
+    padding: 12px;
+
+    * {
+        word-break: break-word;
+    }
+}

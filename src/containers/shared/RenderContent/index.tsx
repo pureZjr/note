@@ -4,7 +4,7 @@ import CreateType from '@store/extraStore/CreateType'
 import { ImgView, ImgViewTrigger } from '@components/ImgView'
 import ReactMarkdown from '@components/ReactMarkdown'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 interface Props {
     type: CreateType

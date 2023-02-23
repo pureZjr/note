@@ -1,0 +1,199 @@
+@import '@styles/base.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 24px;
+    border: 1px solid $black02;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex: 1;
+    overflow: auto;
+}
+
+.commentWrap {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    overflow: hidden;
+    border-left: 1px solid #e6e6e6;
+}
+
+.creator {
+    padding: 20px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    @include textEllipsis;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #898989;
+}
+
+.read > span,
+.like > span {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.like {
+    margin-left: 10px;
+}
+
+.createTime {
+    margin-top: 18px;
+    font-size: 12px;
+    color: #999999;
+}
+
+.top {
+    padding-right: 12px;
+}
+
+.comments {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-top: 24px;
+    padding-left: 20px;
+    overflow: hidden;
+    border-top: 1px solid #e6e6e6;
+}
+
+.commentLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.textarea {
+    margin-top: 16px;
+    resize: none;
+}
+
+.btns {
+    display: none;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.commentItem {
+    display: flex;
+    padding-right: 12px;
+    margin-top: 20px;
+}
+
+.right {
+    flex: 1;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.commentorName {
+    max-width: 100%;
+    font-size: 12px;
+    color: #393939;
+    @include textEllipsis;
+}
+
+.comment {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #393939;
+}
+
+.commentCreateTime {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #898989;
+}
+
+.commentList {
+    flex: 1;
+    margin: 12px 0;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 8px;
+        background: rgba(118, 176, 243, 0.3);
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 15px;
+        min-height: 15px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+        background: #fff;
+    }
+}
+
+.noShare {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.noShare h2 {
+    display: inline-block;
+    width: 300px;
+    margin-top: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #595959;
+}
+
+.noShare p {
+    display: inline-block;
+    width: 300px;
+    margin: 7px 0;
+    color: #666666;
+}

@@ -6,7 +6,7 @@ import { get } from 'lodash'
 import { useRootStore } from '@utils/customHooks'
 import { getFileContent } from '@services/api/file'
 import { byteConvert, setAllKeysByCurrKey } from '@utils/common'
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { Tabs } from '@store/extraStore'
 import RenderFileIcon from '@shared/RenderFileIcon'
 import Icon from '@components/Icon'
@@ -15,7 +15,7 @@ const FileList: React.FC = () => {
     const {
         fileStore: { files, currFileInfo, setCurrFileInfo, setContentLoading },
         folderStore: { setCurrFolderInfo, setExpandTreeKeys },
-        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps }
+        extraStore: { currTabId, isSearching, keyword, fileAndFolderDisplay, setCurrTabId, setMenuProps },
     } = useRootStore()
 
     // 点击文章，更新阅读时间
@@ -27,14 +27,14 @@ const FileList: React.FC = () => {
         parentFolderTitle,
         title,
         isTop,
-        key
+        key,
     }: IFileStore.File) => {
         setCurrFileInfo(null)
         if (Tabs.MyFolder === currTabId) {
             setCurrFolderInfo({
                 title: parentFolderTitle,
                 id: parentId,
-                key: parentKey
+                key: parentKey,
             })
         }
         try {
@@ -51,7 +51,7 @@ const FileList: React.FC = () => {
         setAllKeysByCurrKey(key)
         setCurrFolderInfo({
             id,
-            key
+            key,
         })
     }
     // 鼠标右键
@@ -70,7 +70,7 @@ const FileList: React.FC = () => {
             key: parentKey,
             type,
             title,
-            isTop
+            isTop,
         })
         setCurrFolderInfo({ key: parentKey })
     }
@@ -83,7 +83,7 @@ const FileList: React.FC = () => {
                         __html: title.replace(
                             new RegExp(`${keyword}`),
                             `<span style="background:yellow;">${keyword}</span>`
-                        )
+                        ),
                     }}
                 />
             )
@@ -97,23 +97,23 @@ const FileList: React.FC = () => {
         height: 12,
         style: {
             marginRight: 14,
-            marginLeft: 4
-        }
+            marginLeft: 4,
+        },
     }
 
     return (
         <div className={styles.container}>
-            {files.map(article => {
+            {files.map((article) => {
                 const active = article.id === get(currFileInfo, 'id', '')
                 return (
                     <div
                         className={`${styles.item} ${active ? styles.active : ''}`}
                         style={{
-                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46
+                            height: fileAndFolderDisplay === 'abstract' ? 72 : 46,
                         }}
                         key={article.id}
                         onClick={() => onHandleClickItem(article)}
-                        onContextMenu={Tabs.ShareToMe !== currTabId ? e => onHandleContextMenu(e, article) : null}
+                        onContextMenu={Tabs.ShareToMe !== currTabId ? (e) => onHandleContextMenu(e, article) : null}
                     >
                         <div className={styles.top}>
                             <RenderFileIcon type={article.type} />

@@ -11,7 +11,7 @@ import { Tabs } from '@store/extraStore'
 import { LOCALSTORAGE } from '@constant/index'
 import PerfectScroll from '@components/PerfectScroll'
 import SectionLoading from '@components/SectionLoading'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const FileAndFolder: React.FC = () => {
     const {
@@ -26,8 +26,8 @@ const FileAndFolder: React.FC = () => {
             getFolderAndFile,
             setFileAndFolderDisplay,
             setFileAndFolderSort,
-            getDelFolderAndFile
-        }
+            getDelFolderAndFile,
+        },
     } = useRootStore()
 
     const empty = React.useMemo(() => {
@@ -91,7 +91,7 @@ const FileAndFolder: React.FC = () => {
             title: '无标题笔记',
             type: 'article',
             content: '',
-            parentId: fid
+            parentId: fid,
         })
         insertFile(res)
         setCurrFileInfo(null)
@@ -101,7 +101,7 @@ const FileAndFolder: React.FC = () => {
     // 列表排序项
     const hideSort = ![Tabs.ShareToMe, Tabs.MyShare, Tabs.Recycle].includes(currTabId)
     const menu = (
-        <Menu onClick={e => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
+        <Menu onClick={(e) => onHandleList(e.key)} selectedKeys={[fileAndFolderDisplay, fileAndFolderSort]}>
             <Menu.Item key="abstract">摘要</Menu.Item>
             <Menu.Item key="list">列表</Menu.Item>
             {hideSort && <Menu.Divider />}

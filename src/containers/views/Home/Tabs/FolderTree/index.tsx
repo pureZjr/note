@@ -6,7 +6,7 @@ import { useRootStore } from '@utils/customHooks'
 import { Tabs } from '@store/extraStore'
 import Icon from '@components/Icon'
 import SectionLoading from '@components/SectionLoading'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const { DirectoryTree } = Tree
 

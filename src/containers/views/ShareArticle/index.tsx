@@ -10,7 +10,7 @@ import { useOnMount, useRootStore } from '@utils/customHooks'
 import { getShareFileLink, recentReadShareFile, likeShareFile, commentShareFile } from '@services/api/file'
 import CreateType from '@store/extraStore/CreateType'
 import PerfectScroll from '@components/PerfectScroll'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 interface Creator {
     username: string

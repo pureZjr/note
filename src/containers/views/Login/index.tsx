@@ -7,7 +7,7 @@ import { useRootStore, useOnMount } from '@utils/customHooks'
 import { LOCALSTORAGE } from '@constant/index'
 import { QN_SOURCE_URL } from '@constant/index'
 import message from '@components/AntdMessageExt'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const Login: React.FC = () => {
     const [loading, setLoading] = React.useState(false)
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
         email: '',
         username: '',
         password: '',
-        insure: ''
+        insure: '',
     })
 
     const { routerStore, userInfoStore } = useRootStore()
@@ -26,25 +26,25 @@ const Login: React.FC = () => {
     const onHandleChangeUsername = (val: string) => {
         setFormData({
             ...formData,
-            username: val
+            username: val,
         })
     }
     const onHandleChangeEmail = (val: string) => {
         setFormData({
             ...formData,
-            email: val
+            email: val,
         })
     }
     const onHandleChangePassword = (val: string) => {
         setFormData({
             ...formData,
-            password: val
+            password: val,
         })
     }
     const onHandleInsurePassword = (val: string) => {
         setFormData({
             ...formData,
-            insure: val
+            insure: val,
         })
     }
     const submit = async () => {
@@ -60,7 +60,7 @@ const Login: React.FC = () => {
                 setLoading(true)
                 const res = await login({
                     email: formData.email,
-                    password: formData.password
+                    password: formData.password,
                 })
                 localStorage.setItem(LOCALSTORAGE.USERINFO, JSON.stringify(res))
                 userInfoStore.setUserInfo(res)
@@ -94,7 +94,7 @@ const Login: React.FC = () => {
             setBgImg(img.src)
         }
     }
-    const onEnter = e => {
+    const onEnter = (e) => {
         if (e.keyCode === 13) {
             submit()
         }
@@ -112,63 +112,66 @@ const Login: React.FC = () => {
             <div
                 className={styles.bgImgs}
                 style={{
-                    backgroundImage: `url(${bgImg})`
+                    backgroundImage: `url(${bgImg})`,
                 }}
             >
                 <img
                     src={`${QN_SOURCE_URL}/note/bg-small.png`}
                     style={{
-                        opacity: Number(!bgImg)
+                        opacity: Number(!bgImg),
                     }}
                 />
                 <div className={styles.bgImgsMask} />
             </div>
             <div className={styles.wrapperMask} />
             <div className={styles.formWrapper}>
-                <h1>{handleLogin ? '欢迎回来' : '立即注册'}</h1>
-                <div className={styles.form}>
-                    {!handleLogin && (
+                <form>
+                    <h1>{handleLogin ? '欢迎回来' : '立即注册'}</h1>
+                    <div className={styles.form}>
+                        {!handleLogin && (
+                            <div className={styles.item}>
+                                <label>昵称</label>
+                                <input
+                                    autoComplete="off"
+                                    value={formData.username}
+                                    onChange={(e) => onHandleChangeUsername(e.target.value)}
+                                />
+                            </div>
+                        )}
                         <div className={styles.item}>
-                            <label>昵称</label>
+                            <label>邮箱</label>
                             <input
                                 autoComplete="off"
-                                value={formData.username}
-                                onChange={e => onHandleChangeUsername(e.target.value)}
+                                value={formData.email}
+                                onChange={(e) => onHandleChangeEmail(e.target.value)}
                             />
                         </div>
-                    )}
-                    <div className={styles.item}>
-                        <label>邮箱</label>
-                        <input
-                            autoComplete="off"
-                            value={formData.email}
-                            onChange={e => onHandleChangeEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className={styles.item}>
-                        <label>密码</label>
-                        <input
-                            type="password"
-                            value={formData.password}
-                            onKeyDown={handleLogin ? onEnter : null}
-                            onChange={e => onHandleChangePassword(e.target.value)}
-                        />
-                    </div>
-                    {!handleLogin && (
                         <div className={styles.item}>
-                            <label>确认密码</label>
+                            <label>密码</label>
                             <input
+                                autoComplete="on"
                                 type="password"
-                                value={formData.insure}
-                                onKeyDown={onEnter}
-                                onChange={e => onHandleInsurePassword(e.target.value)}
+                                value={formData.password}
+                                onKeyDown={handleLogin ? onEnter : null}
+                                onChange={(e) => onHandleChangePassword(e.target.value)}
                             />
                         </div>
-                    )}
-                </div>
-                <Button type="primary" shape="round" loading={loading} className={styles.submit} onClick={submit}>
-                    {handleLogin ? '登录' : '注册'}
-                </Button>
+                        {!handleLogin && (
+                            <div className={styles.item}>
+                                <label>确认密码</label>
+                                <input
+                                    type="password"
+                                    value={formData.insure}
+                                    onKeyDown={onEnter}
+                                    onChange={(e) => onHandleInsurePassword(e.target.value)}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <Button type="primary" shape="round" loading={loading} className={styles.submit} onClick={submit}>
+                        {handleLogin ? '登录' : '注册'}
+                    </Button>
+                </form>
             </div>
             <div className={styles.subCount}>
                 <div className={styles.subCountWrap}>

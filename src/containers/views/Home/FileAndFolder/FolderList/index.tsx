@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import dayjs from 'dayjs'
 
 import { useRootStore } from '@utils/customHooks'
-import styles from './index.scss'
+import styles from './index.module.scss'
 import { Tabs } from '@store/extraStore'
 import { setAllKeysByCurrKey } from '@utils/common'
 import Icon from '@components/Icon'
@@ -19,8 +19,8 @@ const FolderList: React.FC = () => {
             fileAndFolderDisplay,
             setCurrTabId,
             getFolderAndFile,
-            setMenuProps
-        }
+            setMenuProps,
+        },
     } = useRootStore()
 
     // 点击文件夹，更新阅读时间
@@ -54,7 +54,7 @@ const FolderList: React.FC = () => {
             folderId: id,
             key,
             isFolder: true,
-            title
+            title,
         })
         setCurrFolderInfo({ key })
     }
@@ -67,7 +67,7 @@ const FolderList: React.FC = () => {
                         __html: title.replace(
                             new RegExp(`${keyword}`),
                             `<span style="background:yellow;">${keyword}</span>`
-                        )
+                        ),
                     }}
                 />
             )
@@ -82,20 +82,20 @@ const FolderList: React.FC = () => {
                   height: 72,
                   flexDirection: 'column',
                   justifyContent: 'space-around',
-                  alignItems: 'flex-start'
+                  alignItems: 'flex-start',
               }
             : { height: 46, flexDirection: 'row', justifyContent: 'space-between' }
 
     return (
         <div className={styles.container}>
-            {folders.map(folder => {
+            {folders.map((folder) => {
                 return (
                     <div
                         className={`${styles.wrapper} ${folder.id === currFolderInfo.id ? styles.active : ''}`}
                         style={itemStyle}
                         key={folder.id}
                         onClick={() => onHandleClickItem(folder)}
-                        onContextMenu={e => onHandleContextMenu(e, folder)}
+                        onContextMenu={(e) => onHandleContextMenu(e, folder)}
                     >
                         <div className={styles.titleContainer}>
                             <Icon type="iconfolder-close" width={20} height={20} />

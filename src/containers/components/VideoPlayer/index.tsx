@@ -3,7 +3,7 @@ import 'video.js/dist/video-js.css'
 import React from 'react'
 import { useVideoJS } from 'react-hook-videojs'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const defaultVideoProps = {
     controls: true,

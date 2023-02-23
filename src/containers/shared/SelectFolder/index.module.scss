@@ -1,0 +1,51 @@
+@import '@styles/base.scss';
+
+.pathWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 353px;
+    margin-top: 24px;
+}
+
+.selectedFile {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    margin-bottom: 12px;
+
+    span {
+        margin-left: 12px;
+        color: $black06;
+    }
+}
+
+.path {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    border: 1px solid $black01;
+
+    > span {
+        flex: 1;
+        padding: 0 12px;
+        color: $black04;
+        @include textEllipsis;
+    }
+}
+.treeWrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    border: 1px solid $black01;
+
+    > div:first-of-type {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-bottom: 1px solid $black01;
+    }
+}
+
+.folderTree {
+    padding: 6px;
+    overflow: hidden;
+}

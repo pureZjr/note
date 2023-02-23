@@ -14,7 +14,7 @@ import PerfectScroll from '@components/PerfectScroll'
 import Icon from '@components/Icon'
 import SectionLoading from '@components/SectionLoading'
 
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const { Sider, Content } = Layout
 

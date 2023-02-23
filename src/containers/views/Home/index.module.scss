@@ -1,0 +1,45 @@
+@import '@styles/base.scss';
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.layout {
+    flex: 1;
+}
+
+.sider {
+    overflow: hidden;
+    user-select: none;
+    background: #fff;
+
+    :global(.ant-layout-sider-children) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+}
+
+.content {
+    position: relative;
+    flex: 1;
+    background: #f8f8f8;
+}
+
+.empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+
+    div {
+        margin-top: 4px;
+        font-size: 12px;
+        color: $black04;
+    }
+}

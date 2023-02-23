@@ -13,7 +13,7 @@ import { create } from '@services/api/file'
 import PageLoading from '@components/PageLoading'
 import SelectFolder from '@shared/SelectFolder'
 import { uploadFile } from '@utils/common'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 const Btns: React.FC = () => {
     const [uploadLoading, setUploadLoading] = React.useState(false)

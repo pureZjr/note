@@ -1,0 +1,10 @@
+@import '@styles/base.scss';
+
+.iconClose {
+    margin-left: 10px;
+    cursor: pointer;
+
+    &.anticon {
+        color: $color-gray;
+    }
+}

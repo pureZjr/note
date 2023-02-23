@@ -7,7 +7,7 @@ import { useRootStore, useOnMount } from '@utils/customHooks'
 import RenderFileIcon from '@shared/RenderFileIcon'
 import CreateType from '@store/extraStore/CreateType'
 import PerfectScroll from '@components/PerfectScroll'
-import styles from './index.scss'
+import styles from './index.module.scss'
 
 interface Props {
     file: File

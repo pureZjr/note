@@ -1,0 +1,43 @@
+@import '@styles/base.scss';
+
+.container {
+    flex: 1;
+    overflow: auto;
+    background-color: #fff;
+}
+
+.tabContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 48px;
+    background: #fff;
+}
+
+.tabParent {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 12px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #eff0f1;
+    }
+}
+
+.tabName {
+    padding-left: 12px;
+}
+
+.show {
+    display: flex;
+}
+
+.hide {
+    display: none;
+}
+
+.active {
+    background-color: #eff0f1;
+}
