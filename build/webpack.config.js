@@ -1,6 +1,6 @@
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 // webpack5自带terser-webpack-plugin
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 
 const plugins = require('./plugins')
@@ -28,6 +28,7 @@ const config = {
         publicPath: APP_ENV === 'production' ? 'https://cdn-src.renjianzahuopu.store/release-webpack/product/' : '/',
         path: assetsRoot,
         filename: APP_ENV === 'production' ? assetsPath('js/[name].[chunkhash:19].js') : '[name].js',
+        clean: true,
     },
     module: {
         rules: [...jsRules, ...styleRules, ...fileRules],
@@ -35,7 +36,10 @@ const config = {
     watchOptions: {
         ignored: /node_modules/,
     },
-    plugins: [...plugins, new BundleAnalyzerPlugin()],
+    plugins: [
+        ...plugins,
+        //new BundleAnalyzerPlugin()
+    ],
     resolve: {
         extensions: FILE_EXTENSIONS,
         plugins: [
@@ -59,7 +63,7 @@ if (APP_ENV === 'development') {
     }
 }
 
-const smp = new SpeedMeasurePlugin()
-webpackConfig = smp.wrap(config)
+// const smp = new SpeedMeasurePlugin()
+// webpackConfig = smp.wrap(config)
 
-module.exports = webpackConfig
+module.exports = config
