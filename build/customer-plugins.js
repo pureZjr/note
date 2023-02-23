@@ -40,4 +40,33 @@ class UploadToQiniuPlugin {
     }
 }
 
-module.exports = { UploadToQiniuPlugin }
+// 输出打包文件清单
+class FileListPlugin {
+    constructor(options) {
+        this.name = options.name || 'fileList.md'
+    }
+
+    apply(compiler) {
+        compiler.hooks.emit.tapAsync('FileListPlugin', (compilation, cb) => {
+            const len = Object.keys(compilation.assets).length
+
+            let content = `### 一共有${len}个文件\n\n`
+
+            for (let filename in compilation.assets) {
+                content += `- ${filename}\n`
+            }
+
+            compilation.assets[this.name] = {
+                source: function () {
+                    return content
+                },
+                size: function () {
+                    return content.length
+                },
+            }
+            cb()
+        })
+    }
+}
+
+module.exports = { UploadToQiniuPlugin, FileListPlugin }

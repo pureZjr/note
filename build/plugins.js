@@ -8,7 +8,7 @@ const getClientEnvironment = require('./env.js')
 const env = getClientEnvironment('/')
 const { assetsPath, resolveFromRootDir } = require('./utils')
 const { APP_ENV } = require('./constants')
-const { UploadToQiniuPlugin } = require('./customer-plugins.js')
+const { UploadToQiniuPlugin, FileListPlugin } = require('./customer-plugins.js')
 
 const definePlugin = new webpack.DefinePlugin(env.stringified)
 
@@ -37,7 +37,8 @@ if (APP_ENV === 'production') {
             chunkFilename: assetsPath('css/[name].[id].[contenthash].css'),
             ignoreOrder: true,
         }),
-        new UploadToQiniuPlugin()
+        new UploadToQiniuPlugin(),
+        new FileListPlugin({ name: 'my-file-list.md' })
         // 不用source-map了，影响打包
         // new SentryPlugin({
         //     // Sentry options are required
